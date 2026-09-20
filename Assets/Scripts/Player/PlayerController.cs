@@ -14,6 +14,10 @@ public class PlayerController : MonoBehaviour
     [Header("Sprint Settings")]
     [SerializeField] private float sprintMultiplier = 1.5f;
     
+    [Header("Interaction Settings")]
+    [Tooltip("ROLE C: Khoảng cách player có thể interact với objects (key, door, clue)")]
+    [SerializeField] private float interactionRange = 3f;
+    
     [Header("Mobile Input - QUAN TRỌNG")]
     [Tooltip("Kéo Virtual Joystick component vào đây (Role D sẽ tạo UI này)")]
     // TODO: Uncomment sau khi import Joystick Pack từ Asset Store
@@ -48,6 +52,7 @@ public class PlayerController : MonoBehaviour
     {
         MovePlayer();
         ApplyGravity();
+        HandleInteraction();
     }
     
     void MovePlayer()
@@ -98,4 +103,41 @@ public class PlayerController : MonoBehaviour
     // Getter cho các script khác
     public bool IsSprinting() => isSprinting;
     public bool IsMoving() => controller != null && controller.velocity.magnitude > 0.1f;
+    
+    /// <summary>
+    /// INTERACTION SYSTEM - Nhấn E để interact với objects gần nhất
+    /// Hoạt động với: KeyItem (nhặt chìa), Lockable (mở khóa), CodeClue (xem gợi ý)
+    /// </summary>
+    void HandleInteraction()
+    {
+        // Check E key
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            // Tìm tất cả Interactables trong range
+            Collider[] colliders = Physics.OverlapSphere(transform.position, interactionRange);
+            Interactable closestInteractable = null;
+            float closestDistance = interactionRange;
+            
+            foreach (Collider col in colliders)
+            {
+                Interactable interactable = col.GetComponent<Interactable>();
+                if (interactable != null)
+                {
+                    float distance = Vector3.Distance(transform.position, col.transform.position);
+                    if (distance < closestDistance)
+                    {
+                        closestDistance = distance;
+                        closestInteractable = interactable;
+                    }
+                }
+            }
+            
+            // Interact với object gần nhất
+            if (closestInteractable != null)
+            {
+                Debug.Log($"[INTERACT] Nhấn E → {closestInteractable.gameObject.name} (distance: {closestDistance:F2}m)");
+                closestInteractable.TryInteract();
+            }
+        }
+    }
 }
