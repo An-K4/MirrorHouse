@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour
         //     Debug.LogWarning("PlayerController: Chưa gắn Virtual Joystick! Player sẽ không di chuyển được.");
         //     Debug.LogWarning("→ Role D sẽ tạo UI Joystick và gắn vào đây sau.");
         // }
-        Debug.LogWarning("PlayerController: Joystick chưa được kích hoạt. Import Joystick Pack để sử dụng!");
+        Debug.Log("PlayerController: Dùng WASD để di chuyển trong Editor. Giữ Shift để chạy.");
     }
     
     void Update()
@@ -63,8 +63,9 @@ public class PlayerController : MonoBehaviour
             return;
         
         // FALLBACK: Dùng WASD tạm thời trong Unity Editor
-        float horizontal = Input.GetAxis("Horizontal");  // A/D hoặc Left/Right arrow
-        float vertical = Input.GetAxis("Vertical");      // W/S hoặc Up/Down arrow
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
+        isSprinting = Input.GetKey(KeyCode.LeftShift);
         
         // Tính hướng di chuyển (relative to camera)
         Vector3 direction = transform.right * horizontal + transform.forward * vertical;
@@ -105,39 +106,53 @@ public class PlayerController : MonoBehaviour
     public bool IsMoving() => controller != null && controller.velocity.magnitude > 0.1f;
     
     /// <summary>
-    /// INTERACTION SYSTEM - Nhấn E để interact với objects gần nhất
-    /// Hoạt động với: KeyItem (nhặt chìa), Lockable (mở khóa), CodeClue (xem gợi ý)
+    /// INTERACTION SYSTEM - Nhấn E hoặc Click chuột trái để interact với objects
+    /// Hoạt động với: DoorInteractive (mở cửa), KeyItem (nhặt chìa), Lockable (mở khóa), CodeClue (xem gợi ý)
     /// </summary>
     void HandleInteraction()
     {
-        // Check E key
-        if (Input.GetKeyDown(KeyCode.E))
+        bool interactPressed = Input.GetKeyDown(KeyCode.E) || Input.GetMouseButtonDown(0);
+        if (!interactPressed) return;
+
+        Camera cam = Camera.main;
+        if (cam != null)
         {
-            // Tìm tất cả Interactables trong range
-            Collider[] colliders = Physics.OverlapSphere(transform.position, interactionRange);
-            Interactable closestInteractable = null;
-            float closestDistance = interactionRange;
-            
-            foreach (Collider col in colliders)
+            Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+            if (Physics.Raycast(ray, out RaycastHit hit, interactionRange))
             {
-                Interactable interactable = col.GetComponent<Interactable>();
+                Interactable interactable = hit.collider.GetComponentInParent<Interactable>();
                 if (interactable != null)
                 {
-                    float distance = Vector3.Distance(transform.position, col.transform.position);
-                    if (distance < closestDistance)
-                    {
-                        closestDistance = distance;
-                        closestInteractable = interactable;
-                    }
+                    Debug.Log($"[INTERACT] Click/E → {interactable.gameObject.name}");
+                    interactable.TryInteract();
+                    return;
                 }
             }
-            
-            // Interact với object gần nhất
-            if (closestInteractable != null)
+        }
+
+        // Fallback: Tìm tất cả Interactables trong range xung quanh
+        Collider[] colliders = Physics.OverlapSphere(transform.position, interactionRange);
+        Interactable closestInteractable = null;
+        float closestDistance = interactionRange;
+        
+        foreach (Collider col in colliders)
+        {
+            Interactable interactable = col.GetComponentInParent<Interactable>();
+            if (interactable != null)
             {
-                Debug.Log($"[INTERACT] Nhấn E → {closestInteractable.gameObject.name} (distance: {closestDistance:F2}m)");
-                closestInteractable.TryInteract();
+                float distance = Vector3.Distance(transform.position, col.transform.position);
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closestInteractable = interactable;
+                }
             }
+        }
+        
+        if (closestInteractable != null)
+        {
+            Debug.Log($"[INTERACT] Nhấn E/Click → {closestInteractable.gameObject.name} (distance: {closestDistance:F2}m)");
+            closestInteractable.TryInteract();
         }
     }
 }
