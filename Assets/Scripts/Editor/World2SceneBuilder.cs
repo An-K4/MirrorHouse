@@ -26,6 +26,15 @@ public class World2SceneBuilder : EditorWindow
             }
         }
 
+        if (!EditorUtility.DisplayDialog(
+            "Rebuild World 2 Scene",
+            "This rebuild replaces the objects currently in World2_Prototype and saves the generated scene. Continue?",
+            "Rebuild Scene",
+            "Cancel"))
+        {
+            return;
+        }
+
         // 1. Clean up old root objects
         var rootObjects = currentScene.GetRootGameObjects();
         foreach (var obj in rootObjects)
@@ -115,25 +124,32 @@ public class World2SceneBuilder : EditorWindow
             modelInstance.transform.localRotation = Quaternion.identity;
             modelInstance.transform.localScale = Vector3.one;
 
-            // Measure unscaled bounds
+            // Measure renderer bounds in the prefab-root coordinate space. Renderer.bounds
+            // is a world-axis-aligned box, so convert all corners before combining bounds.
             Renderer[] renderers = modelInstance.GetComponentsInChildren<Renderer>();
-            if (renderers.Length > 0)
+            Bounds modelBounds;
+            bool hasBounds = TryGetBoundsInRootSpace(tempRoot.transform, renderers, out modelBounds);
+            float factor = 1f;
+            if (hasBounds)
             {
-                Bounds bounds = renderers[0].bounds;
-                for (int i = 1; i < renderers.Length; i++)
-                {
-                    bounds.Encapsulate(renderers[i].bounds);
-                }
-
-                float currentHeight = bounds.size.y;
-                float currentMax = Mathf.Max(bounds.size.x, bounds.size.y, bounds.size.z);
-                float refSize = currentHeight > 0.05f ? currentHeight : currentMax;
-
+                // The requested dimension is physical height for upright assets. Use the
+                // longest extent for flat props (keys, daggers) so import orientation does
+                // not collapse the scale calculation.
+                float refSize = targetHeight <= 0.30f
+                    ? Mathf.Max(modelBounds.size.x, modelBounds.size.y, modelBounds.size.z)
+                    : modelBounds.size.y;
                 if (refSize > 0.001f && targetHeight > 0.005f)
                 {
-                    float factor = targetHeight / refSize;
+                    factor = targetHeight / refSize;
                     modelInstance.transform.localScale = new Vector3(factor, factor, factor);
                 }
+
+                // Keep a predictable root anchor: X/Z centered and the lowest mesh point
+                // resting at local Y=0. This compensates for source-model pivots.
+                modelInstance.transform.localPosition = new Vector3(
+                    -modelBounds.center.x * factor,
+                    -modelBounds.min.y * factor,
+                    -modelBounds.center.z * factor);
             }
 
             // Apply override material if requested
@@ -145,10 +161,50 @@ public class World2SceneBuilder : EditorWindow
                     r.sharedMaterial = overrideMat;
             }
 
-            // Add Collider if missing
+            // Add a collider sized to the calibrated mesh bounds instead of Unity's
+            // default 1x1x1 box (which is especially wrong for keys and other props).
             if (tempRoot.GetComponent<Collider>() == null && tempRoot.GetComponentInChildren<Collider>() == null)
             {
-                tempRoot.AddComponent<BoxCollider>();
+                BoxCollider box = tempRoot.AddComponent<BoxCollider>();
+                if (hasBounds)
+                {
+                    box.center = new Vector3(0f, modelBounds.size.y * factor * 0.5f, 0f);
+                    box.size = new Vector3(
+                        Mathf.Max(0.01f, modelBounds.size.x * factor),
+                        Mathf.Max(0.01f, modelBounds.size.y * factor),
+                        Mathf.Max(0.01f, modelBounds.size.z * factor));
+                }
+            }
+
+            // Give the door an explicit hinge at the left edge of its measured opening.
+            // The wrapper owns world placement; the mesh stays centered around the hinge.
+            if (prefabSavePath == "Assets/Prefabs/Furniture/Victorian_Door.prefab" && hasBounds)
+            {
+                bool widthIsX = modelBounds.size.x >= modelBounds.size.z;
+                float halfWidth = (widthIsX ? modelBounds.size.x : modelBounds.size.z) * factor * 0.5f;
+                GameObject hinge = new GameObject("DoorHinge");
+                hinge.transform.SetParent(tempRoot.transform, false);
+                hinge.transform.localPosition = widthIsX
+                    ? new Vector3(-halfWidth, 0f, 0f)
+                    : new Vector3(0f, 0f, -halfWidth);
+                modelInstance.transform.SetParent(hinge.transform, true);
+
+                BoxCollider rootBox = tempRoot.GetComponent<BoxCollider>();
+                if (rootBox != null)
+                    DestroyImmediate(rootBox);
+                BoxCollider doorBox = hinge.AddComponent<BoxCollider>();
+                doorBox.size = new Vector3(
+                    Mathf.Max(0.01f, modelBounds.size.x * factor),
+                    Mathf.Max(0.01f, modelBounds.size.y * factor),
+                    Mathf.Max(0.01f, modelBounds.size.z * factor));
+                doorBox.center = widthIsX
+                    ? new Vector3(halfWidth, doorBox.size.y * 0.5f, 0f)
+                    : new Vector3(0f, doorBox.size.y * 0.5f, halfWidth);
+
+                DoorInteractive doorInteraction = tempRoot.AddComponent<DoorInteractive>();
+                SerializedObject doorSerialized = new SerializedObject(doorInteraction);
+                doorSerialized.FindProperty("doorHinge").objectReferenceValue = hinge.transform;
+                doorSerialized.ApplyModifiedPropertiesWithoutUndo();
             }
 
             // Save Prefab
@@ -199,8 +255,12 @@ public class World2SceneBuilder : EditorWindow
         };
 
         // Helper: Spawn Interactive Door into doorway
-        System.Func<Vector3, Vector3, string, bool, string, GameObject> SpawnDoor = (pos, euler, name, isLocked, reqKey) => {
-            GameObject doorObj = SpawnPrefab(prefabDoor, name, pos, euler);
+        System.Func<Vector3, Vector3, string, bool, string, GameObject> SpawnDoor = (pos, wallNormal, name, isLocked, reqKey) => {
+            GameObject doorObj = SpawnPrefab(prefabDoor, name, pos, Vector3.zero);
+            // The imported door's local forward axis follows the wall normal. Derive yaw
+            // from each doorway's wall instead of applying one universal Euler rotation.
+            if (wallNormal.sqrMagnitude > 0.0001f)
+                doorObj.transform.rotation = Quaternion.LookRotation(wallNormal.normalized, Vector3.up);
             
             // Setup DoorInteractive
             DoorInteractive doorComp = doorObj.GetComponent<DoorInteractive>();
@@ -210,8 +270,8 @@ public class World2SceneBuilder : EditorWindow
             // Ensure BoxCollider for interaction & blocking
             BoxCollider col = doorObj.GetComponent<BoxCollider>();
             if (col == null) col = doorObj.AddComponent<BoxCollider>();
-            col.center = new Vector3(0, 1.07f, 0);
-            col.size = new Vector3(1.1f, 2.15f, 0.25f);
+            // Keep the collider dimensions calibrated with the model prefab. Its root box
+            // already matches the imported mesh bounds and will rotate with this door.
 
             return doorObj;
         };
@@ -247,8 +307,8 @@ public class World2SceneBuilder : EditorWindow
         CreateBox("Wall_Divider_West_Rooms", new Vector3(-9.75f, H / 2, 0), new Vector3(14.5f, H, T), matWall);
 
         // Doors for West Rooms
-        SpawnDoor(new Vector3(-2.5f, 0, 8.5f), new Vector3(0, 90, 0), "Door_Emily_Bedroom", false, "");
-        SpawnDoor(new Vector3(-2.5f, 0, -8.5f), new Vector3(0, 90, 0), "Door_Locked_Library", true, "key_library");
+        SpawnDoor(new Vector3(-2.5f, 0, 8.5f), Vector3.right, "Door_Emily_Bedroom", false, "");
+        SpawnDoor(new Vector3(-2.5f, 0, -8.5f), Vector3.right, "Door_Locked_Library", true, "key_library");
 
         // -------------------------------------------------------------
         // EAST ROOMS (X: 2.5 to 17): Divided into Dining (North) & Storage (South)
@@ -264,8 +324,8 @@ public class World2SceneBuilder : EditorWindow
         CreateBox("Wall_Divider_East_Rooms", new Vector3(9.75f, H / 2, 0), new Vector3(14.5f, H, T), matWall);
 
         // Doors for East Rooms
-        SpawnDoor(new Vector3(2.5f, 0, 8.5f), new Vector3(0, -90, 0), "Door_Dining_Room", false, "");
-        SpawnDoor(new Vector3(2.5f, 0, -8.5f), new Vector3(0, -90, 0), "Door_Storage_Room", false, "");
+        SpawnDoor(new Vector3(2.5f, 0, 8.5f), Vector3.left, "Door_Dining_Room", false, "");
+        SpawnDoor(new Vector3(2.5f, 0, -8.5f), Vector3.left, "Door_Storage_Room", false, "");
 
         // =================================================================
         // FURNISHING ROOMS WITH ACCURATELY SCALED PREFABS
@@ -506,6 +566,40 @@ public class World2SceneBuilder : EditorWindow
             }
         }
         AssetDatabase.Refresh();
+    }
+
+    private static bool TryGetBoundsInRootSpace(Transform root, Renderer[] renderers, out Bounds bounds)
+    {
+        bounds = new Bounds();
+        bool initialized = false;
+
+        foreach (Renderer renderer in renderers)
+        {
+            Bounds rendererBounds = renderer.localBounds;
+            Vector3 min = rendererBounds.min;
+            Vector3 max = rendererBounds.max;
+            for (int x = 0; x < 2; x++)
+            for (int y = 0; y < 2; y++)
+            for (int z = 0; z < 2; z++)
+            {
+                Vector3 corner = new Vector3(
+                    x == 0 ? min.x : max.x,
+                    y == 0 ? min.y : max.y,
+                    z == 0 ? min.z : max.z);
+                corner = root.InverseTransformPoint(renderer.transform.TransformPoint(corner));
+                if (!initialized)
+                {
+                    bounds = new Bounds(corner, Vector3.zero);
+                    initialized = true;
+                }
+                else
+                {
+                    bounds.Encapsulate(corner);
+                }
+            }
+        }
+
+        return initialized;
     }
 
     private static void PrintCalibrationReport()

@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 /// <summary>
 /// DOOR INTERACTION SYSTEM
@@ -20,7 +21,7 @@ public class DoorInteractive : Interactable
     [SerializeField] private string lockedMessage = "Cửa đang bị khóa! Cần chìa khóa phù hợp.";
 
     [Header("Hinge / Pivot")]
-    [Tooltip("Transform trục xoay của cánh cửa (nếu để trống sẽ tự lấy transform của chính object này)")]
+    [Tooltip("Transform trục xoay của cánh cửa (nếu để trống, bản lề sẽ được tính từ bounds của model)")]
     [SerializeField] private Transform doorHinge;
 
     private bool isOpen = false;
@@ -31,7 +32,7 @@ public class DoorInteractive : Interactable
     void Start()
     {
         if (doorHinge == null)
-            doorHinge = transform;
+            doorHinge = CreateRuntimeHingeFromModelBounds();
 
         closedRotation = doorHinge.localRotation;
         openRotation = closedRotation * Quaternion.Euler(0, openAngle, 0);
@@ -43,6 +44,85 @@ public class DoorInteractive : Interactable
         }
 
         UpdatePrompt();
+    }
+
+    private Transform CreateRuntimeHingeFromModelBounds()
+    {
+        Renderer[] renderers = GetComponentsInChildren<Renderer>();
+        if (renderers.Length == 0)
+            return transform;
+
+        Bounds localBounds = new Bounds();
+        bool initialized = false;
+        foreach (Renderer renderer in renderers)
+        {
+            Bounds rendererBounds = renderer.localBounds;
+            Vector3 min = rendererBounds.min;
+            Vector3 max = rendererBounds.max;
+            for (int x = 0; x < 2; x++)
+            for (int y = 0; y < 2; y++)
+            for (int z = 0; z < 2; z++)
+            {
+                Vector3 corner = transform.InverseTransformPoint(renderer.transform.TransformPoint(new Vector3(
+                    x == 0 ? min.x : max.x,
+                    y == 0 ? min.y : max.y,
+                    z == 0 ? min.z : max.z)));
+                if (!initialized)
+                {
+                    localBounds = new Bounds(corner, Vector3.zero);
+                    initialized = true;
+                }
+                else
+                {
+                    localBounds.Encapsulate(corner);
+                }
+            }
+        }
+
+        bool widthIsX = localBounds.size.x >= localBounds.size.z;
+        float halfWidth = (widthIsX ? localBounds.size.x : localBounds.size.z) * 0.5f;
+        // Scene instances created before calibrated prefabs may have a source pivot that
+        // leaves the panel off-center or below/above its doorway. Keep the root at the
+        // intended center-bottom anchor while moving the whole visual/collider assembly.
+        transform.position += transform.TransformVector(new Vector3(
+            -localBounds.center.x,
+            -localBounds.min.y,
+            -localBounds.center.z));
+
+        GameObject hingeObject = new GameObject("DoorHinge_Runtime");
+        Transform hinge = hingeObject.transform;
+        hinge.SetParent(transform, false);
+        hinge.localPosition = widthIsX
+            ? new Vector3(localBounds.center.x - halfWidth, localBounds.min.y, localBounds.center.z)
+            : new Vector3(localBounds.center.x, localBounds.min.y, localBounds.center.z - halfWidth);
+
+        // Move visible model roots under the hinge without changing their world pose.
+        List<Transform> modelRoots = new List<Transform>();
+        foreach (Transform child in transform)
+            modelRoots.Add(child);
+        foreach (Transform child in modelRoots)
+            child.SetParent(hinge, true);
+
+        // The blocking collider must swing with the mesh. Convert a root box collider
+        // into an equivalent collider on the hinge child.
+        BoxCollider rootBox = GetComponent<BoxCollider>();
+        if (rootBox != null)
+        {
+            bool isTrigger = rootBox.isTrigger;
+            PhysicMaterial material = rootBox.sharedMaterial;
+            Destroy(rootBox);
+
+            BoxCollider hingeBox = hingeObject.AddComponent<BoxCollider>();
+            hingeBox.size = new Vector3(
+                Mathf.Max(0.01f, localBounds.size.x),
+                Mathf.Max(0.01f, localBounds.size.y),
+                Mathf.Max(0.01f, localBounds.size.z));
+            hingeBox.center = localBounds.center - hinge.localPosition;
+            hingeBox.isTrigger = isTrigger;
+            hingeBox.sharedMaterial = material;
+        }
+
+        return hinge;
     }
 
     void UpdatePrompt()
