@@ -58,8 +58,8 @@ public class Lockable : Interactable
         }
         else
         {
-            // Code lock → Role D sẽ hiện UI nhập mã
-            Debug.Log($"Code lock detected. Role D will show code input UI.");
+            // Code lock → Show UI nhập mã
+            CodeInputUI.Show(this);
         }
     }
     

@@ -77,10 +77,17 @@ public class PlayerCamera : MonoBehaviour
         
         // FALLBACK: Dùng mouse cho testing trong Unity Editor
         #if UNITY_EDITOR
-        if (Input.GetMouseButton(0) || Input.GetMouseButton(1)) // Left hoặc Right mouse button
+        // Option 1: Hold click + drag (mobile simulation)
+        if (Input.GetMouseButton(1)) // Right mouse button only
         {
             Vector2 mouseDelta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
             RotateCamera(mouseDelta * 10f); // Scale up vì mouse delta nhỏ hơn touch
+        }
+        // Option 2: Free mouse look (easier for testing)
+        else if (Input.GetKey(KeyCode.LeftShift)) // Hold Left Shift for free look
+        {
+            Vector2 mouseDelta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
+            RotateCamera(mouseDelta * 15f); // Sensitivity cao hơn cho free look
         }
         #endif
     }
