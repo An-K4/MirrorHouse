@@ -51,8 +51,17 @@ public class PlayerCamera : MonoBehaviour
         {
             Touch touch = Input.GetTouch(0);
             
-            // TODO: Kiểm tra touch có nằm trong touchArea không (khi Role D tạo UI)
-            // Tạm thời accept tất cả touch
+            // QUAN TRỌNG: Chỉ accept touch bên PHẢI màn hình
+            // Bên TRÁI dành cho joystick (di chuyển)
+            // Bên PHẢI dành cho camera (xoay nhìn)
+            float screenMiddle = Screen.width / 2f;
+            
+            // Ignore touch bên trái (joystick area)
+            if (touch.position.x < screenMiddle)
+            {
+                isTouching = false;
+                return;
+            }
             
             if (touch.phase == TouchPhase.Began)
             {
