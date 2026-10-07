@@ -302,8 +302,9 @@ public class UISetupBuilder : EditorWindow
         serializedObject.FindProperty("feedbackText").objectReferenceValue = feedbackText;
         serializedObject.ApplyModifiedProperties();
 
-        // Initially hide the panel
-        panelObj.SetActive(false);
+        // DON'T set inactive here! CodeInputUI.Awake() needs to run in Play mode.
+        // GameObject must start ACTIVE so Awake() can set the static instance, 
+        // then Awake() will hide the panel itself (line 31 in CodeInputUI.cs)
 
         Debug.Log("[UISetupBuilder] ✅ Created CodeInputPanel");
     }
