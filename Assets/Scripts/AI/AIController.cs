@@ -17,7 +17,7 @@ public class AIController : MonoBehaviour
     [Header("Patrol Settings")]
     public Transform[] patrolPoints;
     [SerializeField] private float waypointReachDistance = 1.5f;
-    public float patrolSpeed = 1f; // Giảm từ 2f xuống 1f (50%)
+    public float patrolSpeed = 0.5f; // Giảm từ 1f xuống 0.5f (50%)
     private int currentWaypointIndex = 0;
 
     [Header("Detection Settings")]
@@ -25,7 +25,7 @@ public class AIController : MonoBehaviour
     [SerializeField] private float fieldOfView = 120f;
 
     [Header("Chase Settings")]
-    public float chaseSpeed = 2.25f; // Giảm từ 4.5f xuống 2.25f (50%)
+    public float chaseSpeed = 1.125f; // Giảm từ 2.25f xuống 1.125f (50%)
     public float attackRadius = 2f;
 
     private NavMeshAgent agent;
