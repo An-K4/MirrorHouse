@@ -219,22 +219,22 @@ public class World2SceneBuilder : EditorWindow
         Debug.Log("<b>[World2Builder] Bắt đầu chuẩn hóa kích thước các Model 3D thành Prefab chuẩn...</b>");
 
         // Props
-        GameObject prefabKey = CreateOrGetStandardizedPrefab("Assets/3D model/antique-key/source/key.glb", "Assets/Prefabs/Props/Key_Gold.prefab", 0.08f, matKey);
-        GameObject prefabDagger = CreateOrGetStandardizedPrefab("Assets/3D model/ritual-dagger/source/Royal Dagger.fbx", "Assets/Prefabs/Props/Ritual_Dagger.prefab", 0.30f, matDagger);
-        GameObject prefabSafe = CreateOrGetStandardizedPrefab("Assets/3D model/safe/source/Safe.fbx", "Assets/Prefabs/Props/Safe_Box.prefab", 0.55f, matSafe);
-        GameObject prefabBarrel = CreateOrGetStandardizedPrefab("Assets/3D model/wooden-barrel-and-crate/source/unzipped/Barrel.fbx", "Assets/Prefabs/Props/Storage_Barrel.prefab", 0.80f, matBarrel);
+        GameObject prefabKey = CreateOrGetStandardizedPrefab("Assets/Models/Items/Keys/AntiqueKey/source/key.glb", "Assets/Prefabs/Props/Key_Gold.prefab", 0.08f, matKey);
+        GameObject prefabDagger = CreateOrGetStandardizedPrefab("Assets/Models/Items/RitualDagger/source/Royal Dagger.fbx", "Assets/Prefabs/Props/Ritual_Dagger.prefab", 0.30f, matDagger);
+        GameObject prefabSafe = CreateOrGetStandardizedPrefab("Assets/Models/Furniture/Safe/source/Safe.fbx", "Assets/Prefabs/Props/Safe_Box.prefab", 0.55f, matSafe);
+        GameObject prefabBarrel = CreateOrGetStandardizedPrefab("Assets/Models/Furniture/WoodenBarrel/source/unzipped/Barrel.fbx", "Assets/Prefabs/Props/Storage_Barrel.prefab", 0.80f, matBarrel);
 
         // Furniture
-        GameObject prefabDoor = CreateOrGetStandardizedPrefab("Assets/3D model/victorian-door/source/Door.fbx", "Assets/Prefabs/Furniture/Victorian_Door.prefab", 2.15f, matDoor);
-        GameObject prefabBed = CreateOrGetStandardizedPrefab("Assets/3D model/victorian-bed/source/unzipped/Victorian Bed.fbx", "Assets/Prefabs/Furniture/Victorian_Bed.prefab", 1.25f, matBed);
-        GameObject prefabDesk = CreateOrGetStandardizedPrefab("Assets/3D model/antique-desk/source/model.fbx", "Assets/Prefabs/Furniture/Vintage_Desk.prefab", 0.78f, matDesk);
-        GameObject prefabBookshelf = CreateOrGetStandardizedPrefab("Assets/3D model/victorian-bookshelf/source/victorian_bookshelf.glb", "Assets/Prefabs/Furniture/Victorian_Bookshelf.prefab", 2.05f, matBookshelf);
-        GameObject prefabDining = CreateOrGetStandardizedPrefab("Assets/3D model/dining-table-and-chairs/source/Dining table.fbx", "Assets/Prefabs/Furniture/Dining_Table_Set.prefab", 0.78f, matDining);
-        GameObject prefabAltar = CreateOrGetStandardizedPrefab("Assets/3D model/ritual-altar-game-asset/source/Altar_Low.fbx", "Assets/Prefabs/Furniture/Ritual_Altar.prefab", 0.85f, matAltar);
-        GameObject prefabMirror = CreateOrGetStandardizedPrefab("Assets/3D model/gothic-mirror/source/mirror.fbx", "Assets/Prefabs/Furniture/Grand_Mirror.prefab", 2.20f, matMirror);
+        GameObject prefabDoor = CreateOrGetStandardizedPrefab("Assets/Models/Furniture/VictorianDoor/source/Door.fbx", "Assets/Prefabs/Furniture/Victorian_Door.prefab", 2.15f, matDoor);
+        GameObject prefabBed = CreateOrGetStandardizedPrefab("Assets/Models/Furniture/VictorianBed/source/unzipped/Victorian Bed.fbx", "Assets/Prefabs/Furniture/Victorian_Bed.prefab", 1.25f, matBed);
+        GameObject prefabDesk = CreateOrGetStandardizedPrefab("Assets/Models/Furniture/AntiqueDesk/source/model.fbx", "Assets/Prefabs/Furniture/Vintage_Desk.prefab", 0.78f, matDesk);
+        GameObject prefabBookshelf = CreateOrGetStandardizedPrefab("Assets/Models/Furniture/VictorianBookshelf/source/victorian_bookshelf.glb", "Assets/Prefabs/Furniture/Victorian_Bookshelf.prefab", 2.05f, matBookshelf);
+        GameObject prefabDining = CreateOrGetStandardizedPrefab("Assets/Models/Furniture/DiningTable/source/Dining table.fbx", "Assets/Prefabs/Furniture/Dining_Table_Set.prefab", 0.78f, matDining);
+        GameObject prefabAltar = CreateOrGetStandardizedPrefab("Assets/Models/Furniture/RitualAltar/source/Altar_Low.fbx", "Assets/Prefabs/Furniture/Ritual_Altar.prefab", 0.85f, matAltar);
+        GameObject prefabMirror = CreateOrGetStandardizedPrefab("Assets/Models/Furniture/GothicMirror/source/mirror.fbx", "Assets/Prefabs/Furniture/Grand_Mirror.prefab", 2.20f, matMirror);
 
         // Characters
-        GameObject prefabMonster = CreateOrGetStandardizedPrefab("Assets/3D model/horror-monster/source/Monster_WalkingPr.fbx", "Assets/Prefabs/Characters/Demon_Monster.prefab", 2.10f, matMonster);
+        GameObject prefabMonster = CreateOrGetStandardizedPrefab("Assets/Models/Characters/Enemy/HorrorMonster/source/Monster_WalkingPr.fbx", "Assets/Prefabs/Characters/Demon_Monster.prefab", 2.10f, matMonster);
 
         // Helper: Instantiate Prefab or Fallback
         System.Func<GameObject, string, Vector3, Vector3, GameObject> SpawnPrefab = (prefab, name, pos, euler) => {
