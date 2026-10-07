@@ -33,12 +33,7 @@ public class PlayerCamera : MonoBehaviour
             Debug.LogError("PlayerCamera: Chưa gắn Player Body reference!");
 
         if (touchArea == null)
-            Debug.LogWarning("PlayerCamera: Chưa có Touch Area UI. Dùng touch toàn màn hình / chuột phải trong Editor.");
-
-#if UNITY_EDITOR
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-#endif
+            Debug.LogWarning("PlayerCamera: Chưa có Touch Area UI. Dùng touch toàn màn hình / chuột trái kéo trong Editor.");
     }
 
     void Update()
@@ -83,21 +78,13 @@ public class PlayerCamera : MonoBehaviour
         
         // FALLBACK: Dùng mouse cho testing trong Unity Editor
         #if UNITY_EDITOR
-        // Right-click để toggle cursor lock/unlock
-        if (Input.GetMouseButtonDown(1))
-        {
-            bool shouldLock = Cursor.lockState != CursorLockMode.Locked;
-            Cursor.lockState = shouldLock ? CursorLockMode.Locked : CursorLockMode.None;
-            Cursor.visible = !shouldLock;
-        }
-        
-        // Khi cursor locked, tự động xoay camera theo mouse movement (standard FPS controls)
-        if (Cursor.lockState == CursorLockMode.Locked)
+        // Click-trái và kéo để xoay camera (không cần cursor lock)
+        if (Input.GetMouseButton(0)) // Giữ chuột trái
         {
             Vector2 mouseDelta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
-            if (mouseDelta.sqrMagnitude > 0.001f) // Chỉ rotate khi có movement
+            if (mouseDelta.sqrMagnitude > 0.001f)
             {
-                RotateCamera(mouseDelta * 15f); // Sensitivity x15 cho mouse
+                RotateCamera(mouseDelta * 5f); // Giảm sensitivity từ 15f xuống 5f
             }
         }
         #endif
