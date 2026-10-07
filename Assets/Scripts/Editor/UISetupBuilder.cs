@@ -176,7 +176,7 @@ public class UISetupBuilder : EditorWindow
 
         Text text = textObj.AddComponent<Text>();
         text.text = "E";
-        text.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
+        text.font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
         text.fontSize = 40;
         text.alignment = TextAnchor.MiddleCenter;
         text.color = Color.black;
@@ -237,7 +237,7 @@ public class UISetupBuilder : EditorWindow
         inputTextRect.offsetMax = new Vector2(-10, -5);
 
         Text inputText = inputTextObj.AddComponent<Text>();
-        inputText.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
+        inputText.font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
         inputText.fontSize = 24;
         inputText.color = Color.black;
 
@@ -270,7 +270,7 @@ public class UISetupBuilder : EditorWindow
 
         Text submitText = submitTextObj.AddComponent<Text>();
         submitText.text = "Submit";
-        submitText.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
+        submitText.font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
         submitText.fontSize = 20;
         submitText.alignment = TextAnchor.MiddleCenter;
         submitText.color = Color.white;
@@ -286,7 +286,7 @@ public class UISetupBuilder : EditorWindow
         feedbackRect.sizeDelta = Vector2.zero;
 
         Text feedbackText = feedbackTextObj.AddComponent<Text>();
-        feedbackText.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
+        feedbackText.font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
         feedbackText.fontSize = 18;
         feedbackText.alignment = TextAnchor.MiddleCenter;
         feedbackText.color = Color.red;
