@@ -51,9 +51,6 @@ public class PlayerCamera : MonoBehaviour
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
-<<<<<<< HEAD
-
-=======
             
             // QUAN TRỌNG: Chỉ accept touch bên PHẢI màn hình
             // Bên TRÁI dành cho joystick (di chuyển)
@@ -67,7 +64,6 @@ public class PlayerCamera : MonoBehaviour
                 return;
             }
             
->>>>>>> origin/main
             if (touch.phase == TouchPhase.Began)
             {
                 lastTouchPosition = touch.position;
@@ -84,33 +80,16 @@ public class PlayerCamera : MonoBehaviour
                 isTouching = false;
             }
         }
-<<<<<<< HEAD
-
-#if UNITY_EDITOR
-        if (Input.GetKeyDown(KeyCode.Escape))
-=======
         
         // FALLBACK: Dùng mouse cho testing trong Unity Editor
         #if UNITY_EDITOR
         // Option 1: Hold click + drag (mobile simulation)
         if (Input.GetMouseButton(1)) // Right mouse button only
->>>>>>> origin/main
         {
             bool locked = Cursor.lockState != CursorLockMode.Locked;
             Cursor.lockState = locked ? CursorLockMode.Locked : CursorLockMode.None;
             Cursor.visible = !locked;
         }
-<<<<<<< HEAD
-
-        if (Cursor.lockState == CursorLockMode.Locked || Input.GetMouseButton(1))
-        {
-            float mouseX = Input.GetAxis("Mouse X");
-            float mouseY = Input.GetAxis("Mouse Y");
-            if (Mathf.Abs(mouseX) > 0.001f || Mathf.Abs(mouseY) > 0.001f)
-                RotateCamera(new Vector2(mouseX, mouseY) * 2f);
-        }
-#endif
-=======
         // Option 2: Free mouse look (easier for testing)
         else if (Input.GetKey(KeyCode.LeftShift)) // Hold Left Shift for free look
         {
@@ -118,7 +97,6 @@ public class PlayerCamera : MonoBehaviour
             RotateCamera(mouseDelta * 15f); // Sensitivity cao hơn cho free look
         }
         #endif
->>>>>>> origin/main
     }
 
     void RotateCamera(Vector2 delta)
