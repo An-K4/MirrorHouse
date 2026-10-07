@@ -76,23 +76,11 @@ public class PlayerController : MonoBehaviour
             float joystickV = joystick.Vertical;
             horizontal += joystickH;
             vertical += joystickV;
-            
-            // DEBUG: Log joystick input khi có input
-            if (Mathf.Abs(joystickH) > 0.01f || Mathf.Abs(joystickV) > 0.01f)
-            {
-                Debug.Log($"🕹️ JOYSTICK INPUT: H={joystickH:F2}, V={joystickV:F2}");
-            }
         }
         
         // Clamp to valid range
         horizontal = Mathf.Clamp(horizontal, -1f, 1f);
         vertical = Mathf.Clamp(vertical, -1f, 1f);
-        
-        // DEBUG: Log final input khi có movement
-        if (Mathf.Abs(horizontal) > 0.01f || Mathf.Abs(vertical) > 0.01f)
-        {
-            Debug.Log($"➡️ MOVEMENT INPUT: H={horizontal:F2}, V={vertical:F2} (Keyboard: {keyboardH:F2},{keyboardV:F2})");
-        }
         
         // Tính hướng di chuyển (relative to camera)
         Vector3 direction = transform.right * horizontal + transform.forward * vertical;
