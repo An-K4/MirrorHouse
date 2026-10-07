@@ -1,0 +1,129 @@
+╔════════════════════════════════════════════════════════════════╗
+║        ROLE C - LEVEL BUILD - 4 SIMPLE STEPS IN UNITY           ║
+╚════════════════════════════════════════════════════════════════╝
+
+Project: MirrorHouse (Unity 6000.6.0f1)
+Target Scene: Assets/Scenes/Level_Main.unity
+Status: All scripts ready - execute in Unity Editor
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+STEP-BY-STEP BUILD PROCESS (4 MENU CLICKS):
+
+1️⃣  STEP 1: SETUP STRUCTURE (< 30 seconds)
+   Menu: Tools → Role_C → Build - STEP 1 Setup Structure
+   → Creates folder hierarchy (Geometry, Furniture, Puzzles, AI)
+   → Visible in Console: "Folder structure created"
+
+2️⃣  STEP 2: BUILD ROOMS & FURNITURE (< 1 minute)
+   Menu: Tools → Role_C → Build - STEP 2 Rooms & Furniture
+   → Builds 6 rooms: Bedroom, Hallway, Bathroom, Staircase, MainHall, Kitchen
+   → Places 29 furniture placeholders
+   → Visible in Hierarchy: 6 room folders with content
+   → Visible in Console: "BUILD COMPLETE!"
+
+3️⃣  STEP 3: SETUP PUZZLES (< 30 seconds)
+   Menu: Tools → Role_C → Build - STEP 3 Puzzles
+   → Creates 4 puzzle locks (red cubes)
+   → Creates 2 puzzle keys (yellow cubes)
+   → Creates 2 puzzle clues (blue cubes)
+   → Visible in Hierarchy: Puzzles folder with 8 objects
+
+4️⃣  STEP 4: SETUP AI WAYPOINTS (< 30 seconds)
+   Menu: Tools → Role_C → Build - STEP 4 Waypoints
+   → Creates 7 green waypoints for AI patrol
+   → Covers all 6 rooms in patrol route
+   → Visible in Hierarchy: AI/Waypoints with 7 waypoints
+
+5️⃣  BAKE NAVMESH (< 1 minute)
+   Menu: Window → AI → Navigation
+   → Select any object in the scene
+   → Make sure "Bake" tab is active
+   → Click blue "Bake" button
+   → Wait until green NavMesh appears on all floors
+   → Save scene (Ctrl+S)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+OR: BUILD EVERYTHING AT ONCE
+
+Menu: Tools → Role_C → BUILD ALL (Complete Level)
+
+This will execute all 4 steps automatically!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+WHAT WILL BE CREATED:
+
+✓ 6 Rooms (complete with walls and floors):
+  • Bedroom (8m x 6m)
+  • Hallway (15m x 3m L-shaped)
+  • Bathroom (5m x 4m)
+  • Staircase (4m x 4m x 3m tall)
+  • MainHall (10m x 8m)
+  • Kitchen (7m x 5m)
+
+✓ 29 Furniture Placeholders:
+  • Bedroom: Bed, Dresser, Nightstand, Lamp, Picture, Rug (6)
+  • Hallway: Bookshelf, Plant, Chair, Table, Picture (5)
+  • Bathroom: Sink, Toilet, Bathtub, Mirror, TowelRack (5)
+  • MainHall: Sofa, Table, 2 Chairs, Lamp, Rug (6)
+  • Kitchen: Counter, Stove, Fridge, Sink, Table, 2 Chairs, Shelves (7)
+
+✓ 4 Puzzle Locks (red cubes at doorways)
+✓ 2 Puzzle Keys (yellow cubes in rooms)
+✓ 2 Puzzle Clues (blue cubes for hints)
+✓ 7 AI Waypoints (green cubes for patrol route)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+TESTING AFTER BUILD:
+
+1. Press Ctrl+P to enter Play Mode
+2. Use WASD to walk through all 6 rooms
+3. Verify no collision issues
+4. Look for puzzle objects (red/yellow/blue cubes)
+5. Exit Play Mode (Ctrl+P)
+6. Save scene (Ctrl+S)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+TROUBLESHOOTING:
+
+❌ Menu items not showing?
+   → Assets > Reimport All (wait 30-60 seconds)
+   → Check Console for any errors
+   → Restart Unity if needed
+
+❌ NavMesh won't bake?
+   → Ensure walls have "NavigationStatic" tag
+   → Check NavMesh layer settings
+   → Try: Window > AI > Navigation > Clear All > Bake
+
+❌ Furniture overlapping?
+   → This is expected - they are placeholder cubes
+   → Art pass will replace with proper models later
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+NEXT PHASES (After Scene Build):
+
+✓ Scene structure complete
+✓ 6 rooms built and connected
+✓ Walls, floors, furniture placed
+✓ Puzzles, keys, clues positioned
+✓ AI waypoints ready
+✓ Ready to bake NavMesh
+
+→ DAY 4: Final testing, cleanup, documentation, commit
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Scripts Created:
+  • SetupLevelC.cs - Setup structure
+  • RoleC_LevelBuilder.cs - Build rooms/walls/furniture
+  • RoleC_PuzzleSetup.cs - Create puzzle objects
+  • RoleC_AIWaypoints.cs - Create waypoints
+  • RoleC_BuildMenu.cs - Menu triggers
+
+All ready to execute in Unity!
