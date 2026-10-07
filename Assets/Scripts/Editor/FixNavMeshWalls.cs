@@ -31,9 +31,13 @@ public class FixNavMeshWalls : EditorWindow
         int addedCount = 0;
         int skippedCount = 0;
 
+        // Get all GameObjects in scene (including children)
+        GameObject[] allObjects = UnityEngine.SceneManagement.SceneManager.GetActiveScene()
+            .GetRootGameObjects();
+        
         foreach (string wallName in wallNames)
         {
-            GameObject wall = GameObject.Find(wallName);
+            GameObject wall = FindGameObjectByName(allObjects, wallName);
             
             if (wall == null)
             {
@@ -97,7 +101,38 @@ public class FixNavMeshWalls : EditorWindow
         }
 
         // Mark scene as dirty to save changes
-        EditorUtility.SetDirty(UnityEditor.SceneManagement.EditorSceneManager.GetActiveScene().GetRootGameObjects()[0]);
+        UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(
+            UnityEditor.SceneManagement.EditorSceneManager.GetActiveScene()
+        );
+    }
+
+    // Helper: Recursively search for GameObject by name in hierarchy
+    private static GameObject FindGameObjectByName(GameObject[] rootObjects, string name)
+    {
+        foreach (GameObject root in rootObjects)
+        {
+            if (root.name == name)
+                return root;
+
+            GameObject found = FindInChildren(root.transform, name);
+            if (found != null)
+                return found;
+        }
+        return null;
+    }
+
+    private static GameObject FindInChildren(Transform parent, string name)
+    {
+        foreach (Transform child in parent)
+        {
+            if (child.name == name)
+                return child.gameObject;
+
+            GameObject found = FindInChildren(child, name);
+            if (found != null)
+                return found;
+        }
+        return null;
     }
 }
 #endif
