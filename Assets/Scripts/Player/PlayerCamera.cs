@@ -83,18 +83,22 @@ public class PlayerCamera : MonoBehaviour
         
         // FALLBACK: Dùng mouse cho testing trong Unity Editor
         #if UNITY_EDITOR
-        // Option 1: Hold click + drag (mobile simulation)
-        if (Input.GetMouseButton(1)) // Right mouse button only
+        // Right-click để toggle cursor lock/unlock
+        if (Input.GetMouseButtonDown(1))
         {
-            bool locked = Cursor.lockState != CursorLockMode.Locked;
-            Cursor.lockState = locked ? CursorLockMode.Locked : CursorLockMode.None;
-            Cursor.visible = !locked;
+            bool shouldLock = Cursor.lockState != CursorLockMode.Locked;
+            Cursor.lockState = shouldLock ? CursorLockMode.Locked : CursorLockMode.None;
+            Cursor.visible = !shouldLock;
         }
-        // Option 2: Free mouse look (easier for testing)
-        else if (Input.GetKey(KeyCode.LeftShift)) // Hold Left Shift for free look
+        
+        // Khi cursor locked, tự động xoay camera theo mouse movement (standard FPS controls)
+        if (Cursor.lockState == CursorLockMode.Locked)
         {
             Vector2 mouseDelta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
-            RotateCamera(mouseDelta * 15f); // Sensitivity cao hơn cho free look
+            if (mouseDelta.sqrMagnitude > 0.001f) // Chỉ rotate khi có movement
+            {
+                RotateCamera(mouseDelta * 15f); // Sensitivity x15 cho mouse
+            }
         }
         #endif
     }
