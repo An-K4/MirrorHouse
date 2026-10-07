@@ -19,9 +19,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float interactionRange = 3f;
     
     [Header("Mobile Input - QUAN TRỌNG")]
-    [Tooltip("Kéo Virtual Joystick component vào đây (Role D sẽ tạo UI này)")]
-    // TODO: Uncomment sau khi import Joystick Pack từ Asset Store
-    // [SerializeField] private VariableJoystick joystick;
+    [Tooltip("Kéo Virtual Joystick component vào đây (Fixed Joystick hoặc Variable Joystick)")]
+    [SerializeField] private Joystick joystick;
     
     // Components
     private CharacterController controller;
@@ -39,13 +38,14 @@ public class PlayerController : MonoBehaviour
         }
         
         // Cảnh báo nếu chưa gắn joystick
-        // TODO: Uncomment sau khi có Joystick
-        // if (joystick == null)
-        // {
-        //     Debug.LogWarning("PlayerController: Chưa gắn Virtual Joystick! Player sẽ không di chuyển được.");
-        //     Debug.LogWarning("→ Role D sẽ tạo UI Joystick và gắn vào đây sau.");
-        // }
-        Debug.Log("PlayerController: Dùng WASD để di chuyển trong Editor. Giữ Shift để chạy.");
+        if (joystick == null)
+        {
+            Debug.LogWarning("PlayerController: ❌ CHƯA GẮN JOYSTICK! Kéo 'Fixed Joystick' từ Canvas vào ô 'Joystick' trong Inspector!");
+        }
+        else
+        {
+            Debug.Log($"PlayerController: ✅ Joystick đã gắn: {joystick.name}");
+        }
     }
     
     void Update()
@@ -57,15 +57,42 @@ public class PlayerController : MonoBehaviour
     
     void MovePlayer()
     {
-        // TODO: Sẽ dùng joystick sau khi import Joystick Pack
-        // Tạm thời dùng keyboard cho testing trong Unity Editor
         if (controller == null)
             return;
         
-        // FALLBACK: Dùng WASD tạm thời trong Unity Editor
-        float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
-        isSprinting = Input.GetKey(KeyCode.LeftShift);
+        float horizontal = 0f;
+        float vertical = 0f;
+        
+        // PRIORITY: Keyboard always works (especially in Editor)
+        float keyboardH = Input.GetAxis("Horizontal");
+        float keyboardV = Input.GetAxis("Vertical");
+        horizontal = keyboardH;
+        vertical = keyboardV;
+        
+        // ADD joystick input if available (allows both to work)
+        if (joystick != null)
+        {
+            float joystickH = joystick.Horizontal;
+            float joystickV = joystick.Vertical;
+            horizontal += joystickH;
+            vertical += joystickV;
+            
+            // DEBUG: Log joystick input khi có input
+            if (Mathf.Abs(joystickH) > 0.01f || Mathf.Abs(joystickV) > 0.01f)
+            {
+                Debug.Log($"🕹️ JOYSTICK INPUT: H={joystickH:F2}, V={joystickV:F2}");
+            }
+        }
+        
+        // Clamp to valid range
+        horizontal = Mathf.Clamp(horizontal, -1f, 1f);
+        vertical = Mathf.Clamp(vertical, -1f, 1f);
+        
+        // DEBUG: Log final input khi có movement
+        if (Mathf.Abs(horizontal) > 0.01f || Mathf.Abs(vertical) > 0.01f)
+        {
+            Debug.Log($"➡️ MOVEMENT INPUT: H={horizontal:F2}, V={vertical:F2} (Keyboard: {keyboardH:F2},{keyboardV:F2})");
+        }
         
         // Tính hướng di chuyển (relative to camera)
         Vector3 direction = transform.right * horizontal + transform.forward * vertical;
@@ -106,38 +133,32 @@ public class PlayerController : MonoBehaviour
     public bool IsMoving() => controller != null && controller.velocity.magnitude > 0.1f;
     
     /// <summary>
-    /// INTERACTION SYSTEM - Nhấn E hoặc Click chuột trái để interact với objects
-    /// Hoạt động với: DoorInteractive (mở cửa), KeyItem (nhặt chìa), Lockable (mở khóa), CodeClue (xem gợi ý)
+    /// INTERACTION SYSTEM - Nhấn E để interact với objects gần nhất
+    /// Hoạt động với: KeyItem (nhặt chìa), Lockable (mở khóa), CodeClue (xem gợi ý)
     /// </summary>
     void HandleInteraction()
     {
-        bool interactPressed = Input.GetKeyDown(KeyCode.E) || Input.GetMouseButtonDown(0);
-        if (!interactPressed) return;
-
-        Camera cam = Camera.main;
-        if (cam != null)
+        // Check E key
+        if (Input.GetKeyDown(KeyCode.E))
         {
-            Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-            if (Physics.Raycast(ray, out RaycastHit hit, interactionRange))
-            {
-                Interactable interactable = hit.collider.GetComponentInParent<Interactable>();
-                if (interactable != null)
-                {
-                    Debug.Log($"[INTERACT] Click/E → {interactable.gameObject.name}");
-                    interactable.TryInteract();
-                    return;
-                }
-            }
+            TryInteract();
         }
-
-        // Fallback: Tìm tất cả Interactables trong range xung quanh
+    }
+    
+    /// <summary>
+    /// PUBLIC METHOD - Tương tác với object gần nhất
+    /// Gọi từ: Phím E (PC) hoặc Mobile Button (Android/iOS)
+    /// </summary>
+    public void TryInteract()
+    {
+        // Tìm tất cả Interactables trong range
         Collider[] colliders = Physics.OverlapSphere(transform.position, interactionRange);
         Interactable closestInteractable = null;
         float closestDistance = interactionRange;
         
         foreach (Collider col in colliders)
         {
-            Interactable interactable = col.GetComponentInParent<Interactable>();
+            Interactable interactable = col.GetComponent<Interactable>();
             if (interactable != null)
             {
                 float distance = Vector3.Distance(transform.position, col.transform.position);
@@ -149,9 +170,10 @@ public class PlayerController : MonoBehaviour
             }
         }
         
+        // Interact với object gần nhất
         if (closestInteractable != null)
         {
-            Debug.Log($"[INTERACT] Nhấn E/Click → {closestInteractable.gameObject.name} (distance: {closestDistance:F2}m)");
+            Debug.Log($"[INTERACT] Nhấn E → {closestInteractable.gameObject.name} (distance: {closestDistance:F2}m)");
             closestInteractable.TryInteract();
         }
     }

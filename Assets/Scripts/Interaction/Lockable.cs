@@ -26,6 +26,14 @@ public class Lockable : Interactable
     // SIMPLE INVENTORY SYSTEM - Track picked keys globally
     private static HashSet<string> playerInventory = new HashSet<string>();
     
+    // AUTO-CLEAR INVENTORY khi game start (fix static field persistence bug)
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+    private static void ResetInventory()
+    {
+        playerInventory.Clear();
+        Debug.Log("[INVENTORY] Cleared inventory on game start");
+    }
+    
     [Header("Lock Settings")]
     [Tooltip("ROLE C: Loại khóa - Key (chìa vật lý) hoặc Code (mã số)")]
     [SerializeField] private LockType lockType = LockType.Key;
@@ -58,8 +66,8 @@ public class Lockable : Interactable
         }
         else
         {
-            // Code lock → Role D sẽ hiện UI nhập mã
-            Debug.Log($"Code lock detected. Role D will show code input UI.");
+            // Code lock → Show UI nhập mã
+            CodeInputUI.Show(this);
         }
     }
     
