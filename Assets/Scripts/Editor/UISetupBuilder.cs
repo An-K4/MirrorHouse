@@ -294,16 +294,13 @@ public class UISetupBuilder : EditorWindow
         // Add CodeInputUI script to Panel
         CodeInputUI codeInputUI = panelObj.AddComponent<CodeInputUI>();
 
-        // Use reflection to set private fields
-        var panelField = typeof(CodeInputUI).GetField("panel", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-        var inputFieldField = typeof(CodeInputUI).GetField("codeInputField", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-        var buttonField = typeof(CodeInputUI).GetField("submitButton", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-        var feedbackField = typeof(CodeInputUI).GetField("feedbackText", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-
-        if (panelField != null) panelField.SetValue(codeInputUI, panelObj);
-        if (inputFieldField != null) inputFieldField.SetValue(codeInputUI, inputField);
-        if (buttonField != null) buttonField.SetValue(codeInputUI, submitButton);
-        if (feedbackField != null) feedbackField.SetValue(codeInputUI, feedbackText);
+        // Properly assign serialized fields using Unity's Editor API (not reflection)
+        SerializedObject serializedObject = new SerializedObject(codeInputUI);
+        serializedObject.FindProperty("panel").objectReferenceValue = panelObj;
+        serializedObject.FindProperty("codeInputField").objectReferenceValue = inputField;
+        serializedObject.FindProperty("submitButton").objectReferenceValue = submitButton;
+        serializedObject.FindProperty("feedbackText").objectReferenceValue = feedbackText;
+        serializedObject.ApplyModifiedProperties();
 
         // Initially hide the panel
         panelObj.SetActive(false);
