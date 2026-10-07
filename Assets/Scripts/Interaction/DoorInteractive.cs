@@ -109,7 +109,7 @@ public class DoorInteractive : Interactable
         if (rootBox != null)
         {
             bool isTrigger = rootBox.isTrigger;
-            PhysicMaterial material = rootBox.sharedMaterial;
+            PhysicsMaterial material = rootBox.sharedMaterial;
             Destroy(rootBox);
 
             BoxCollider hingeBox = hingeObject.AddComponent<BoxCollider>();
