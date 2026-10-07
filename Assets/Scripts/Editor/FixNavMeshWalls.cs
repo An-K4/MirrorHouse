@@ -28,6 +28,36 @@ public class FixNavMeshWalls : EditorWindow
     [MenuItem("MirrorHouse/Fix NavMesh Walls (Unity 6)")]
     public static void FixWalls()
     {
+        // Ensure Level_Main.unity is loaded
+        var activeScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
+        if (activeScene.name != "Level_Main")
+        {
+            string scenePath = "Assets/Scenes/Level_Main.unity";
+            if (!System.IO.File.Exists(scenePath))
+            {
+                EditorUtility.DisplayDialog("Error", "Level_Main.unity not found at: " + scenePath, "OK");
+                return;
+            }
+            
+            bool openScene = EditorUtility.DisplayDialog(
+                "Wrong Scene Active",
+                $"Current scene: {activeScene.name}\n\nThis script needs Level_Main.unity to be open.\n\nOpen Level_Main.unity now?",
+                "Yes, Open Level_Main",
+                "Cancel"
+            );
+            
+            if (openScene)
+            {
+                UnityEditor.SceneManagement.EditorSceneManager.OpenScene(scenePath);
+                Debug.Log("[NavMesh Fix] Opened Level_Main.unity");
+            }
+            else
+            {
+                Debug.LogWarning("[NavMesh Fix] Cancelled - Level_Main.unity must be active scene");
+                return;
+            }
+        }
+
         int addedCount = 0;
         int skippedCount = 0;
 
