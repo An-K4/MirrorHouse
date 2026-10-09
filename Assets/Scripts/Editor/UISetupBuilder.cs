@@ -63,6 +63,7 @@ public class UISetupBuilder : EditorWindow
 
         // Create UI
         CreateCanvas();
+        CreateEventSystem();
         CreateJoystick();
         CreateMobileInteractButton();
         CreateCodeInputPanel();
@@ -94,6 +95,29 @@ public class UISetupBuilder : EditorWindow
         canvasObj.AddComponent<GraphicRaycaster>();
 
         Debug.Log("[UISetupBuilder] ✅ Created Canvas");
+    }
+
+    static void CreateEventSystem()
+    {
+        // Check if EventSystem already exists
+        var existingEventSystem = GameObject.FindObjectOfType<UnityEngine.EventSystems.EventSystem>();
+        if (existingEventSystem != null)
+        {
+            Debug.Log("[UISetupBuilder] ✅ EventSystem already exists");
+            return;
+        }
+
+        // Create EventSystem GameObject
+        GameObject eventSystemObj = new GameObject("EventSystem");
+        Undo.RegisterCreatedObjectUndo(eventSystemObj, "Create EventSystem");
+
+        // Add EventSystem component
+        eventSystemObj.AddComponent<UnityEngine.EventSystems.EventSystem>();
+
+        // Add StandaloneInputModule (handles keyboard/mouse input)
+        eventSystemObj.AddComponent<UnityEngine.EventSystems.StandaloneInputModule>();
+
+        Debug.Log("[UISetupBuilder] ✅ Created EventSystem");
     }
 
     static void CreateJoystick()
