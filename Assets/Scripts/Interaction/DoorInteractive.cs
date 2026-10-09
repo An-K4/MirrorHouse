@@ -29,8 +29,10 @@ public class DoorInteractive : Interactable
     private Quaternion openRotation;
     private Coroutine rotateCoroutine;
 
-    void Start()
+    protected override void Start()
     {
+        base.Start(); // ← FIX: Gọi base.Start() để khởi tạo player reference!
+        
         if (doorHinge == null)
             doorHinge = CreateRuntimeHingeFromModelBounds();
 
@@ -167,17 +169,29 @@ public class DoorInteractive : Interactable
         if (rotateCoroutine != null)
             StopCoroutine(rotateCoroutine);
 
+        Debug.Log($"[DoorInteractive] {gameObject.name} → {(isOpen ? "OPENING" : "CLOSING")}");
         rotateCoroutine = StartCoroutine(AnimateDoor(isOpen ? openRotation : closedRotation));
     }
 
     private IEnumerator AnimateDoor(Quaternion targetRot)
     {
-        while (Quaternion.Angle(doorHinge.localRotation, targetRot) > 0.5f)
+        // FIX: Dùng RotateTowards thay vì Slerp (theo Unity best practices cho door rotation)
+        // openSpeed được interpret là multiplier, nhân 30 để ra degrees/second
+        float degreesPerSecond = openSpeed * 30f; // openSpeed=3 → 90°/s → mở 90° trong 1 giây
+        
+        while (Quaternion.Angle(doorHinge.localRotation, targetRot) > 0.1f)
         {
-            doorHinge.localRotation = Quaternion.Slerp(doorHinge.localRotation, targetRot, Time.deltaTime * openSpeed);
+            doorHinge.localRotation = Quaternion.RotateTowards(
+                doorHinge.localRotation,
+                targetRot,
+                degreesPerSecond * Time.deltaTime
+            );
             yield return null;
         }
+        
+        // Snap to exact target
         doorHinge.localRotation = targetRot;
+        Debug.Log($"[DoorInteractive] {gameObject.name} → {(isOpen ? "OPENED" : "CLOSED")}");
     }
 
     public void Unlock()
