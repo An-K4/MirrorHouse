@@ -72,10 +72,9 @@ public abstract class Interactable : MonoBehaviour
 
     public void TryInteract()
     {
-        if (playerInRange)
-        {
-            Interact();
-        }
+        // FIX: Luôn gọi Interact() khi method này được gọi
+        // PlayerController đã check distance rồi, không cần check lại playerInRange
+        Interact();
     }
 
     protected abstract void Interact();

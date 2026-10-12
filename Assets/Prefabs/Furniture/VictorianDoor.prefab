@@ -1,5 +1,37 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7079765673685460422
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1064206009191921308}
+  m_Layer: 0
+  m_Name: DoorHinge
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1064206009191921308
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7079765673685460422}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.397, y: 0.41, z: 16.97}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5170918510669478048}
+  m_Father: {fileID: 6619750587336161307}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7362930218876930473
 GameObject:
   m_ObjectHideFlags: 0
@@ -9,9 +41,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6619750587336161307}
-  - component: {fileID: 464317389834595346}
+  - component: {fileID: 7964242367783401040}
   m_Layer: 0
-  m_Name: Victorian_Door
+  m_Name: VictorianDoor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,37 +62,37 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 5170918510669478048}
+  - {fileID: 1064206009191921308}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &464317389834595346
-BoxCollider:
+--- !u!114 &7964242367783401040
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7362930218876930473}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf9d5ca925dd6434da222fae12f117b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DoorInteractive
+  interactionRange: 2
+  interactionPrompt: Press E to interact
+  openAngle: 90
+  openSpeed: 3
+  startsOpen: 0
+  isLocked: 0
+  requiredKeyId: 
+  lockedMessage: "C\u1EEDa \u0111ang b\u1ECB kh\xF3a! C\u1EA7n ch\xECa kh\xF3a ph\xF9 h\u1EE3p."
+  doorHinge: {fileID: 1064206009191921308}
 --- !u!1001 &4632079211959377739
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 6619750587336161307}
+    m_TransformParent: {fileID: 1064206009191921308}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 4c621b5dbc97555f274b9d529e905a8b, type: 3}
       propertyPath: m_LocalScale.x
@@ -76,15 +108,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4c621b5dbc97555f274b9d529e905a8b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.746
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4c621b5dbc97555f274b9d529e905a8b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.765
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4c621b5dbc97555f274b9d529e905a8b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -17.302
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4c621b5dbc97555f274b9d529e905a8b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -92,15 +124,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4c621b5dbc97555f274b9d529e905a8b, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4c621b5dbc97555f274b9d529e905a8b, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4c621b5dbc97555f274b9d529e905a8b, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4c621b5dbc97555f274b9d529e905a8b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -121,10 +153,39 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: -7862391691550088030, guid: 4c621b5dbc97555f274b9d529e905a8b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7969336203045143430}
   m_SourcePrefab: {fileID: 100100000, guid: 4c621b5dbc97555f274b9d529e905a8b, type: 3}
 --- !u!4 &5170918510669478048 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4c621b5dbc97555f274b9d529e905a8b, type: 3}
   m_PrefabInstance: {fileID: 4632079211959377739}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &5956960389351865321 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -7862391691550088030, guid: 4c621b5dbc97555f274b9d529e905a8b, type: 3}
+  m_PrefabInstance: {fileID: 4632079211959377739}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &7969336203045143430
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5956960389351865321}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.099999994, y: 1.0000002, z: 2.0294547}
+  m_Center: {x: 0, y: -0.0000009536743, z: 0.2647272}

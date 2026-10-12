@@ -146,7 +146,8 @@ public class PlayerController : MonoBehaviour
         
         foreach (Collider col in colliders)
         {
-            Interactable interactable = col.GetComponent<Interactable>();
+            // FIX: Tìm Interactable trên collider hoặc parent (cho trường hợp collider ở child object)
+            Interactable interactable = col.GetComponentInParent<Interactable>();
             if (interactable != null)
             {
                 float distance = Vector3.Distance(transform.position, col.transform.position);
