@@ -12,18 +12,29 @@ public class CrosshairUI : MonoBehaviour
     public Image crosshairImage;
     
     [Tooltip("Normal color (when not looking at interactable)")]
-    public Color normalColor = new Color(1f, 1f, 1f, 0.5f);
+    public Color normalColor = new Color(0.78f, 0.74f, 0.65f, 0.75f);
     
     [Tooltip("Highlight color (when looking at interactable)")]
-    public Color highlightColor = new Color(1f, 0.8f, 0f, 1f);
+    public Color highlightColor = new Color(0.72f, 0.04f, 0.07f, 1f);
     
     [Tooltip("Size of crosshair (width and height)")]
-    public float crosshairSize = 20f;
+    public float crosshairSize = 34f;
+
+    private MirrorHouseHorrorHUD horrorHUD;
     
     void Start()
     {
-        // If no image assigned, create one
-        if (crosshairImage == null)
+        horrorHUD = FindAnyObjectByType<MirrorHouseHorrorHUD>();
+
+        // The horror HUD owns the reticle in Level_Main. Disable the old Image
+        // so its sprite-less fallback cannot render as a large coloured square.
+        if (horrorHUD != null)
+        {
+            SetLegacyCrosshairVisible(false);
+        }
+        // Keep the original simple crosshair only as a fallback for scenes that
+        // do not use MirrorHouseHorrorHUD.
+        else if (crosshairImage == null)
         {
             CreateCrosshairImage();
         }
@@ -37,6 +48,13 @@ public class CrosshairUI : MonoBehaviour
     /// </summary>
     public void SetNormal()
     {
+        if (TryGetHorrorHUD(out MirrorHouseHorrorHUD hud))
+        {
+            SetLegacyCrosshairVisible(false);
+            hud.SetCrosshairHighlighted(false);
+            return;
+        }
+
         if (crosshairImage != null)
         {
             crosshairImage.color = normalColor;
@@ -48,9 +66,35 @@ public class CrosshairUI : MonoBehaviour
     /// </summary>
     public void SetHighlight()
     {
+        if (TryGetHorrorHUD(out MirrorHouseHorrorHUD hud))
+        {
+            SetLegacyCrosshairVisible(false);
+            hud.SetCrosshairHighlighted(true);
+            return;
+        }
+
         if (crosshairImage != null)
         {
             crosshairImage.color = highlightColor;
+        }
+    }
+
+    private bool TryGetHorrorHUD(out MirrorHouseHorrorHUD hud)
+    {
+        if (horrorHUD == null)
+        {
+            horrorHUD = FindAnyObjectByType<MirrorHouseHorrorHUD>();
+        }
+
+        hud = horrorHUD;
+        return hud != null;
+    }
+
+    private void SetLegacyCrosshairVisible(bool visible)
+    {
+        if (crosshairImage != null)
+        {
+            crosshairImage.enabled = visible;
         }
     }
     

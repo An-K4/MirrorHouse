@@ -75,6 +75,14 @@ public class DoorSetupTool : EditorWindow
     private static bool FixSingleDoor(DoorInteractive door)
     {
         string doorName = door.gameObject.name;
+
+        // Door models are connected prefab instances. Their hierarchy must be fixed in
+        // the prefab asset, not by reparenting children on a scene instance.
+        if (PrefabUtility.GetPrefabInstanceStatus(door.gameObject) == PrefabInstanceStatus.Connected)
+        {
+            Debug.Log($"[DoorSetupTool] SKIP: {doorName} - cửa dùng prefab; hãy hiệu chỉnh pivot trong prefab nguồn.");
+            return false;
+        }
         
         // Kiểm tra xem đã có doorHinge chưa
         Transform existingHinge = door.GetType()

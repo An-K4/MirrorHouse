@@ -94,4 +94,9 @@ public static class GameEvents
         OnLockOpened?.Invoke(lockId);
         Debug.Log($"[GameEvents] Mở khóa thành công: {lockId}");
     }
+
+    public static void TriggerPlayerSprintChanged(bool isSprinting)
+    {
+        OnPlayerSprintChanged?.Invoke(isSprinting);
+    }
 }

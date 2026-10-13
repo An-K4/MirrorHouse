@@ -303,12 +303,15 @@ public class World2SceneBuilder : EditorWindow
         CreateBox("Lintel_Library_Door", new Vector3(-2.5f, 2.85f, -8.5f), new Vector3(T, 1.3f, 1.3f), matWall); // Lintel over door
         CreateBox("Wall_West_Corr_South", new Vector3(-2.5f, H / 2, -14.25f), new Vector3(T, H, 5.5f), matWall); // Z: -17 to -11.5
 
-        // Horizontal Wall dividing Bedroom and Library (Z = 0, X: -17 to -2.5)
-        CreateBox("Wall_Divider_West_Rooms", new Vector3(-9.75f, H / 2, 0), new Vector3(14.5f, H, T), matWall);
+        // Horizontal Wall dividing Bedroom and Library (Z = 0, X: -17 to -2.5) with connecting doorway
+        CreateBox("Wall_West_Divider_Inner", new Vector3(-5.7f, H / 2, 0f), new Vector3(6.4f, H, T), matWall);
+        CreateBox("Wall_West_Divider_Outer", new Vector3(-13.55f, H / 2, 0f), new Vector3(6.9f, H, T), matWall);
+        CreateBox("Lintel_Bedroom_Library_Door", new Vector3(-9.5f, 2.85f, 0f), new Vector3(1.2f, 1.3f, T), matWall);
 
         // Doors for West Rooms
         SpawnDoor(new Vector3(-2.5f, 0, 8.5f), Vector3.right, "Door_Emily_Bedroom", false, "");
         SpawnDoor(new Vector3(-2.5f, 0, -8.5f), Vector3.right, "Door_Locked_Library", true, "key_library");
+        SpawnDoor(new Vector3(-9.5f, 0, 0f), Vector3.forward, "Door_Bedroom_Library", false, "");
 
         // -------------------------------------------------------------
         // EAST ROOMS (X: 2.5 to 17): Divided into Dining (North) & Storage (South)
@@ -320,12 +323,15 @@ public class World2SceneBuilder : EditorWindow
         CreateBox("Lintel_Storage_Door", new Vector3(2.5f, 2.85f, -8.5f), new Vector3(T, 1.3f, 1.3f), matWall); // Lintel over door
         CreateBox("Wall_East_Corr_South", new Vector3(2.5f, H / 2, -14.25f), new Vector3(T, H, 5.5f), matWall); // Z: -17 to -11.5
 
-        // Horizontal Wall dividing Dining and Storage (Z = 0, X: 2.5 to 17)
-        CreateBox("Wall_Divider_East_Rooms", new Vector3(9.75f, H / 2, 0), new Vector3(14.5f, H, T), matWall);
+        // Horizontal Wall dividing Dining and Storage (Z = 0, X: 2.5 to 17) with connecting doorway
+        CreateBox("Wall_East_Divider_Inner", new Vector3(5.7f, H / 2, 0f), new Vector3(6.4f, H, T), matWall);
+        CreateBox("Wall_East_Divider_Outer", new Vector3(13.55f, H / 2, 0f), new Vector3(6.9f, H, T), matWall);
+        CreateBox("Lintel_Dining_Storage_Door", new Vector3(9.5f, 2.85f, 0f), new Vector3(1.2f, 1.3f, T), matWall);
 
         // Doors for East Rooms
         SpawnDoor(new Vector3(2.5f, 0, 8.5f), Vector3.left, "Door_Dining_Room", false, "");
         SpawnDoor(new Vector3(2.5f, 0, -8.5f), Vector3.left, "Door_Storage_Room", false, "");
+        SpawnDoor(new Vector3(9.5f, 0, 0f), Vector3.forward, "Door_Dining_Storage", false, "");
 
         // =================================================================
         // FURNISHING ROOMS WITH ACCURATELY SCALED PREFABS
@@ -342,16 +348,18 @@ public class World2SceneBuilder : EditorWindow
         soBed.FindProperty("lockType").enumValueIndex = (int)LockType.Code;
         soBed.FindProperty("lockId").stringValue = "safe_bedroom";
         soBed.FindProperty("correctCode").stringValue = "1894";
-        soBed.FindProperty("interactionPrompt").stringValue = "Locked Safe (Enter Code: 1894)";
+        soBed.FindProperty("rewardKeyId").stringValue = "key_library";
+        soBed.FindProperty("lockDisplayName").stringValue = "KÉT SẮT PHÒNG NGỦ";
+        soBed.FindProperty("interactionPrompt").stringValue = "Két Sắt Cổ (Nhấn E để nhập mật mã)";
         soBed.ApplyModifiedProperties();
 
-        // Clue Note A4 size on table
-        var clueNote = CreateBox("Clue_Note_Emily", new Vector3(-7.7f, 0.79f, 14.5f), new Vector3(0.28f, 0.01f, 0.20f), matPaper);
+        // Clue Note Emily on table
+        var clueNote = CreateBox("Clue_Note_Emily", new Vector3(-7.7f, 0.79f, 14.5f), new Vector3(0.32f, 0.012f, 0.24f), matPaper);
         var clueComp = clueNote.AddComponent<CodeClue>();
         var soClue = new SerializedObject(clueComp);
         soClue.FindProperty("clueId").stringValue = "clue_emily_diary";
-        soClue.FindProperty("clueText").stringValue = "Read torn diary: The year Father bought the mirror was 1894...";
-        soClue.FindProperty("interactionPrompt").stringValue = "Read torn diary (E / Click)";
+        soClue.FindProperty("clueText").stringValue = "Trang nhật ký của Emily (14/10):\n\n'Cha mang về chiếc gương cổ bằng vàng từ phiên đấu giá. Cha bảo nó được đúc vào đúng NĂM 1894 - năm thành lập dòng họ...\nTừ đêm đó cha luôn nói chuyện một mình trước tấm gương...'\n\n[GỢI Ý: Mật mã két phòng ngủ là 1894]";
+        soClue.FindProperty("interactionPrompt").stringValue = "Đọc nhật ký của Emily [E]";
         soClue.ApplyModifiedProperties();
 
         CreatePointLight("Light_Candle_Bedroom", new Vector3(-9.5f, 2.2f, 9.5f), 16f, 12f, new Color(1f, 0.8f, 0.45f));
@@ -368,14 +376,34 @@ public class World2SceneBuilder : EditorWindow
         var soLib = new SerializedObject(lockLib);
         soLib.FindProperty("lockType").enumValueIndex = (int)LockType.Code;
         soLib.FindProperty("lockId").stringValue = "safe_library";
-        soLib.FindProperty("correctCode").stringValue = "5731";
-        soLib.FindProperty("interactionPrompt").stringValue = "Occult Safe (Code: 5731)";
+        soLib.FindProperty("correctCode").stringValue = "4219";
+        soLib.FindProperty("rewardKeyId").stringValue = "key_storage";
+        soLib.FindProperty("lockDisplayName").stringValue = "KÉT BÍ MẬT THƯ VIỆN";
+        soLib.FindProperty("interactionPrompt").stringValue = "Két Thư Viện Cổ (Nhấn E để nhập mật mã)";
         soLib.ApplyModifiedProperties();
+
+        // Clue Note Library on study desk
+        var clueLib = CreateBox("Clue_Note_Library", new Vector3(-9.7f, 0.79f, -8.5f), new Vector3(0.32f, 0.012f, 0.24f), matPaper);
+        var clueLibComp = clueLib.AddComponent<CodeClue>();
+        var soClueLib = new SerializedObject(clueLibComp);
+        soClueLib.FindProperty("clueId").stringValue = "clue_library_occult";
+        soClueLib.FindProperty("clueText").stringValue = "Mẩu giấy cổ thư Thư Viện - Cổ Thư Nghi Thức:\n\n'Để mở phong ấn két bí mật, hãy đếm các dấu mốc cổ xưa:\n- 4 bức tường đá giam giữ linh hồn (4)\n- 2 chiếc bóng đối diện nhau trong gương (2)\n- 1 con dao hiến tế trên bàn thờ (1)\n- 9 vòng xoáy cõi hư vô (9)'\n\n[GỢI Ý: Ghép 4 con số theo thứ tự -> 4219]";
+        soClueLib.FindProperty("interactionPrompt").stringValue = "Đọc cổ thư Thư Viện [E]";
+        soClueLib.ApplyModifiedProperties();
 
         CreatePointLight("Light_Candle_Library", new Vector3(-9.5f, 2.2f, -9.5f), 16f, 12f, new Color(1f, 0.75f, 0.4f));
 
         // --- ROOM 3: DINING ROOM (North-East) ---
         SpawnPrefab(prefabDining, "Prop_Dining_Table_Set", new Vector3(9.5f, 0, 8.5f), Vector3.zero);
+
+        // Clue Note Storage on Dining Table
+        var clueStor = CreateBox("Clue_Note_Storage", new Vector3(9.8f, 0.80f, 8.5f), new Vector3(0.32f, 0.012f, 0.24f), matPaper);
+        var clueStorComp = clueStor.AddComponent<CodeClue>();
+        var soClueStor = new SerializedObject(clueStorComp);
+        soClueStor.FindProperty("clueId").stringValue = "clue_storage_blood";
+        soClueStor.FindProperty("clueText").stringValue = "Mẩu giấy dính máu dưới chân bàn ăn:\n\n'Kẻ canh giữ kho chứa đã để lại mật mã bằng những vệt cào rỉ máu:\nNăm vệt cào ở lối vào kho (5)\nBảy giọt máu khô trên phiến đá (7)\nBa tiếng chuông lúc nửa đêm (3)\nMột con dao nghi lễ giấu kín (1)...'\n\n[GỢI Ý: Mật mã két sắt nhà kho là 5731]";
+        soClueStor.FindProperty("interactionPrompt").stringValue = "Đọc mẩu giấy dính máu [E]";
+        soClueStor.ApplyModifiedProperties();
 
         // Gold Key on Dining Table (0.08m)
         var keyLib = SpawnPrefab(prefabKey, "Key_Library_Gold", new Vector3(9.5f, 0.80f, 8.5f), new Vector3(90, 0, 0));
@@ -401,7 +429,9 @@ public class World2SceneBuilder : EditorWindow
         soStor.FindProperty("lockType").enumValueIndex = (int)LockType.Code;
         soStor.FindProperty("lockId").stringValue = "chest_storage";
         soStor.FindProperty("correctCode").stringValue = "5731";
-        soStor.FindProperty("interactionPrompt").stringValue = "Locked Metal Safe (Code: 5731)";
+        soStor.FindProperty("rewardKeyId").stringValue = "key_ritual_dagger";
+        soStor.FindProperty("lockDisplayName").stringValue = "KÉT KIM LOẠI NHÀ KHO";
+        soStor.FindProperty("interactionPrompt").stringValue = "Két Kim Loại Nhà Kho (Nhấn E để nhập mật mã)";
         soStor.ApplyModifiedProperties();
 
         // Ritual Dagger (0.30m)

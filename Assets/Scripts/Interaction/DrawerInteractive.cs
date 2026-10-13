@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class DrawerInteractive : MonoBehaviour
+public class DrawerInteractive : Interactable
 {
     [Header("Drawer Settings")]
     [Tooltip("Direction to slide in WORLD SPACE. Look at Scene view:\nNorth (+Z) = (0,0,1)\nSouth (-Z) = (0,0,-1)\nEast (+X) = (1,0,0)\nWest (-X) = (-1,0,0)")]
@@ -32,8 +32,9 @@ public class DrawerInteractive : MonoBehaviour
     private Coroutine slideRoutine;
     private AudioSource audioSource;
 
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         // Store initial position as closed position
         closedPosition = transform.localPosition;
         
@@ -67,14 +68,40 @@ public class DrawerInteractive : MonoBehaviour
         
         // If drawer should start open, set to open position
         if (isOpen) transform.localPosition = openPosition;
+
+        UpdatePrompt();
     }
 
-    public void Interact()
+    private void UpdatePrompt()
     {
         if (isLocked)
         {
-            if (lockedSound != null) audioSource.PlayOneShot(lockedSound);
-            onLockedMessage?.Invoke(lockedMessage);
+            interactionPrompt = "Ngăn kéo bị khóa (Click / E để thử mở)";
+        }
+        else
+        {
+            interactionPrompt = isOpen ? "Click / E để đóng ngăn kéo" : "Click / E để kéo ngăn kéo";
+        }
+    }
+
+    protected override void Interact()
+    {
+        if (isLocked)
+        {
+            if (!string.IsNullOrEmpty(requiredKeyId) && Lockable.HasKey(requiredKeyId))
+            {
+                isLocked = false;
+                Debug.Log($"<color=green>[DRAWER] Đã dùng chìa khóa '{requiredKeyId}' mở khóa ngăn kéo thành công!</color>");
+                GameEvents.TriggerLockOpened(requiredKeyId);
+                ToggleDrawer();
+            }
+            else
+            {
+                if (lockedSound != null && audioSource != null) audioSource.PlayOneShot(lockedSound);
+                onLockedMessage?.Invoke(lockedMessage);
+                Debug.Log($"<color=yellow>[DRAWER] {lockedMessage}</color>");
+            }
+            UpdatePrompt();
             return;
         }
         ToggleDrawer();
@@ -83,6 +110,7 @@ public class DrawerInteractive : MonoBehaviour
     public void ToggleDrawer()
     {
         isOpen = !isOpen;
+        UpdatePrompt();
 
         var clip = isOpen ? openSound : closeSound;
         if (clip != null) audioSource.PlayOneShot(clip);

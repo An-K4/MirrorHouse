@@ -1,9 +1,9 @@
 using UnityEngine;
 
 /// <summary>
-/// Performs raycast from camera center to detect and interact with drawers
+/// Performs a raycast from camera center to detect and interact with scene objects.
 /// Works alongside CrosshairUI to provide visual feedback
-/// Press E to interact with drawer in crosshair
+/// Press E to interact with the object in the crosshair.
 /// </summary>
 [RequireComponent(typeof(Camera))]
 public class CameraRaycastInteraction : MonoBehaviour
@@ -29,7 +29,21 @@ public class CameraRaycastInteraction : MonoBehaviour
     
     // Internal state
     private Camera mainCamera;
-    private DrawerInteractive currentDrawer;
+    private Interactable currentInteractable;
+    private MirrorHouseHorrorHUD horrorHUD;
+
+    public Interactable CurrentInteractable => currentInteractable;
+
+    public bool InteractWithCurrent()
+    {
+        if (currentInteractable != null)
+        {
+            Debug.Log($"[CameraRaycastInteraction] Interacting with {currentInteractable.gameObject.name}");
+            currentInteractable.TryInteract();
+            return true;
+        }
+        return false;
+    }
     
     void Start()
     {
@@ -45,12 +59,14 @@ public class CameraRaycastInteraction : MonoBehaviour
         // Find crosshair UI if not assigned
         if (crosshairUI == null)
         {
-            crosshairUI = FindObjectOfType<CrosshairUI>();
+            crosshairUI = FindAnyObjectByType<CrosshairUI>();
             if (crosshairUI == null)
             {
                 Debug.LogWarning("[CameraRaycastInteraction] No CrosshairUI found in scene");
             }
         }
+
+        horrorHUD = MirrorHouseHorrorHUD.EnsureExists();
         
         Debug.Log("[CameraRaycastInteraction] Initialized - Range: " + interactionRange + "m");
     }
@@ -62,7 +78,7 @@ public class CameraRaycastInteraction : MonoBehaviour
     }
     
     /// <summary>
-    /// Perform raycast from screen center to detect drawers
+    /// Perform a raycast from screen center to detect interactable objects.
     /// </summary>
     private void PerformRaycast()
     {
@@ -73,24 +89,22 @@ public class CameraRaycastInteraction : MonoBehaviour
         // Perform raycast
         if (Physics.Raycast(ray, out hit, interactionRange, interactionLayer))
         {
-            // Check if we hit a drawer
-            DrawerInteractive drawer = hit.collider.GetComponent<DrawerInteractive>();
+            // Check the collider and its parents so doors, drawers, clues and keys all work.
+            Interactable interactable = hit.collider.GetComponentInParent<Interactable>();
             
-            if (drawer != null)
+            if (interactable != null)
             {
-                // Looking at a drawer
-                if (currentDrawer != drawer)
+                if (currentInteractable != interactable)
                 {
-                    currentDrawer = drawer;
-                    OnDrawerEnter(drawer);
+                    currentInteractable = interactable;
+                    OnInteractableEnter(interactable);
                 }
             }
             else
             {
-                // Hit something but not a drawer
-                if (currentDrawer != null)
+                if (currentInteractable != null)
                 {
-                    OnDrawerExit();
+                    OnInteractableExit();
                 }
             }
             
@@ -103,9 +117,9 @@ public class CameraRaycastInteraction : MonoBehaviour
         else
         {
             // Didn't hit anything
-            if (currentDrawer != null)
+            if (currentInteractable != null)
             {
-                OnDrawerExit();
+                OnInteractableExit();
             }
             
             // Debug visualization
@@ -121,44 +135,53 @@ public class CameraRaycastInteraction : MonoBehaviour
     /// </summary>
     private void HandleInput()
     {
-        // Check if E key pressed and we're looking at a drawer
-        if (Input.GetKeyDown(interactKey) && currentDrawer != null)
+        if (Input.GetKeyDown(interactKey) && currentInteractable != null)
         {
-            Debug.Log($"[CameraRaycastInteraction] Interacting with {currentDrawer.gameObject.name}");
-            currentDrawer.Interact();
+            Debug.Log($"[CameraRaycastInteraction] Interacting with {currentInteractable.gameObject.name}");
+            currentInteractable.TryInteract();
         }
     }
     
     /// <summary>
-    /// Called when raycast starts hitting a drawer
+    /// Called when raycast starts hitting an interactable object.
     /// </summary>
-    private void OnDrawerEnter(DrawerInteractive drawer)
+    private void OnInteractableEnter(Interactable interactable)
     {
-        Debug.Log($"[CameraRaycastInteraction] Looking at: {drawer.gameObject.name}");
+        Debug.Log($"[CameraRaycastInteraction] Looking at: {interactable.gameObject.name}");
         
         // Update crosshair to highlight
         if (crosshairUI != null)
         {
             crosshairUI.SetHighlight();
         }
+
+        if (horrorHUD != null)
+        {
+            horrorHUD.SetInteractionTarget(interactable);
+        }
     }
     
     /// <summary>
-    /// Called when raycast stops hitting a drawer
+    /// Called when raycast stops hitting an interactable object.
     /// </summary>
-    private void OnDrawerExit()
+    private void OnInteractableExit()
     {
-        if (currentDrawer != null)
+        if (currentInteractable != null)
         {
-            Debug.Log($"[CameraRaycastInteraction] Stopped looking at: {currentDrawer.gameObject.name}");
+            Debug.Log($"[CameraRaycastInteraction] Stopped looking at: {currentInteractable.gameObject.name}");
         }
         
-        currentDrawer = null;
+        currentInteractable = null;
         
         // Update crosshair to normal
         if (crosshairUI != null)
         {
             crosshairUI.SetNormal();
+        }
+
+        if (horrorHUD != null)
+        {
+            horrorHUD.SetInteractionTarget(null);
         }
     }
     

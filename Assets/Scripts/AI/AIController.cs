@@ -167,6 +167,25 @@ public class AIController : MonoBehaviour
         }
     }
 
+    void OnEnable()
+    {
+        GameEvents.OnPlayerCaught += HandleGameEnd;
+        GameEvents.OnGameWin += HandleGameEnd;
+    }
+
+    void OnDisable()
+    {
+        GameEvents.OnPlayerCaught -= HandleGameEnd;
+        GameEvents.OnGameWin -= HandleGameEnd;
+    }
+
+    void HandleGameEnd()
+    {
+        if (AgentReady())
+            agent.isStopped = true;
+        enabled = false;
+    }
+
     void CatchBehavior()
     {
         if (AgentReady())
@@ -177,7 +196,12 @@ public class AIController : MonoBehaviour
 
         catchTriggered = true;
         GameEvents.TriggerPlayerCaught();
-        Invoke(nameof(ReloadScene), 2f);
+
+        // Fallback reload only if no MirrorHouseGameManager is present
+        if (FindAnyObjectByType<MirrorHouseGameManager>() == null)
+        {
+            Invoke(nameof(ReloadScene), 2.5f);
+        }
     }
 
     void ReloadScene()

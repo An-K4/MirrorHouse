@@ -22,6 +22,14 @@ public class CodeClue : Interactable
     
     [Tooltip("ROLE C: Nội dung gợi ý - viết hint về mã số. TextArea cho phép nhiều dòng")]
     [SerializeField] [TextArea] private string clueText = "The code is 12__";
+
+    public void SetClueData(string id, string text, string prompt = "Đọc manh mối [E / Chạm]")
+    {
+        clueId = id;
+        clueText = text;
+        interactionPrompt = prompt;
+        interactionRange = 2.5f;
+    }
     
     protected override void Interact()
     {
@@ -30,13 +38,19 @@ public class CodeClue : Interactable
     
     void ShowClue()
     {
-        // Trigger event cho Role D
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayButtonClick();
+        }
+
+        // Trigger event cho UI
         GameEvents.TriggerCluePickup(clueId, clueText);
         
-        Debug.Log($"Clue: {clueText}");
+        Debug.Log($"[CodeClue] {clueId}: {clueText}");
         
         // Không destroy - player có thể đọc lại
     }
     
     public string GetClueText() => clueText;
+    public string GetClueId() => clueId;
 }

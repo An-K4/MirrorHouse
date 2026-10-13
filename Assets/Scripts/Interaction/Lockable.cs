@@ -49,12 +49,58 @@ public class Lockable : Interactable
     [Tooltip("ROLE C: Mã số đúng (VD: 1234, 9527). Player phải nhập đúng mã này")]
     [SerializeField] private string correctCode = "1234";
     
+    [Header("Win Condition")]
+    [Tooltip("Tích chọn nếu đây là cửa thoát hiểm / gương thoát (Mở khóa này = Thắng game)")]
+    [SerializeField] private bool isExitTrigger = false;
+    
+    [Header("Reward Settings")]
+    [Tooltip("Chìa khóa hoặc vật phẩm tự động nhận khi mở khóa (VD: key_library, key_storage, key_ritual_dagger)")]
+    [SerializeField] private string rewardKeyId = "";
+    [Tooltip("Object vật lý xuất hiện khi mở khóa (nếu có)")]
+    [SerializeField] private GameObject rewardObject = null;
+    [Tooltip("Tên hiển thị trên giao diện nhập mã (VD: KÉT SẮT PHÒNG NGỦ)")]
+    [SerializeField] private string lockDisplayName = "";
+
+    public string GetDisplayName()
+    {
+        if (!string.IsNullOrEmpty(lockDisplayName))
+            return lockDisplayName;
+
+        return lockId switch
+        {
+            "safe_bedroom" => "KÉT SẮT PHÒNG NGỦ",
+            "safe_library" => "KÉT BÍ MẬT THƯ VIỆN",
+            "chest_storage" => "KÉT KIM LOẠI NHÀ KHO",
+            "altar_ritual" => "BÀN THỜ TẾ NGHI LỄ",
+            "exit_gateway_mirror" => "GƯƠNG THẦN THOÁT HIỂM",
+            _ => "KÉT SẮT BÍ MẬT"
+        };
+    }
+
+    public string GetRewardKeyId()
+    {
+        if (!string.IsNullOrEmpty(rewardKeyId))
+            return rewardKeyId;
+
+        return lockId switch
+        {
+            "safe_bedroom" => "key_library",
+            "safe_library" => "key_storage",
+            "chest_storage" => "key_ritual_dagger",
+            _ => ""
+        };
+    }
+    
     private bool isLocked = true;
     
     protected override void Interact()
     {
         if (!isLocked)
         {
+            if (isExitTrigger || lockId == "exit_gateway_mirror" || lockId == "door_main")
+            {
+                GameEvents.TriggerGameWin();
+            }
             Open();
             return;
         }
@@ -91,16 +137,18 @@ public class Lockable : Interactable
     /// ROLE D: Gọi method này từ UI code input khi player submit mã
     /// Example: lockable.TryUnlockWithCode(inputField.text);
     /// </summary>
-    public void TryUnlockWithCode(string inputCode)
+    public bool TryUnlockWithCode(string inputCode)
     {
         if (inputCode == correctCode)
         {
             GameEvents.TriggerCodeCorrect(lockId);
             Unlock();
+            return true;
         }
         else
         {
             Debug.Log("Wrong code!");
+            return false;
         }
     }
     
@@ -109,19 +157,39 @@ public class Lockable : Interactable
         isLocked = false;
         GameEvents.TriggerLockOpened(lockId);
         Debug.Log($"Unlocked: {lockId}");
+
+        // Tự động trao thưởng chìa khóa / vật phẩm tương ứng
+        string grantKey = GetRewardKeyId();
+        if (!string.IsNullOrEmpty(grantKey))
+        {
+            AddKeyToInventory(grantKey);
+            GameEvents.TriggerKeyPickup(grantKey);
+            Debug.Log($"[LOCKABLE] Đã nhận được vật phẩm: {grantKey}");
+        }
+
+        if (rewardObject != null)
+        {
+            rewardObject.SetActive(true);
+        }
+
+        if (isExitTrigger || lockId == "exit_gateway_mirror" || lockId == "door_main")
+        {
+            GameEvents.TriggerGameWin();
+        }
+
         Open();
     }
     
     void Open()
     {
         Debug.Log($"Opening: {lockId}");
-        // TODO: Animation/SFX (Role B/D)
         gameObject.SetActive(false); // Tạm thời ẩn đi
     }
     
     // Getters cho Role D
     public LockType GetLockType() => lockType;
     public string GetLockId() => lockId;
+    public string GetCorrectCode() => correctCode;
     
     // INVENTORY MANAGEMENT - Role A
     /// <summary>Add key to player inventory (called by KeyItem when picked up)</summary>

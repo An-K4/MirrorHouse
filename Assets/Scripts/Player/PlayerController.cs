@@ -27,6 +27,23 @@ public class PlayerController : MonoBehaviour
     private Vector3 velocity;
     private bool isSprinting = false;
     
+    void OnEnable()
+    {
+        GameEvents.OnPlayerCaught += HandleGameEnd;
+        GameEvents.OnGameWin += HandleGameEnd;
+    }
+
+    void OnDisable()
+    {
+        GameEvents.OnPlayerCaught -= HandleGameEnd;
+        GameEvents.OnGameWin -= HandleGameEnd;
+    }
+
+    void HandleGameEnd()
+    {
+        enabled = false;
+    }
+
     void Start()
     {
         // Lấy CharacterController component
@@ -50,6 +67,16 @@ public class PlayerController : MonoBehaviour
     
     void Update()
     {
+        if (Time.timeScale <= 0f)
+            return;
+
+        #if UNITY_EDITOR || UNITY_STANDALONE
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+            SetSprinting(true);
+        else if (Input.GetKeyUp(KeyCode.LeftShift))
+            SetSprinting(false);
+        #endif
+
         MovePlayer();
         ApplyGravity();
         HandleInteraction();
@@ -111,9 +138,7 @@ public class PlayerController : MonoBehaviour
     public void SetSprinting(bool sprinting)
     {
         isSprinting = sprinting;
-        
-        // Event cho footstep sound (Role D sẽ subscribe)
-        // TODO: GameEvents.OnPlayerSprintChanged?.Invoke(sprinting);
+        GameEvents.TriggerPlayerSprintChanged(sprinting);
     }
     
     // Getter cho các script khác
@@ -126,6 +151,12 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void HandleInteraction()
     {
+        // CameraRaycastInteraction owns desktop keyboard interaction so the player
+        // interacts with the object in the crosshair rather than an arbitrary nearby object.
+        // TryInteract remains public for the mobile UI button.
+        if (FindAnyObjectByType<CameraRaycastInteraction>() != null)
+            return;
+
         // Check E key
         if (Input.GetKeyDown(KeyCode.E))
         {

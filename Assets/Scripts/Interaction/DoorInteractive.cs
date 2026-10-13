@@ -19,6 +19,8 @@ public class DoorInteractive : Interactable
     [SerializeField] private bool isLocked = false;
     [SerializeField] private string requiredKeyId = "";
     [SerializeField] private string lockedMessage = "Cửa đang bị khóa! Cần chìa khóa phù hợp.";
+    [Tooltip("Nếu là cửa thoát chính (thoát khỏi nhà) -> Thắng game")]
+    [SerializeField] private bool isExitDoor = false;
 
     [Header("Hinge / Pivot")]
     [Tooltip("Transform trục xoay của cánh cửa (nếu để trống, bản lề sẽ được tính từ bounds của model)")]
@@ -83,13 +85,9 @@ public class DoorInteractive : Interactable
 
         bool widthIsX = localBounds.size.x >= localBounds.size.z;
         float halfWidth = (widthIsX ? localBounds.size.x : localBounds.size.z) * 0.5f;
-        // Scene instances created before calibrated prefabs may have a source pivot that
-        // leaves the panel off-center or below/above its doorway. Keep the root at the
-        // intended center-bottom anchor while moving the whole visual/collider assembly.
-        transform.position += transform.TransformVector(new Vector3(
-            -localBounds.center.x,
-            -localBounds.min.y,
-            -localBounds.center.z));
+
+        // Never move the door root here. Scene doors are already aligned to their wall
+        // openings; only a child pivot may be repositioned for rotation.
 
         GameObject hingeObject = new GameObject("DoorHinge_Runtime");
         Transform hinge = hingeObject.transform;
@@ -101,7 +99,10 @@ public class DoorInteractive : Interactable
         // Move visible model roots under the hinge without changing their world pose.
         List<Transform> modelRoots = new List<Transform>();
         foreach (Transform child in transform)
-            modelRoots.Add(child);
+        {
+            if (child != hinge)
+                modelRoots.Add(child);
+        }
         foreach (Transform child in modelRoots)
             child.SetParent(hinge, true);
 
@@ -165,6 +166,11 @@ public class DoorInteractive : Interactable
     {
         isOpen = !isOpen;
         UpdatePrompt();
+
+        if (isOpen && isExitDoor)
+        {
+            GameEvents.TriggerGameWin();
+        }
 
         if (rotateCoroutine != null)
             StopCoroutine(rotateCoroutine);

@@ -34,31 +34,54 @@ public class PlayerCamera : MonoBehaviour
 
         if (touchArea == null)
             Debug.LogWarning("PlayerCamera: Chưa có Touch Area UI. Dùng touch toàn màn hình / chuột trái kéo trong Editor.");
+
+        // Load saved sensitivity with safe default
+        touchSensitivity = PlayerPrefs.GetFloat("CameraSensitivity", 1.2f);
+        if (touchSensitivity > 3.5f)
+        {
+            touchSensitivity = 1.2f;
+            PlayerPrefs.SetFloat("CameraSensitivity", 1.2f);
+            PlayerPrefs.Save();
+        }
     }
 
     void Update()
     {
+        if (Time.timeScale <= 0f)
+            return;
+
         HandleTouchInput();
     }
 
     void HandleTouchInput()
     {
+        // Don't rotate if interacting with UI
+        bool isPointerOverUI = UnityEngine.EventSystems.EventSystem.current != null &&
+                               UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject();
+
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
-            
+
+            if (UnityEngine.EventSystems.EventSystem.current != null &&
+                UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject(touch.fingerId))
+            {
+                isTouching = false;
+                return;
+            }
+
             // QUAN TRỌNG: Chỉ accept touch bên PHẢI màn hình
             // Bên TRÁI dành cho joystick (di chuyển)
             // Bên PHẢI dành cho camera (xoay nhìn)
             float screenMiddle = Screen.width / 2f;
-            
+
             // Ignore touch bên trái (joystick area)
             if (touch.position.x < screenMiddle)
             {
                 isTouching = false;
                 return;
             }
-            
+
             if (touch.phase == TouchPhase.Began)
             {
                 lastTouchPosition = touch.position;
@@ -66,39 +89,51 @@ public class PlayerCamera : MonoBehaviour
             }
             else if (touch.phase == TouchPhase.Moved && isTouching)
             {
-                Vector2 delta = touch.position - lastTouchPosition;
+                Vector2 pixelDelta = touch.position - lastTouchPosition;
                 lastTouchPosition = touch.position;
-                RotateCamera(delta);
+                // Chuẩn hóa cảm ứng mobile (1 px tương đương ~0.065 độ)
+                Vector2 rotDegrees = pixelDelta * (touchSensitivity * 0.065f);
+                RotateCamera(rotDegrees);
             }
             else if (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)
             {
                 isTouching = false;
             }
         }
-        
-        // FALLBACK: Dùng mouse cho testing trong Unity Editor
+
+        // FALLBACK: Dùng mouse cho testing trong Unity Editor (hỗ trợ cả chuột trái và chuột phải)
         #if UNITY_EDITOR
-        // Click-trái và kéo để xoay camera (không cần cursor lock)
-        if (Input.GetMouseButton(0)) // Giữ chuột trái
+        if (!isPointerOverUI && (Input.GetMouseButton(0) || Input.GetMouseButton(1)))
         {
             Vector2 mouseDelta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
-            if (mouseDelta.sqrMagnitude > 0.001f)
+            if (mouseDelta.sqrMagnitude > 0.0001f)
             {
-                RotateCamera(mouseDelta * 5f); // Giảm sensitivity từ 15f xuống 5f
+                // Chuẩn hóa chuột trên PC: tốc độ mượt mà, không bị giật hay xoay quá nhanh
+                Vector2 rotDegrees = mouseDelta * (touchSensitivity * 1.4f);
+                RotateCamera(rotDegrees);
             }
         }
         #endif
     }
 
-    void RotateCamera(Vector2 delta)
+    void RotateCamera(Vector2 deltaDegrees)
     {
         if (playerBody == null)
             return;
 
-        playerBody.Rotate(Vector3.up * (delta.x * touchSensitivity));
+        playerBody.Rotate(Vector3.up * deltaDegrees.x);
 
-        verticalRotation -= delta.y * touchSensitivity;
+        verticalRotation -= deltaDegrees.y;
         verticalRotation = Mathf.Clamp(verticalRotation, minVerticalAngle, maxVerticalAngle);
         transform.localRotation = Quaternion.Euler(verticalRotation, 0f, 0f);
     }
+
+    public void SetSensitivity(float newSensitivity)
+    {
+        touchSensitivity = Mathf.Clamp(newSensitivity, 0.2f, 3.5f);
+        PlayerPrefs.SetFloat("CameraSensitivity", touchSensitivity);
+        PlayerPrefs.Save();
+    }
+
+    public float GetSensitivity() => touchSensitivity;
 }

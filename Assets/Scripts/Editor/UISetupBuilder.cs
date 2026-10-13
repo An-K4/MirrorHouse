@@ -18,6 +18,21 @@ using System.IO;
 /// </summary>
 public class UISetupBuilder : EditorWindow
 {
+    [MenuItem("MirrorHouse/1. Mở Map Game (Level_Main) Để Chỉnh Sửa", false, 0)]
+    public static void OpenLevelMain()
+    {
+        string scenePath = "Assets/Scenes/Level_Main.unity";
+        if (File.Exists(scenePath))
+        {
+            EditorSceneManager.OpenScene(scenePath);
+            Debug.Log("[MirrorHouse] ✅ Đã mở Map Level_Main thành công!");
+        }
+        else
+        {
+            EditorUtility.DisplayDialog("Error", "Không tìm thấy Level_Main.unity tại: " + scenePath, "OK");
+        }
+    }
+
     [MenuItem("MirrorHouse/Setup UI for Level_Main", false, 2)]
     public static void SetupUI()
     {
@@ -61,18 +76,57 @@ public class UISetupBuilder : EditorWindow
             Undo.DestroyObjectImmediate(existingCanvas.gameObject);
         }
 
-        // Create UI
+        // Create UI and Managers
         CreateCanvas();
         CreateEventSystem();
         CreateJoystick();
         CreateMobileInteractButton();
         CreateCodeInputPanel();
+        CreateGameManagers();
 
         // Save scene
         EditorSceneManager.SaveScene(currentScene);
         
-        Debug.Log("[UISetupBuilder] ✅ UI setup complete for Level_Main!");
-        EditorUtility.DisplayDialog("Success", "UI setup complete!\n\n- Canvas\n- Joystick\n- MobileInteractButton\n- CodeInputPanel", "OK");
+        Debug.Log("[UISetupBuilder] ✅ Complete UI & Game Loop setup finished for Level_Main!");
+        EditorUtility.DisplayDialog("Success", "Thiết lập hoàn tất!\n\n- Canvas (Responsive 1920x1080)\n- Virtual Joystick\n- MobileInteractButton\n- CodeInputPanel\n- MirrorHouseGameManager\n- AudioManager (Procedural SFX/BGM)\n- GameUIManager (HUD, Inventory, Pause, Game Over, Victory)", "OK");
+    }
+
+    static void CreateGameManagers()
+    {
+        // 1. MirrorHouseGameManager
+        var existingGM = GameObject.FindObjectOfType<MirrorHouseGameManager>();
+        if (existingGM == null)
+        {
+            GameObject gmObj = new GameObject("MirrorHouseGameManager");
+            Undo.RegisterCreatedObjectUndo(gmObj, "Create MirrorHouseGameManager");
+            gmObj.AddComponent<MirrorHouseGameManager>();
+            Debug.Log("[UISetupBuilder] ✅ Created MirrorHouseGameManager");
+        }
+
+        // 2. AudioManager
+        var existingAudio = GameObject.FindObjectOfType<AudioManager>();
+        if (existingAudio == null)
+        {
+            GameObject audioObj = new GameObject("AudioManager");
+            Undo.RegisterCreatedObjectUndo(audioObj, "Create AudioManager");
+            audioObj.AddComponent<AudioManager>();
+            Debug.Log("[UISetupBuilder] ✅ Created AudioManager");
+        }
+
+        // 3. GameUIManager
+        Canvas canvas = GameObject.FindObjectOfType<Canvas>();
+        if (canvas != null)
+        {
+            var existingUI = canvas.GetComponentInChildren<GameUIManager>();
+            if (existingUI == null)
+            {
+                GameObject uiManagerObj = new GameObject("GameUIManager");
+                Undo.RegisterCreatedObjectUndo(uiManagerObj, "Create GameUIManager");
+                uiManagerObj.transform.SetParent(canvas.transform, false);
+                uiManagerObj.AddComponent<GameUIManager>();
+                Debug.Log("[UISetupBuilder] ✅ Created GameUIManager");
+            }
+        }
     }
 
     static void CreateCanvas()
@@ -273,12 +327,12 @@ public class UISetupBuilder : EditorWindow
         submitBtnObj.transform.SetParent(panelObj.transform, false);
 
         RectTransform submitRect = submitBtnObj.AddComponent<RectTransform>();
-        submitRect.anchorMin = new Vector2(0.3f, 0.2f);
-        submitRect.anchorMax = new Vector2(0.7f, 0.4f);
+        submitRect.anchorMin = new Vector2(0.1f, 0.15f);
+        submitRect.anchorMax = new Vector2(0.48f, 0.35f);
         submitRect.sizeDelta = Vector2.zero;
 
         Image submitImage = submitBtnObj.AddComponent<Image>();
-        submitImage.color = new Color(0.2f, 0.8f, 0.2f, 1f); // Green
+        submitImage.color = new Color(0.2f, 0.75f, 0.2f, 1f); // Green
 
         Button submitButton = submitBtnObj.AddComponent<Button>();
 
@@ -293,11 +347,43 @@ public class UISetupBuilder : EditorWindow
         submitTextRect.sizeDelta = Vector2.zero;
 
         Text submitText = submitTextObj.AddComponent<Text>();
-        submitText.text = "Submit";
+        submitText.text = "Nhập mã";
         submitText.font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
         submitText.fontSize = 20;
         submitText.alignment = TextAnchor.MiddleCenter;
         submitText.color = Color.white;
+
+        // Create Cancel Button
+        GameObject cancelBtnObj = new GameObject("CancelButton");
+        Undo.RegisterCreatedObjectUndo(cancelBtnObj, "Create Cancel Button");
+        cancelBtnObj.transform.SetParent(panelObj.transform, false);
+
+        RectTransform cancelRect = cancelBtnObj.AddComponent<RectTransform>();
+        cancelRect.anchorMin = new Vector2(0.52f, 0.15f);
+        cancelRect.anchorMax = new Vector2(0.9f, 0.35f);
+        cancelRect.sizeDelta = Vector2.zero;
+
+        Image cancelImage = cancelBtnObj.AddComponent<Image>();
+        cancelImage.color = new Color(0.65f, 0.2f, 0.2f, 1f); // Red
+
+        Button cancelButton = cancelBtnObj.AddComponent<Button>();
+
+        // Cancel button text
+        GameObject cancelTextObj = new GameObject("Text");
+        Undo.RegisterCreatedObjectUndo(cancelTextObj, "Create Cancel Text");
+        cancelTextObj.transform.SetParent(cancelBtnObj.transform, false);
+
+        RectTransform cancelTextRect = cancelTextObj.AddComponent<RectTransform>();
+        cancelTextRect.anchorMin = Vector2.zero;
+        cancelTextRect.anchorMax = Vector2.one;
+        cancelTextRect.sizeDelta = Vector2.zero;
+
+        Text cancelText = cancelTextObj.AddComponent<Text>();
+        cancelText.text = "Đóng";
+        cancelText.font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+        cancelText.fontSize = 20;
+        cancelText.alignment = TextAnchor.MiddleCenter;
+        cancelText.color = Color.white;
 
         // Create Feedback Text
         GameObject feedbackTextObj = new GameObject("FeedbackText");
@@ -313,24 +399,54 @@ public class UISetupBuilder : EditorWindow
         feedbackText.font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
         feedbackText.fontSize = 18;
         feedbackText.alignment = TextAnchor.MiddleCenter;
-        feedbackText.color = Color.red;
+        feedbackText.color = Color.yellow;
 
         // Add CodeInputUI script to Panel
         CodeInputUI codeInputUI = panelObj.AddComponent<CodeInputUI>();
 
-        // Properly assign serialized fields using Unity's Editor API (not reflection)
+        // Properly assign serialized fields using Unity's Editor API
         SerializedObject serializedObject = new SerializedObject(codeInputUI);
         serializedObject.FindProperty("panel").objectReferenceValue = panelObj;
         serializedObject.FindProperty("codeInputField").objectReferenceValue = inputField;
         serializedObject.FindProperty("submitButton").objectReferenceValue = submitButton;
+        serializedObject.FindProperty("cancelButton").objectReferenceValue = cancelButton;
         serializedObject.FindProperty("feedbackText").objectReferenceValue = feedbackText;
         serializedObject.ApplyModifiedProperties();
 
-        // DON'T set inactive here! CodeInputUI.Awake() needs to run in Play mode.
-        // GameObject must start ACTIVE so Awake() can set the static instance, 
-        // then Awake() will hide the panel itself (line 31 in CodeInputUI.cs)
-
         Debug.Log("[UISetupBuilder] ✅ Created CodeInputPanel");
+    }
+
+    [MenuItem("MirrorHouse/Create Main Menu Scene & Configure Build Settings", false, 3)]
+    public static void CreateMainMenuScene()
+    {
+        string scenePath = "Assets/Scenes/MainMenu.unity";
+        var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
+
+        // Add Main Camera to scene
+        GameObject camObj = new GameObject("Main Camera");
+        Camera cam = camObj.AddComponent<Camera>();
+        cam.clearFlags = CameraClearFlags.SolidColor;
+        cam.backgroundColor = new Color(0.04f, 0.02f, 0.03f, 1f);
+        camObj.tag = "MainCamera";
+
+        GameObject root = new GameObject("MainMenuController");
+        root.AddComponent<MainMenuUI>();
+
+        EditorSceneManager.SaveScene(scene, scenePath);
+        Debug.Log("[UISetupBuilder] ✅ Created MainMenu scene at " + scenePath);
+
+        // Update Build Settings: MainMenu (index 0), Level_Main (index 1)
+        var buildScenes = new System.Collections.Generic.List<EditorBuildSettingsScene>();
+        buildScenes.Add(new EditorBuildSettingsScene(scenePath, true));
+        string mainScenePath = "Assets/Scenes/Level_Main.unity";
+        if (File.Exists(mainScenePath))
+        {
+            buildScenes.Add(new EditorBuildSettingsScene(mainScenePath, true));
+        }
+        EditorBuildSettings.scenes = buildScenes.ToArray();
+        Debug.Log("[UISetupBuilder] ✅ Configured EditorBuildSettings: MainMenu (0), Level_Main (1)");
+
+        EditorUtility.DisplayDialog("Main Menu Created", "Đã tạo scene MainMenu và thiết lập Build Settings thành công!\n\n0: Assets/Scenes/MainMenu.unity\n1: Assets/Scenes/Level_Main.unity", "OK");
     }
 }
 #endif

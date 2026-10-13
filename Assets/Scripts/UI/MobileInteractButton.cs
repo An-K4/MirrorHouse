@@ -25,7 +25,7 @@ public class MobileInteractButton : MonoBehaviour
     void Start()
     {
         // Tìm PlayerController trong scene
-        playerController = FindObjectOfType<PlayerController>();
+        playerController = FindAnyObjectByType<PlayerController>();
         
         if (playerController == null)
         {
@@ -55,9 +55,17 @@ public class MobileInteractButton : MonoBehaviour
     
     void OnInteractButtonClick()
     {
+        // First try interacting with the exact object in the crosshairs
+        CameraRaycastInteraction raycastInteraction = FindAnyObjectByType<CameraRaycastInteraction>();
+        if (raycastInteraction != null && raycastInteraction.InteractWithCurrent())
+        {
+            Debug.Log("[MobileInteractButton] Successfully interacted via CameraRaycastInteraction!");
+            return;
+        }
+
         if (playerController != null)
         {
-            Debug.Log("[MobileInteractButton] Button clicked → calling TryInteract()");
+            Debug.Log("[MobileInteractButton] Button clicked → calling playerController.TryInteract()");
             playerController.TryInteract();
         }
         else
