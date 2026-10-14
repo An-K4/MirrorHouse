@@ -11,27 +11,31 @@ public class SceneFurnitureAdjuster : EditorWindow
     // Furniture position/scale reference data
     private static readonly FurnitureData[] furnitureList = new FurnitureData[]
     {
-        // Bedroom furniture
-        new FurnitureData("Prop_Victorian_Bed", new Vector3(-12.5f, 0, 13f), 1.0f),
-        new FurnitureData("Prop_Bedroom_Desk", new Vector3(-7f, 0, 14.5f), 1.0f),
-        new FurnitureData("Safe_Bedroom", new Vector3(-7f, 0.78f, 14.5f), 1.0f), // On desk
+        // Bedroom furniture (sát tường Bắc, cách xa cửa Z=0 tới 15.8m)
+        new FurnitureData("Prop_Victorian_Bed", new Vector3(-13.5f, 0, 12.5f), 1.0f),
+        new FurnitureData("Prop_Bedroom_Desk", new Vector3(-7.5f, 0, 15.8f), 1.0f),
+        new FurnitureData("Safe_Bedroom", new Vector3(-6.5f, 0.78f, 15.8f), 1.0f), // On desk
         
-        // Library furniture
-        new FurnitureData("Prop_Bookshelf_West_1", new Vector3(-15.5f, 0, -6f), 1.0f),
-        new FurnitureData("Prop_Bookshelf_West_2", new Vector3(-15.5f, 0, -11f), 1.0f),
-        new FurnitureData("Prop_Bookshelf_South", new Vector3(-9f, 0, -15.5f), 1.0f),
-        new FurnitureData("Prop_Library_StudyDesk", new Vector3(-9f, 0, -8.5f), 1.0f),
-        new FurnitureData("Safe_Library", new Vector3(-9f, 0.78f, -8.5f), 1.0f), // On desk
+        // Library furniture (sát tường Nam, cách xa cửa Z=0 tới 9.5m)
+        new FurnitureData("Prop_Bookshelf_West_1", new Vector3(-16.2f, 0, -5.5f), 1.0f),
+        new FurnitureData("Prop_Bookshelf_West_2", new Vector3(-16.2f, 0, -11f), 1.0f),
+        new FurnitureData("Prop_Bookshelf_South", new Vector3(-10f, 0, -16.2f), 1.0f),
+        new FurnitureData("Prop_Library_StudyDesk", new Vector3(-9.5f, 0, -9.5f), 1.0f),
+        new FurnitureData("Safe_Library", new Vector3(-9.5f, 0.78f, -9.5f), 1.0f), // On desk
         
-        // Storage room furniture
-        new FurnitureData("Prop_Storage_Barrel_1", new Vector3(13.5f, 0, -13.5f), 1.0f),
-        new FurnitureData("Prop_Storage_Barrel_2", new Vector3(14.5f, 0, -11.5f), 1.0f),
-        new FurnitureData("Prop_Storage_Barrel_3", new Vector3(7.5f, 0, -14.5f), 1.0f),
-        new FurnitureData("Safe_Storage_Dagger", new Vector3(10f, 0, -8.5f), 1.0f),
+        // Storage room furniture (sát tường Đông & Nam, cách xa cửa Z=0 tới 14m)
+        new FurnitureData("Prop_Storage_Barrel_1", new Vector3(15f, 0, -14f), 1.0f),
+        new FurnitureData("Prop_Storage_Barrel_2", new Vector3(14f, 0, -8f), 1.0f),
+        new FurnitureData("Prop_Storage_Barrel_3", new Vector3(6.5f, 0, -14.5f), 1.0f),
+        new FurnitureData("Safe_Storage_Dagger", new Vector3(9.5f, 0.78f, -14f), 1.0f),
         
         // Ritual room furniture
-        new FurnitureData("Prop_Ritual_Altar", new Vector3(0, 0, 12f), 1.0f),
+        new FurnitureData("Prop_Ritual_Altar", new Vector3(9.5f, 0, -14f), 1.0f),
         
+        // Dining furniture (nâng lên sàn Y=0, cách xa cửa Z=0 tới 8.5m)
+        new FurnitureData("Prop_Dining_Table_Set", new Vector3(9.5f, 0, 8.5f), 1.0f),
+        new FurnitureData("Dining_Table", new Vector3(9.5f, 0, 8.5f), 1.0f),
+
         // Exit mirror
         new FurnitureData("GrandGatewayMirror_Exit", new Vector3(0, 0, 16.3f), 1.0f),
     };

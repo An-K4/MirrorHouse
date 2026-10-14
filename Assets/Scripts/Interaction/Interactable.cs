@@ -70,10 +70,27 @@ public abstract class Interactable : MonoBehaviour
         }
     }
 
+    public string InteractionPrompt => interactionPrompt;
+
+    /// <summary>
+    /// Kiểm tra xem đối tượng có thể tương tác lúc này hay không.
+    /// Ví dụ: nếu nằm trong một ngăn kéo (DrawerInteractive) đang đóng thì không thể tương tác xuyên qua gỗ.
+    /// </summary>
+    public virtual bool CanInteract()
+    {
+        DrawerInteractive parentDrawer = GetComponentInParent<DrawerInteractive>();
+        // Chỉ chặn nếu parentDrawer là một ngăn kéo cha khác VÀ ngăn kéo đó đang đóng
+        // (Nếu chính object này là DrawerInteractive thì phải luôn tương tác được để mở/đóng)
+        if (parentDrawer != null && parentDrawer != this && !parentDrawer.isOpen)
+        {
+            return false;
+        }
+        return true;
+    }
+
     public void TryInteract()
     {
-        // FIX: Luôn gọi Interact() khi method này được gọi
-        // PlayerController đã check distance rồi, không cần check lại playerInRange
+        if (!CanInteract()) return;
         Interact();
     }
 

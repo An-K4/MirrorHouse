@@ -197,14 +197,39 @@ public class UISetupBuilder : EditorWindow
             joystick.transform.SetParent(canvas.transform, false);
         }
 
-        // Position joystick at bottom-left
+        // Position joystick at bottom-left (cân đối, không bị cắt viền)
         RectTransform rect = joystick.GetComponent<RectTransform>();
         if (rect != null)
         {
             rect.anchorMin = new Vector2(0, 0);
             rect.anchorMax = new Vector2(0, 0);
-            rect.pivot = new Vector2(0, 0);
-            rect.anchoredPosition = new Vector2(100, 100);
+            rect.pivot = new Vector2(0.5f, 0.5f);
+            rect.anchoredPosition = new Vector2(170, 170);
+            rect.sizeDelta = new Vector2(200, 200);
+        }
+
+        Transform handleTrans = joystick.transform.Find("Handle");
+        if (handleTrans != null)
+        {
+            RectTransform handleRect = handleTrans.GetComponent<RectTransform>();
+            if (handleRect != null)
+            {
+                handleRect.sizeDelta = new Vector2(85, 85);
+            }
+        }
+
+        // Tự động gán Joystick vào PlayerController
+        PlayerController player = GameObject.FindObjectOfType<PlayerController>();
+        if (player != null)
+        {
+            SerializedObject so = new SerializedObject(player);
+            SerializedProperty prop = so.FindProperty("joystick");
+            if (prop != null)
+            {
+                prop.objectReferenceValue = joystick.GetComponent<Joystick>();
+                so.ApplyModifiedProperties();
+                Debug.Log("[UISetupBuilder] ✅ Đã tự động gán Joystick vào PlayerController!");
+            }
         }
 
         Debug.Log("[UISetupBuilder] ✅ Created Fixed Joystick");

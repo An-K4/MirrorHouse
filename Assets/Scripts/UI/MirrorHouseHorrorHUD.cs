@@ -25,6 +25,11 @@ public class MirrorHouseHorrorHUD : MonoBehaviour
     private Image eyePupil;
     private float targetVisible;
 
+    // Horror Clue & Mirror Reflection Message Box
+    private GameObject cluePanel;
+    private Text clueContentText;
+    private float clueTimer;
+
     public static MirrorHouseHorrorHUD EnsureExists()
     {
         MirrorHouseHorrorHUD existing = FindAnyObjectByType<MirrorHouseHorrorHUD>();
@@ -49,6 +54,40 @@ public class MirrorHouseHorrorHUD : MonoBehaviour
         BuildIfNeeded();
     }
 
+    private void OnEnable()
+    {
+        GameEvents.OnCluePickup += HandleClueReceived;
+    }
+
+    private void OnDisable()
+    {
+        GameEvents.OnCluePickup -= HandleClueReceived;
+    }
+
+    private void HandleClueReceived(string clueId, string clueText)
+    {
+        ShowClueMessage(clueText);
+    }
+
+    public void ShowClueMessage(string message, float duration = 7.5f)
+    {
+        if (cluePanel != null && clueContentText != null)
+        {
+            clueContentText.text = message;
+            cluePanel.SetActive(true);
+            clueTimer = duration;
+        }
+    }
+
+    public void CloseClueMessage()
+    {
+        if (cluePanel != null)
+        {
+            cluePanel.SetActive(false);
+            clueTimer = 0f;
+        }
+    }
+
     private void Update()
     {
         if (mistLeft != null && mistRight != null)
@@ -69,6 +108,15 @@ public class MirrorHouseHorrorHUD : MonoBehaviour
             float alpha = Mathf.MoveTowards(promptText.color.a, targetVisible, Time.unscaledDeltaTime * 7f);
             promptText.color = new Color(candleGold.r, candleGold.g, candleGold.b, alpha);
         }
+
+        if (clueTimer > 0f)
+        {
+            clueTimer -= Time.deltaTime;
+            if (clueTimer <= 0f && cluePanel != null)
+            {
+                cluePanel.SetActive(false);
+            }
+        }
     }
 
     public void SetInteractionTarget(Interactable target)
@@ -79,7 +127,8 @@ public class MirrorHouseHorrorHUD : MonoBehaviour
             return;
         }
 
-        promptText.text = "[ E ]  CHẠM VÀO PHẢN CHIẾU";
+        string prompt = target.InteractionPrompt;
+        promptText.text = string.IsNullOrEmpty(prompt) ? "[ E ]  TƯƠNG TÁC" : prompt;
     }
 
     public void SetCrosshairHighlighted(bool highlighted)
@@ -133,6 +182,50 @@ public class MirrorHouseHorrorHUD : MonoBehaviour
         CreateTitle();
         CreateReticle();
         CreatePrompt();
+        CreateCluePanel();
+    }
+
+    private void CreateCluePanel()
+    {
+        cluePanel = new GameObject("Horror_Clue_Panel", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
+        cluePanel.transform.SetParent(transform, false);
+
+        Image bgImage = cluePanel.GetComponent<Image>();
+        bgImage.sprite = HorrorUITheme.GetRoundedBoxSprite(HorrorUITheme.ColorCryptDark, HorrorUITheme.ColorBoxBorderGold, 3f, 16);
+        bgImage.type = Image.Type.Sliced;
+        bgImage.raycastTarget = true;
+
+        RectTransform rect = cluePanel.GetComponent<RectTransform>();
+        rect.anchorMin = new Vector2(0.2f, 0.22f);
+        rect.anchorMax = new Vector2(0.8f, 0.78f);
+        rect.offsetMin = Vector2.zero;
+        rect.offsetMax = Vector2.zero;
+
+        // Title
+        Text headerText = CreateText("Panel_Header", cluePanel.transform, "📜 MANH MỐI / THÔNG ĐIỆP CÕI GƯƠNG", 18, TextAnchor.MiddleCenter);
+        headerText.color = HorrorUITheme.TextCandleGold;
+        headerText.fontStyle = FontStyle.Bold;
+        HorrorUITheme.AddHorrorTextShadow(headerText, Color.black, new Vector2(1.5f, -1.5f));
+        Stretch(headerText.rectTransform, new Vector2(0.05f, 0.86f), new Vector2(0.95f, 0.97f), Vector2.zero, Vector2.zero);
+
+        // Content
+        clueContentText = CreateText("Panel_Content", cluePanel.transform, "", 16, TextAnchor.UpperLeft);
+        clueContentText.color = HorrorUITheme.TextBoneWhite;
+        clueContentText.lineSpacing = 1.25f;
+        clueContentText.horizontalOverflow = HorizontalWrapMode.Wrap;
+        clueContentText.verticalOverflow = VerticalWrapMode.Truncate;
+        Stretch(clueContentText.rectTransform, new Vector2(0.06f, 0.16f), new Vector2(0.94f, 0.84f), Vector2.zero, Vector2.zero);
+
+        // Close Hint
+        Text closeHint = CreateText("Close_Hint", cluePanel.transform, "[ Chạm vào đây hoặc bấm E để đóng ]", 14, TextAnchor.MiddleCenter);
+        closeHint.color = new Color(0.7f, 0.65f, 0.6f, 0.85f);
+        Stretch(closeHint.rectTransform, new Vector2(0.1f, 0.03f), new Vector2(0.9f, 0.13f), Vector2.zero, Vector2.zero);
+
+        // Click to close button
+        Button btn = cluePanel.AddComponent<Button>();
+        btn.onClick.AddListener(CloseClueMessage);
+
+        cluePanel.SetActive(false);
     }
 
     private void CreateTitle()

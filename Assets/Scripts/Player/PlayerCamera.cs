@@ -23,6 +23,7 @@ public class PlayerCamera : MonoBehaviour
     private float verticalRotation = 0f;
     private Vector2 lastTouchPosition;
     private bool isTouching = false;
+    private int cameraFingerId = -1;
 
     void Start()
     {
@@ -59,46 +60,67 @@ public class PlayerCamera : MonoBehaviour
         bool isPointerOverUI = UnityEngine.EventSystems.EventSystem.current != null &&
                                UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject();
 
-        if (Input.touchCount > 0)
+        float screenMiddle = Screen.width / 2f;
+        bool foundCameraTouch = false;
+
+        for (int i = 0; i < Input.touchCount; i++)
         {
-            Touch touch = Input.GetTouch(0);
+            Touch touch = Input.GetTouch(i);
 
-            if (UnityEngine.EventSystems.EventSystem.current != null &&
-                UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject(touch.fingerId))
+            // Bỏ qua nếu ngón tay này chạm vào UI (ví dụ bấm nút E, bấm Pause, bấm Sprint)
+            bool touchOverUI = UnityEngine.EventSystems.EventSystem.current != null &&
+                               UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject(touch.fingerId);
+
+            if (touchOverUI)
             {
-                isTouching = false;
-                return;
-            }
-
-            // QUAN TRỌNG: Chỉ accept touch bên PHẢI màn hình
-            // Bên TRÁI dành cho joystick (di chuyển)
-            // Bên PHẢI dành cho camera (xoay nhìn)
-            float screenMiddle = Screen.width / 2f;
-
-            // Ignore touch bên trái (joystick area)
-            if (touch.position.x < screenMiddle)
-            {
-                isTouching = false;
-                return;
+                if (touch.fingerId == cameraFingerId)
+                {
+                    cameraFingerId = -1;
+                    isTouching = false;
+                }
+                continue;
             }
 
-            if (touch.phase == TouchPhase.Began)
+            // Nếu ngón tay đang là camera finger đã lock
+            if (cameraFingerId != -1 && touch.fingerId == cameraFingerId)
             {
-                lastTouchPosition = touch.position;
-                isTouching = true;
+                foundCameraTouch = true;
+                if (touch.phase == TouchPhase.Moved)
+                {
+                    Vector2 pixelDelta = touch.position - lastTouchPosition;
+                    lastTouchPosition = touch.position;
+                    Vector2 rotDegrees = pixelDelta * (touchSensitivity * 0.065f);
+                    RotateCamera(rotDegrees);
+                }
+                else if (touch.phase == TouchPhase.Stationary)
+                {
+                    lastTouchPosition = touch.position;
+                }
+                else if (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)
+                {
+                    cameraFingerId = -1;
+                    isTouching = false;
+                }
+                break;
             }
-            else if (touch.phase == TouchPhase.Moved && isTouching)
+            // Nếu chưa có camera finger và chạm vào nửa PHẢI màn hình
+            else if (cameraFingerId == -1 && touch.position.x >= screenMiddle)
             {
-                Vector2 pixelDelta = touch.position - lastTouchPosition;
-                lastTouchPosition = touch.position;
-                // Chuẩn hóa cảm ứng mobile (1 px tương đương ~0.065 độ)
-                Vector2 rotDegrees = pixelDelta * (touchSensitivity * 0.065f);
-                RotateCamera(rotDegrees);
+                if (touch.phase == TouchPhase.Began || touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary)
+                {
+                    cameraFingerId = touch.fingerId;
+                    lastTouchPosition = touch.position;
+                    isTouching = true;
+                    foundCameraTouch = true;
+                    break;
+                }
             }
-            else if (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)
-            {
-                isTouching = false;
-            }
+        }
+
+        if (!foundCameraTouch && cameraFingerId != -1)
+        {
+            cameraFingerId = -1;
+            isTouching = false;
         }
 
         // FALLBACK: Dùng mouse cho testing trong Unity Editor (hỗ trợ cả chuột trái và chuột phải)

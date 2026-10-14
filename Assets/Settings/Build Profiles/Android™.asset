@@ -23,8 +23,8 @@ MonoBehaviour:
   m_OverrideGlobalSceneList: 1
   m_Scenes:
   - m_enabled: 1
-    m_path: Assets/Scenes/Demo_Topic7_Interaction.unity
-    m_guid: f226d0be243cbd041a71afda418e9fbe
+    m_path: Assets/Scenes/Level_Main.unity
+    m_guid: 82a394c8b2a14e9ea52a0a2839958dc1
   m_HasScriptingDefines: 0
   m_ScriptingDefines: []
   m_PlayerSettingsYaml:
@@ -199,7 +199,7 @@ MonoBehaviour:
     - line: '|   androidMaxAspectRatio: 2.4'
     - line: '|   androidMinAspectRatio: 1'
     - line: '|   applicationIdentifier:'
-    - line: '|     Android: com.UnityTechnologies.com.unity.template.urpblank'
+    - line: '|     Android: com.MirrorHouse.Game'
     - line: '|     Standalone: com.Unity-Technologies.com.unity.template.urp-blank'
     - line: '|     iPhone: com.Unity-Technologies.com.unity.template.urp-blank'
     - line: '|   buildNumber:'

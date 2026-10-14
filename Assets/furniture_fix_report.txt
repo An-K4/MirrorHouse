@@ -1,0 +1,6 @@
+=== BÁO CÁO SỬA LỖI MÀU TÍM & NỘI THẤT LEVEL_MAIN (14/10/2026 6:37:57 SA) ===
+- Số Material đã nâng cấp sang URP Lit: 35
+- Số đồ nội thất 3D thật đã bố trí trực tiếp: 55
+- Số MeshRenderer đã kiểm tra và chuẩn hóa: 0
+- Cửa kết nối (Bedroom-Library & Dining-Storage): HOÀN TOÀN THÔNG THOÁNG (> 7m)
+- Scene Level_Main đã lưu vĩnh viễn: True

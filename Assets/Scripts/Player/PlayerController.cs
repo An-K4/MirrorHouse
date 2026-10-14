@@ -54,14 +54,21 @@ public class PlayerController : MonoBehaviour
             Debug.LogError("PlayerController: Thiếu CharacterController component!");
         }
         
-        // Cảnh báo nếu chưa gắn joystick
+        // Tự động tìm Virtual Joystick trong scene nếu chưa gán Inspector
         if (joystick == null)
         {
-            Debug.LogWarning("PlayerController: ❌ CHƯA GẮN JOYSTICK! Kéo 'Fixed Joystick' từ Canvas vào ô 'Joystick' trong Inspector!");
+            joystick = FindFirstObjectByType<Joystick>();
+            if (joystick == null)
+                joystick = FindObjectOfType<Joystick>();
+        }
+
+        if (joystick == null)
+        {
+            Debug.LogWarning("PlayerController: ❌ CHƯA GẮN JOYSTICK! Đang tìm trong Canvas...");
         }
         else
         {
-            Debug.Log($"PlayerController: ✅ Joystick đã gắn: {joystick.name}");
+            Debug.Log($"PlayerController: ✅ Joystick đã kết nối thành công: {joystick.name}");
         }
     }
     
@@ -96,6 +103,14 @@ public class PlayerController : MonoBehaviour
         horizontal = keyboardH;
         vertical = keyboardV;
         
+        // Tự động tìm lại Joystick nếu bị mất liên kết (runtime spawn)
+        if (joystick == null)
+        {
+            joystick = FindFirstObjectByType<Joystick>();
+            if (joystick == null)
+                joystick = FindObjectOfType<Joystick>();
+        }
+
         // ADD joystick input if available (allows both to work)
         if (joystick != null)
         {
@@ -179,8 +194,16 @@ public class PlayerController : MonoBehaviour
         {
             // FIX: Tìm Interactable trên collider hoặc parent (cho trường hợp collider ở child object)
             Interactable interactable = col.GetComponentInParent<Interactable>();
-            if (interactable != null)
+            if (interactable != null && interactable.CanInteract())
             {
+                // Chỉ ưu tiên tương tác vật phẩm ở PHÍA TRƯỚC mặt người chơi (tránh mở nhầm cửa sau lưng)
+                Vector3 toCol = (col.transform.position - transform.position).normalized;
+                toCol.y = 0f;
+                if (toCol.sqrMagnitude > 0.001f && Vector3.Dot(transform.forward, toCol) < -0.1f)
+                {
+                    continue; // Bỏ qua nếu vật thể ở hẳn phía sau lưng
+                }
+
                 float distance = Vector3.Distance(transform.position, col.transform.position);
                 if (distance < closestDistance)
                 {

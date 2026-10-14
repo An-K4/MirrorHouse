@@ -93,20 +93,8 @@ public class MansionPuzzleAndDoorsManager : MonoBehaviour
             paperMat.color = new Color(0.92f, 0.88f, 0.74f);
         }
 
-        // Clue 1: Phòng ngủ Emily (trên bàn ngủ gần két)
-        CreateOrUpdateClue(
-            "Clue_Note_Emily",
-            new Vector3(-7.7f, 0.79f, 14.5f),
-            new Vector3(0.32f, 0.012f, 0.24f),
-            "clue_emily_diary",
-            "Trang nhật ký của Emily - Ngày 14 tháng 10:\n\n" +
-            "\"Cha mang về chiếc gương cổ bằng vàng từ một phiên đấu giá bí mật. " +
-            "Cha bảo nó được đúc vào đúng NĂM 1894 - năm khởi đầu cho dòng họ chúng ta.\n\n" +
-            "Từ đêm hôm đó, cha luôn nhốt mình trong phòng và nói chuyện một mình trước tấm gương...\"\n\n" +
-            "[MANH MỐI: Mật mã két sắt phòng ngủ là 1894]",
-            "Đọc nhật ký của Emily [E / Chạm]",
-            paperMat
-        );
+        // Clue 1: Phòng ngủ Emily (giấu trong ngăn kéo bàn trang điểm / học Draw 1_low)
+        SetupEmilyClueInDrawer(paperMat);
 
         // Clue 2: Thư viện (trên bàn học / đọc sách)
         CreateOrUpdateClue(
@@ -140,6 +128,101 @@ public class MansionPuzzleAndDoorsManager : MonoBehaviour
             "[MANH MỐI: Mật mã két sắt nhà kho là 5731]",
             "Đọc mẩu giấy dính máu [E / Chạm]",
             paperMat
+        );
+    }
+
+    private void SetupEmilyClueInDrawer(Material paperMat)
+    {
+        string clueName = "Clue_Note_Emily";
+        GameObject clueObj = GameObject.Find(clueName);
+
+        // Tìm bàn phòng ngủ Emily
+        GameObject deskObj = GameObject.Find("Prop_Bedroom_Desk");
+        Transform targetDrawer = null;
+
+        if (deskObj != null)
+        {
+            // Tìm Draw 1_low trong desk
+            Transform[] children = deskObj.GetComponentsInChildren<Transform>(true);
+            foreach (Transform t in children)
+            {
+                if (t.name == "Draw 1_low" || t.name.Equals("Draw 1_low", System.StringComparison.OrdinalIgnoreCase))
+                {
+                    targetDrawer = t;
+                    break;
+                }
+            }
+
+            // Fallback: tìm bất kỳ DrawerInteractive nào trên bàn
+            if (targetDrawer == null)
+            {
+                DrawerInteractive di = deskObj.GetComponentInChildren<DrawerInteractive>(true);
+                if (di != null) targetDrawer = di.transform;
+            }
+        }
+
+        if (clueObj == null)
+        {
+            clueObj = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            clueObj.name = clueName;
+        }
+
+        if (paperMat != null)
+        {
+            MeshRenderer mr = clueObj.GetComponent<MeshRenderer>();
+            if (mr != null) mr.sharedMaterial = paperMat;
+        }
+
+        // Kích thước mẩu giấy nhật ký chuẩn vừa vặn đáy ngăn kéo
+        Vector3 noteSize = new Vector3(0.24f, 0.012f, 0.18f);
+
+        if (targetDrawer != null)
+        {
+            Renderer drawerRend = targetDrawer.GetComponent<Renderer>();
+            Vector3 drawerCenter = drawerRend != null ? drawerRend.bounds.center : targetDrawer.position;
+
+            // Đặt nằm phẳng ngay trong lòng ngăn kéo (hơi nhấc lên một chút so với mặt đáy)
+            Vector3 worldPos = drawerCenter + new Vector3(0f, 0.02f, 0f);
+            clueObj.transform.position = worldPos;
+            clueObj.transform.rotation = targetDrawer.rotation;
+
+            // Gắn làm con của drawer với worldPositionStays = true để giữ nguyên tọa độ world khi reparent
+            clueObj.transform.SetParent(targetDrawer, true);
+
+            // Bù trừ parent lossyScale nếu prefab có scale không đồng nhất
+            Vector3 parentLossy = targetDrawer.lossyScale;
+            clueObj.transform.localScale = new Vector3(
+                noteSize.x / Mathf.Max(0.001f, parentLossy.x),
+                noteSize.y / Mathf.Max(0.001f, parentLossy.y),
+                noteSize.z / Mathf.Max(0.001f, parentLossy.z)
+            );
+
+            Debug.Log($"[MansionManager] Đã đặt manh mối '{clueName}' BÊN TRONG ngăn kéo '{targetDrawer.name}'!");
+        }
+        else
+        {
+            // Fallback nếu không tìm thấy bàn
+            clueObj.transform.position = new Vector3(-6.7f, 0.65f, 14.5f);
+            clueObj.transform.localScale = noteSize;
+            Debug.LogWarning($"[MansionManager] Không tìm thấy Prop_Bedroom_Desk / Draw 1_low để giấu '{clueName}'!");
+        }
+
+        // Ensure collider
+        Collider col = clueObj.GetComponent<Collider>();
+        if (col == null) clueObj.AddComponent<BoxCollider>();
+
+        // Ensure CodeClue component
+        CodeClue clueComp = clueObj.GetComponent<CodeClue>();
+        if (clueComp == null) clueComp = clueObj.AddComponent<CodeClue>();
+
+        clueComp.SetClueData(
+            "clue_emily_diary",
+            "Trang nhật ký của Emily giấu kín trong ngăn kéo bàn:\n\n" +
+            "\"Cha mang về chiếc gương cổ bằng vàng từ một phiên đấu giá bí mật. " +
+            "Cha bảo nó được đúc vào đúng NĂM 1894 - năm khởi đầu cho dòng họ chúng ta.\n\n" +
+            "Từ đêm hôm đó, cha luôn nhốt mình trong phòng và nói chuyện một mình trước tấm gương...\"\n\n" +
+            "[MANH MỐI THEN CHỐT: Mật mã két sắt phòng ngủ là 1894]",
+            "Đọc nhật ký của Emily trong ngăn kéo [E / Chạm]"
         );
     }
 

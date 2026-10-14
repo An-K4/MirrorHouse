@@ -44,12 +44,38 @@ public class MobileInteractButton : MonoBehaviour
             return;
         }
         
+        // Đảm bảo nút E luôn cân đối, nằm an toàn bên trong màn hình điện thoại
+        RectTransform rt = GetComponent<RectTransform>();
+        if (rt != null)
+        {
+            rt.anchorMin = new Vector2(1f, 0f);
+            rt.anchorMax = new Vector2(1f, 0f);
+            rt.pivot = new Vector2(0.5f, 0.5f);
+            rt.anchoredPosition = new Vector2(-190f, 190f);
+            rt.sizeDelta = new Vector2(120f, 120f);
+        }
+
+        // Trang trí nút theo phong cách Gothic Horror
+        HorrorUITheme.ApplyHorrorButtonStyle(interactButton, 
+            new Color(0.12f, 0.08f, 0.10f, 0.85f), 
+            HorrorUITheme.ColorBoxBorderGold);
+
+        Text txt = GetComponentInChildren<Text>();
+        if (txt != null)
+        {
+            txt.color = HorrorUITheme.TextCandleGold;
+            txt.fontStyle = FontStyle.Bold;
+            txt.fontSize = 42;
+            txt.alignment = TextAnchor.MiddleCenter;
+            HorrorUITheme.AddHorrorTextShadow(txt, Color.black, new Vector2(2f, -2f));
+        }
+
         // LUÔN HIỆN BUTTON - Để test trong Game View và hoạt động trên Mobile
-        // User có thể test bằng cách click chuột trong Unity Editor
         gameObject.SetActive(true);
-        Debug.Log("[MobileInteractButton] Button enabled - Ready for testing");
+        Debug.Log("[MobileInteractButton] Button configured at (-190, 190) - Safe inside screen");
         
         // Register button click event
+        interactButton.onClick.RemoveListener(OnInteractButtonClick);
         interactButton.onClick.AddListener(OnInteractButtonClick);
     }
     

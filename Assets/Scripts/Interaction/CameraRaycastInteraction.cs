@@ -36,7 +36,7 @@ public class CameraRaycastInteraction : MonoBehaviour
 
     public bool InteractWithCurrent()
     {
-        if (currentInteractable != null)
+        if (currentInteractable != null && currentInteractable.CanInteract())
         {
             Debug.Log($"[CameraRaycastInteraction] Interacting with {currentInteractable.gameObject.name}");
             currentInteractable.TryInteract();
@@ -86,13 +86,13 @@ public class CameraRaycastInteraction : MonoBehaviour
         Ray ray = mainCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
         RaycastHit hit;
         
-        // Perform raycast
-        if (Physics.Raycast(ray, out hit, interactionRange, interactionLayer))
+        // Perform raycast (hỗ trợ cả trigger lẫn non-trigger colliders)
+        if (Physics.Raycast(ray, out hit, interactionRange, interactionLayer, QueryTriggerInteraction.Collide))
         {
             // Check the collider and its parents so doors, drawers, clues and keys all work.
             Interactable interactable = hit.collider.GetComponentInParent<Interactable>();
             
-            if (interactable != null)
+            if (interactable != null && interactable.CanInteract())
             {
                 if (currentInteractable != interactable)
                 {
@@ -135,7 +135,7 @@ public class CameraRaycastInteraction : MonoBehaviour
     /// </summary>
     private void HandleInput()
     {
-        if (Input.GetKeyDown(interactKey) && currentInteractable != null)
+        if (Input.GetKeyDown(interactKey) && currentInteractable != null && currentInteractable.CanInteract())
         {
             Debug.Log($"[CameraRaycastInteraction] Interacting with {currentInteractable.gameObject.name}");
             currentInteractable.TryInteract();

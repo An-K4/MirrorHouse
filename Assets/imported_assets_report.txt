@@ -1,0 +1,723 @@
+=== REPORT TÀI NGUYÊN IMPORT TRONG ASSETS (14/10/2026 6:21:30 SA) ===
+Assets/InputSystem_Actions.inputactions
+Assets/Readme.asset
+Assets/TestScene.unity
+Assets/test_dl.txt
+Assets/Documentation/C_HANDOFF.md
+Assets/Documentation/ROLEC_BUILDER_READY.txt
+Assets/Documentation/ROLEC_BUILD_INSTRUCTIONS.txt
+Assets/Documentation/WORLD_2_ASSET_LIST.md
+Assets/Documentation/WORLD_2_LEVEL_SPECIFICATION.md
+Assets/Editor/DemoSceneBuilder.cs
+Assets/Editor/LevelBuilderHelper.cs
+Assets/Editor/PrefabBatchCreator.cs
+Assets/Editor/RoleC_AIWaypoints.cs
+Assets/Editor/RoleC_BuildMenu.cs
+Assets/Editor/RoleC_LevelBuilder.cs
+Assets/Editor/RoleC_PuzzleSetup.cs
+Assets/Editor/ScenePlacer.cs
+Assets/Editor/SceneSetupHelper.cs
+Assets/Editor/SetupLevelC.cs
+Assets/Furniture/All models.unity
+Assets/Joystick Pack/Documentaion.pdf
+Assets/Materials/Mat_Altar_Stone.mat
+Assets/Materials/Mat_Candle_Glow.mat
+Assets/Materials/Mat_Clue_Paper.mat
+Assets/Materials/Mat_Demon_Dark.mat
+Assets/Materials/Mat_Door_Locked.mat
+Assets/Materials/Mat_Door_Wood.mat
+Assets/Materials/Mat_Fabric_Velvet.mat
+Assets/Materials/Mat_Floor_Wood.mat
+Assets/Materials/Mat_Gothic_Mirror.mat
+Assets/Materials/Mat_Key_Gold.mat
+Assets/Materials/Mat_Mirror_Frame_DarkWood.mat
+Assets/Materials/Mat_Mirror_Frame_Gold.mat
+Assets/Materials/Mat_Mirror_Glass.mat
+Assets/Materials/Mat_Mirror_Tainted.mat
+Assets/Materials/Mat_Safe_Metal.mat
+Assets/Materials/Mat_Wall_Dark.mat
+Assets/Models/Bookshelf.obj
+Assets/Models/Candelabra.obj
+Assets/Models/DemonMonster.obj
+Assets/Models/GothicDoor.obj
+Assets/Models/GrandMirror.obj
+Assets/Models/MasterBed.obj
+Assets/Models/OrnateKey.obj
+Assets/Models/RitualAltar.obj
+Assets/Models/SafeBox.obj
+Assets/Models/StorageCrate.obj
+Assets/Models/VintageDesk.obj
+Assets/Old Cabinet/Documentation.txt
+Assets/Scenes/Level_Main.unity
+Assets/Scenes/Level_Test_Interactive.unity
+Assets/Scenes/MainMenu.unity
+Assets/Screenshots/bedroom_door_before_fix.png
+Assets/Screenshots/storage_door_after_fix_closed.png
+Assets/Screenshots/storage_door_after_fix_open.png
+Assets/Screenshots/storage_door_before_fix.png
+Assets/Screenshots/storage_door_verified_open.png
+Assets/Scripts/World2GameManager.cs
+Assets/Settings/DefaultVolumeProfile.asset
+Assets/Settings/Mobile_Renderer.asset
+Assets/Settings/Mobile_RPAsset.asset
+Assets/Settings/PC_Renderer.asset
+Assets/Settings/PC_RPAsset.asset
+Assets/Settings/SampleSceneProfile.asset
+Assets/Settings/UniversalRenderPipelineGlobalSettings.asset
+Assets/TutorialInfo/Layout.wlt
+Assets/TutorialInfo/Readme.cs
+Assets/_Recovery/0 (1).unity
+Assets/_Recovery/0.unity
+Assets/Furniture/Prefabs/3Seat.prefab
+Assets/Furniture/Prefabs/3Seat2.prefab
+Assets/Furniture/Prefabs/3Seat3.prefab
+Assets/Furniture/Prefabs/3seat4.prefab
+Assets/Furniture/Prefabs/BigCloset.prefab
+Assets/Furniture/Prefabs/chair.prefab
+Assets/Furniture/Prefabs/closet2.prefab
+Assets/Furniture/Prefabs/Closet3.prefab
+Assets/Furniture/Prefabs/Couch.prefab
+Assets/Furniture/Prefabs/DoubleSeat.prefab
+Assets/Furniture/Prefabs/DoubleSeat2.prefab
+Assets/Furniture/Prefabs/Fotel.prefab
+Assets/Furniture/Prefabs/Fotel2.prefab
+Assets/Furniture/Prefabs/Fotel3.prefab
+Assets/Furniture/Prefabs/Fotel4.prefab
+Assets/Furniture/Prefabs/MetalTable.prefab
+Assets/Furniture/Prefabs/MirrorComode.prefab
+Assets/Furniture/Prefabs/MirrorComode2.prefab
+Assets/Furniture/Prefabs/RoundTable.prefab
+Assets/Furniture/Prefabs/SmallCloset.prefab
+Assets/Joystick Pack/Examples/Example Scene.unity
+Assets/Joystick Pack/Examples/Ground.mat
+Assets/Joystick Pack/Examples/JoystickPlayerExample.cs
+Assets/Joystick Pack/Examples/JoystickSetterExample.cs
+Assets/Joystick Pack/Examples/Player.mat
+Assets/Joystick Pack/Prefabs/Dynamic Joystick.prefab
+Assets/Joystick Pack/Prefabs/Fixed Joystick.prefab
+Assets/Joystick Pack/Prefabs/Floating Joystick.prefab
+Assets/Joystick Pack/Prefabs/Variable Joystick.prefab
+Assets/Materials/Characters/Mat_Imported_Monster.mat
+Assets/Materials/Furniture/Mat_Imported_Barrel.mat
+Assets/Materials/Furniture/Mat_Imported_Door.mat
+Assets/Materials/Furniture/Mat_Imported_Safe.mat
+Assets/Materials/Imported/Mat_Imported_Altar.mat
+Assets/Materials/Imported/Mat_Imported_Barrel.mat
+Assets/Materials/Imported/Mat_Imported_BedWood.mat
+Assets/Materials/Imported/Mat_Imported_Bookshelf.mat
+Assets/Materials/Imported/Mat_Imported_Candelabra.mat
+Assets/Materials/Imported/Mat_Imported_Dagger.mat
+Assets/Materials/Imported/Mat_Imported_Desk.mat
+Assets/Materials/Imported/Mat_Imported_Dining.mat
+Assets/Materials/Imported/Mat_Imported_Door.mat
+Assets/Materials/Imported/Mat_Imported_Key.mat
+Assets/Materials/Imported/Mat_Imported_Mirror.mat
+Assets/Materials/Imported/Mat_Imported_Monster.mat
+Assets/Materials/Imported/Mat_Imported_Safe.mat
+Assets/Materials/Items/MasterKey_Material.mat
+Assets/Materials/Items/Mat_Imported_Dagger.mat
+Assets/Materials/Items/Mat_Imported_Key.mat
+Assets/Materials/Textures/Tex_Altar_Runes.png
+Assets/Materials/Textures/Tex_Door.png
+Assets/Materials/Textures/Tex_Mansion_Wall.png
+Assets/Materials/Textures/Tex_Mirror_Grand.png
+Assets/Materials/Textures/Tex_Painting_Family.png
+Assets/Materials/Textures/Tex_Wood_Floor.png
+Assets/Old Cabinet/Materials/M_cabinet.mat
+Assets/Old Cabinet/Materials/M_cabinet_glass.mat
+Assets/Old Cabinet/Materials/Skybox_Mat.mat
+Assets/Old Cabinet/Meshes/SM_cabinet.FBX
+Assets/Old Cabinet/Prefabs/SM_cabinet.prefab
+Assets/Old Cabinet/Scenes/Demonstration_01.unity
+Assets/Old Cabinet/Scenes/Postprocess Profile_URP_01.asset
+Assets/Old Cabinet/Settings/ForwardRenderer.asset
+Assets/Old Cabinet/Settings/UniversalRP-HighQuality.asset
+Assets/Old Cabinet/Settings/UniversalRP-LowQuality.asset
+Assets/Old Cabinet/Settings/UniversalRP-MediumQuality.asset
+Assets/Old Cabinet/Textures/T_cabinet_AlbedoTransparency.tga
+Assets/Old Cabinet/Textures/T_cabinet_AO.tga
+Assets/Old Cabinet/Textures/T_cabinet_glass_AlbedoTransparency.tga
+Assets/Old Cabinet/Textures/T_cabinet_glass_AO.tga
+Assets/Old Cabinet/Textures/T_cabinet_glass_MetallicSmoothness.tga
+Assets/Old Cabinet/Textures/T_cabinet_glass_Normal.tga
+Assets/Old Cabinet/Textures/T_cabinet_MetallicSmoothness.png
+Assets/Old Cabinet/Textures/T_cabinet_Normal.tga
+Assets/Prefabs/Characters/Demon_Monster.prefab
+Assets/Prefabs/Characters/Enemy.prefab
+Assets/Prefabs/Furniture/Barrel.prefab
+Assets/Prefabs/Furniture/Dining_Table_Set.prefab
+Assets/Prefabs/Furniture/Grand_Mirror.prefab
+Assets/Prefabs/Furniture/Ritual_Altar.prefab
+Assets/Prefabs/Furniture/Safe.prefab
+Assets/Prefabs/Furniture/VictorianDoor.prefab
+Assets/Prefabs/Furniture/Victorian_Bed.prefab
+Assets/Prefabs/Furniture/Victorian_Door.prefab
+Assets/Prefabs/Furniture/Vintage_Desk.prefab
+Assets/Prefabs/Interactables/Clue_Note_Prefab.prefab
+Assets/Prefabs/Interactables/Door_Locked_Prefab.prefab
+Assets/Prefabs/Interactables/Grand_Mirror_Exit_Prefab.prefab
+Assets/Prefabs/Interactables/KeyItem_Prefab.prefab
+Assets/Prefabs/Interactables/Safe_Locked_Prefab.prefab
+Assets/Prefabs/Items/Dagger.prefab
+Assets/Prefabs/Props/Ritual_Dagger.prefab
+Assets/Prefabs/Props/Safe_Box.prefab
+Assets/Prefabs/Props/Storage_Barrel.prefab
+Assets/Scenes/Level_Main/NavMesh-NavMesh 1.asset
+Assets/Scenes/Level_Main/NavMesh-NavMesh.asset
+Assets/Scenes/SampleScene/NavMesh-Ground.asset
+Assets/Scripts/AI/AIController.cs
+Assets/Scripts/AI/AIState.cs
+Assets/Scripts/Audio/AudioManager.cs
+Assets/Scripts/Editor/DirectAssetDecorator.cs
+Assets/Scripts/Editor/DoorSetupTool.cs
+Assets/Scripts/Editor/FixNavMeshWalls.cs
+Assets/Scripts/Editor/MansionComprehensiveFixer.cs
+Assets/Scripts/Editor/MansionDecoratorAndMirrorsEditor.cs
+Assets/Scripts/Editor/MansionDoorsAndPuzzlesEditor.cs
+Assets/Scripts/Editor/MirrorHouseHorrorHUDBuilder.cs
+Assets/Scripts/Editor/SceneFurnitureAdjuster.cs
+Assets/Scripts/Editor/UISetupBuilder.cs
+Assets/Scripts/Editor/World2SceneBuilder.cs
+Assets/Scripts/Events/GameEvents.cs
+Assets/Scripts/Interaction/CameraRaycastInteraction.cs
+Assets/Scripts/Interaction/CodeClue.cs
+Assets/Scripts/Interaction/DoorInteractive.cs
+Assets/Scripts/Interaction/DrawerInteractive.cs
+Assets/Scripts/Interaction/EscapeTrigger.cs
+Assets/Scripts/Interaction/Interactable.cs
+Assets/Scripts/Interaction/KeyItem.cs
+Assets/Scripts/Interaction/Lockable.cs
+Assets/Scripts/Interaction/MirrorInteractive.cs
+Assets/Scripts/Level/MansionPuzzleAndDoorsManager.cs
+Assets/Scripts/Managers/MirrorHouseGameManager.cs
+Assets/Scripts/Player/PlayerCamera.cs
+Assets/Scripts/Player/PlayerController.cs
+Assets/Scripts/UI/CodeInputUI.cs
+Assets/Scripts/UI/CrosshairUI.cs
+Assets/Scripts/UI/GameUIManager.cs
+Assets/Scripts/UI/HorrorUITheme.cs
+Assets/Scripts/UI/MainMenuUI.cs
+Assets/Scripts/UI/MirrorHouseHorrorHUD.cs
+Assets/Scripts/UI/MobileInteractButton.cs
+Assets/Settings/Build Profiles/Android™.asset
+Assets/TextMesh Pro/Fonts/LiberationSans - OFL.txt
+Assets/TextMesh Pro/Fonts/LiberationSans.ttf
+Assets/TextMesh Pro/Resources/LineBreaking Following Characters.txt
+Assets/TextMesh Pro/Resources/LineBreaking Leading Characters.txt
+Assets/TextMesh Pro/Resources/TMP Settings.asset
+Assets/TextMesh Pro/Shaders/SDFFunctions.hlsl
+Assets/TextMesh Pro/Shaders/TMPro.cginc
+Assets/TextMesh Pro/Shaders/TMPro_Mobile.cginc
+Assets/TextMesh Pro/Shaders/TMPro_Properties.cginc
+Assets/TextMesh Pro/Shaders/TMPro_Surface.cginc
+Assets/TextMesh Pro/Shaders/TMP_Bitmap-Custom-Atlas.shader
+Assets/TextMesh Pro/Shaders/TMP_Bitmap-Mobile.shader
+Assets/TextMesh Pro/Shaders/TMP_Bitmap.shader
+Assets/TextMesh Pro/Shaders/TMP_SDF Overlay.shader
+Assets/TextMesh Pro/Shaders/TMP_SDF SpaceWarp.shader
+Assets/TextMesh Pro/Shaders/TMP_SDF SSD SpaceWarp.shader
+Assets/TextMesh Pro/Shaders/TMP_SDF SSD.shader
+Assets/TextMesh Pro/Shaders/TMP_SDF-HDRP LIT.shadergraph
+Assets/TextMesh Pro/Shaders/TMP_SDF-HDRP UNLIT.shadergraph
+Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile Masking.shader
+Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile Overlay.shader
+Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile SpaceWarp.shader
+Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile SSD SpaceWarp.shader
+Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile SSD.shader
+Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile-2-Pass.shader
+Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile.shader
+Assets/TextMesh Pro/Shaders/TMP_SDF-Surface-Mobile.shader
+Assets/TextMesh Pro/Shaders/TMP_SDF-Surface.shader
+Assets/TextMesh Pro/Shaders/TMP_SDF-URP Lit.shadergraph
+Assets/TextMesh Pro/Shaders/TMP_SDF-URP Unlit.shadergraph
+Assets/TextMesh Pro/Shaders/TMP_SDF.shader
+Assets/TextMesh Pro/Shaders/TMP_Sprite.shader
+Assets/TutorialInfo/Editor/ReadmeEditor.cs
+Assets/TutorialInfo/Icons/URP.png
+Assets/TutorialInfo/StyleSheets/ReadmeEditor.uss
+Assets/TutorialInfo/StyleSheets/ReadmeEditorDark.uss
+Assets/TutorialInfo/StyleSheets/ReadmeEditorLight.uss
+Assets/Furniture/Source/Materials/2SeatD_BaseColor.mat
+Assets/Furniture/Source/Materials/2Seat_BaseColor.mat
+Assets/Furniture/Source/Materials/3Seat2D_BaseColor.mat
+Assets/Furniture/Source/Materials/3Seat2_BaseColor.mat
+Assets/Furniture/Source/Materials/3SeatDirt_BaseColor.mat
+Assets/Furniture/Source/Materials/3Seat_BaseColor.mat
+Assets/Furniture/Source/Materials/chair_chair_Albedo.mat
+Assets/Furniture/Source/Materials/closet2_BaseColor.mat
+Assets/Furniture/Source/Materials/closet3_BaseColor.mat
+Assets/Furniture/Source/Materials/closet_BaseColor.mat
+Assets/Furniture/Source/Materials/couch_BaseColor.mat
+Assets/Furniture/Source/Materials/fotel2D_BaseColor.mat
+Assets/Furniture/Source/Materials/fotel2_BaseColor.mat
+Assets/Furniture/Source/Materials/komm2_BaseColor.mat
+Assets/Furniture/Source/Materials/Kom_BaseColor.mat
+Assets/Furniture/Source/Materials/MetalTable_BaseColor.mat
+Assets/Furniture/Source/Materials/RoundTable_BaseColor.mat
+Assets/Furniture/Source/Mesh/3Seat.fbx
+Assets/Furniture/Source/Mesh/3Seat2.fbx
+Assets/Furniture/Source/Mesh/3Seat3.fbx
+Assets/Furniture/Source/Mesh/3Seat4.fbx
+Assets/Furniture/Source/Mesh/BigCloset.fbx
+Assets/Furniture/Source/Mesh/chair.fbx
+Assets/Furniture/Source/Mesh/closet2.fbx
+Assets/Furniture/Source/Mesh/Closet3.fbx
+Assets/Furniture/Source/Mesh/Couch.fbx
+Assets/Furniture/Source/Mesh/DoubleSeat.fbx
+Assets/Furniture/Source/Mesh/DoubleSeat2.fbx
+Assets/Furniture/Source/Mesh/Fotel.fbx
+Assets/Furniture/Source/Mesh/Fotel2.fbx
+Assets/Furniture/Source/Mesh/Fotel3.fbx
+Assets/Furniture/Source/Mesh/Fotel4.fbx
+Assets/Furniture/Source/Mesh/MetalTable.fbx
+Assets/Furniture/Source/Mesh/MirrorComode.fbx
+Assets/Furniture/Source/Mesh/MirrorComode2.fbx
+Assets/Furniture/Source/Mesh/RoundTable.fbx
+Assets/Furniture/Source/Mesh/SmallCloset.fbx
+Assets/Furniture/Source/Textures/2SeatD_BaseColor.tga
+Assets/Furniture/Source/Textures/2SeatD_mask.tga
+Assets/Furniture/Source/Textures/2SeatD_Normal.tga
+Assets/Furniture/Source/Textures/2Seat_BaseColor.tga
+Assets/Furniture/Source/Textures/2Seat_mask.tga
+Assets/Furniture/Source/Textures/2Seat_Normal.tga
+Assets/Furniture/Source/Textures/3Seat2D_BaseColor.tga
+Assets/Furniture/Source/Textures/3Seat2D_mask.tga
+Assets/Furniture/Source/Textures/3Seat2D_Normal.tga
+Assets/Furniture/Source/Textures/3Seat2_BaseColor.tga
+Assets/Furniture/Source/Textures/3Seat2_mask.tga
+Assets/Furniture/Source/Textures/3Seat2_Normal.tga
+Assets/Furniture/Source/Textures/3SeatDirt_BaseColor.tga
+Assets/Furniture/Source/Textures/3SeatDirt_mask.tga
+Assets/Furniture/Source/Textures/3SeatDirt_Normal.tga
+Assets/Furniture/Source/Textures/3Seat_BaseColor.tga
+Assets/Furniture/Source/Textures/3Seat_mask.tga
+Assets/Furniture/Source/Textures/3Seat_Normal.tga
+Assets/Furniture/Source/Textures/chair_chair_Albedo.tga
+Assets/Furniture/Source/Textures/chair_chair_Metallic.tga
+Assets/Furniture/Source/Textures/chair_chair_Normal.png
+Assets/Furniture/Source/Textures/closet2_BaseColor.tga
+Assets/Furniture/Source/Textures/closet2_mask.tga
+Assets/Furniture/Source/Textures/closet2_Normal.png
+Assets/Furniture/Source/Textures/closet3_BaseColor.tga
+Assets/Furniture/Source/Textures/closet3_mask.tga
+Assets/Furniture/Source/Textures/closet3_Normal.png
+Assets/Furniture/Source/Textures/closet_BaseColor.tga
+Assets/Furniture/Source/Textures/closet_mask.tga
+Assets/Furniture/Source/Textures/closet_Normal.tga
+Assets/Furniture/Source/Textures/couch_BaseColor.tga
+Assets/Furniture/Source/Textures/couch_mask.tga
+Assets/Furniture/Source/Textures/couch_Normal.tga
+Assets/Furniture/Source/Textures/fotel2D_BaseColor.tga
+Assets/Furniture/Source/Textures/fotel2D_mask.tga
+Assets/Furniture/Source/Textures/fotel2D_Normal.tga
+Assets/Furniture/Source/Textures/fotel2_BaseColor.tga
+Assets/Furniture/Source/Textures/fotel2_mask.tga
+Assets/Furniture/Source/Textures/fotel2_Normal.tga
+Assets/Furniture/Source/Textures/komm2_BaseColor.tga
+Assets/Furniture/Source/Textures/komm2_mask.tga
+Assets/Furniture/Source/Textures/komm2_Normal.png
+Assets/Furniture/Source/Textures/Kom_BaseColor.tga
+Assets/Furniture/Source/Textures/Kom_mask.tga
+Assets/Furniture/Source/Textures/Kom_Normal.png
+Assets/Furniture/Source/Textures/MetalTable_BaseColor.tga
+Assets/Furniture/Source/Textures/MetalTable_mask.tga
+Assets/Furniture/Source/Textures/MetalTable_Normal.tga
+Assets/Furniture/Source/Textures/RoundTable_BaseColor.tga
+Assets/Furniture/Source/Textures/RoundTable_mask.tga
+Assets/Furniture/Source/Textures/RoundTable_Normal.tga
+Assets/Joystick Pack/Scripts/Base/Joystick.cs
+Assets/Joystick Pack/Scripts/Editor/DynamicJoystickEditor.cs
+Assets/Joystick Pack/Scripts/Editor/FloatingJoystickEditor.cs
+Assets/Joystick Pack/Scripts/Editor/JoystickEditor.cs
+Assets/Joystick Pack/Scripts/Editor/VariableJoystickEditor.cs
+Assets/Joystick Pack/Scripts/Joysticks/DynamicJoystick.cs
+Assets/Joystick Pack/Scripts/Joysticks/FixedJoystick.cs
+Assets/Joystick Pack/Scripts/Joysticks/FloatingJoystick.cs
+Assets/Joystick Pack/Scripts/Joysticks/VariableJoystick.cs
+Assets/Joystick Pack/Sprites/All Axis Backgrounds/AllAxis_Outline.png
+Assets/Joystick Pack/Sprites/All Axis Backgrounds/AllAxis_Outline_Arrows.png
+Assets/Joystick Pack/Sprites/All Axis Backgrounds/AllAxis_Plain.png
+Assets/Joystick Pack/Sprites/All Axis Backgrounds/AllAxis_Plain_Arrows.png
+Assets/Joystick Pack/Sprites/All Axis Backgrounds/AllAxis_Ridged.png
+Assets/Joystick Pack/Sprites/All Axis Backgrounds/AllAxis_Ridged_Arrows.png
+Assets/Joystick Pack/Sprites/Handles/Handle_Outline.png
+Assets/Joystick Pack/Sprites/Handles/Handle_Outline_Arrows.png
+Assets/Joystick Pack/Sprites/Handles/Handle_Plain.png
+Assets/Joystick Pack/Sprites/Handles/Handle_Plain_Arrows.png
+Assets/Joystick Pack/Sprites/Handles/Handle_Ridged.png
+Assets/Joystick Pack/Sprites/Handles/Handle_Ridged_Arrows.png
+Assets/Joystick Pack/Sprites/Horizontal Backgrounds/Horizontal_Outline.png
+Assets/Joystick Pack/Sprites/Horizontal Backgrounds/Horizontal_Outline_Arrows.png
+Assets/Joystick Pack/Sprites/Horizontal Backgrounds/Horizontal_Plain.png
+Assets/Joystick Pack/Sprites/Horizontal Backgrounds/Horizontal_Plain_Arrows.png
+Assets/Joystick Pack/Sprites/Horizontal Backgrounds/Horizontal_Ridged.png
+Assets/Joystick Pack/Sprites/Horizontal Backgrounds/Horizontal_Ridged_Arrows.png
+Assets/Joystick Pack/Sprites/Vertical Backgrounds/Vertical_Outline.png
+Assets/Joystick Pack/Sprites/Vertical Backgrounds/Vertical_Outline_Arrows.png
+Assets/Joystick Pack/Sprites/Vertical Backgrounds/Vertical_Plain.png
+Assets/Joystick Pack/Sprites/Vertical Backgrounds/Vertical_Plain_Arrows.png
+Assets/Joystick Pack/Sprites/Vertical Backgrounds/Vertical_Ridged.png
+Assets/Joystick Pack/Sprites/Vertical Backgrounds/Vertical_Ridged_Arrows.png
+Assets/Scenes/ZNS3D/Prefabs/antique_light.prefab
+Assets/Scenes/ZNS3D/Prefabs/bookshelf.prefab
+Assets/Scenes/ZNS3D/Prefabs/book_1.prefab
+Assets/Scenes/ZNS3D/Prefabs/book_2.prefab
+Assets/Scenes/ZNS3D/Prefabs/book_3.prefab
+Assets/Scenes/ZNS3D/Prefabs/book_4.prefab
+Assets/Scenes/ZNS3D/Prefabs/book_5.prefab
+Assets/Scenes/ZNS3D/Prefabs/book_6.prefab
+Assets/Scenes/ZNS3D/Prefabs/book_7.prefab
+Assets/Scenes/ZNS3D/Prefabs/book_8.prefab
+Assets/Scenes/ZNS3D/Prefabs/book_9.prefab
+Assets/Scenes/ZNS3D/Prefabs/carpet_1.prefab
+Assets/Scenes/ZNS3D/Prefabs/carpet_2.prefab
+Assets/Scenes/ZNS3D/Prefabs/carpet_3.prefab
+Assets/Scenes/ZNS3D/Prefabs/ceiling_big.prefab
+Assets/Scenes/ZNS3D/Prefabs/ceiling_rectangle.prefab
+Assets/Scenes/ZNS3D/Prefabs/ceiling_small.prefab
+Assets/Scenes/ZNS3D/Prefabs/ceramic_teapot.prefab
+Assets/Scenes/ZNS3D/Prefabs/ceramic_tea_glass.prefab
+Assets/Scenes/ZNS3D/Prefabs/clock_wall.prefab
+Assets/Scenes/ZNS3D/Prefabs/curtain_1.prefab
+Assets/Scenes/ZNS3D/Prefabs/curtain_2.prefab
+Assets/Scenes/ZNS3D/Prefabs/floor_big.prefab
+Assets/Scenes/ZNS3D/Prefabs/floor_rectangle.prefab
+Assets/Scenes/ZNS3D/Prefabs/floor_small.prefab
+Assets/Scenes/ZNS3D/Prefabs/GameObjectTimeline.playable
+Assets/Scenes/ZNS3D/Prefabs/gramophone.prefab
+Assets/Scenes/ZNS3D/Prefabs/light_desk.prefab
+Assets/Scenes/ZNS3D/Prefabs/light_tall.prefab
+Assets/Scenes/ZNS3D/Prefabs/New Lighting Settings.lighting
+Assets/Scenes/ZNS3D/Prefabs/painting_1.prefab
+Assets/Scenes/ZNS3D/Prefabs/painting_2.prefab
+Assets/Scenes/ZNS3D/Prefabs/painting_3.prefab
+Assets/Scenes/ZNS3D/Prefabs/painting_4.prefab
+Assets/Scenes/ZNS3D/Prefabs/painting_5.prefab
+Assets/Scenes/ZNS3D/Prefabs/painting_6.prefab
+Assets/Scenes/ZNS3D/Prefabs/phone.prefab
+Assets/Scenes/ZNS3D/Prefabs/photo_1.prefab
+Assets/Scenes/ZNS3D/Prefabs/photo_2.prefab
+Assets/Scenes/ZNS3D/Prefabs/photo_3.prefab
+Assets/Scenes/ZNS3D/Prefabs/photo_4.prefab
+Assets/Scenes/ZNS3D/Prefabs/photo_5.prefab
+Assets/Scenes/ZNS3D/Prefabs/photo_frame_desk.prefab
+Assets/Scenes/ZNS3D/Prefabs/sofa_big.prefab
+Assets/Scenes/ZNS3D/Prefabs/sofa_small.prefab
+Assets/Scenes/ZNS3D/Prefabs/tea_table 1.prefab
+Assets/Scenes/ZNS3D/Prefabs/tv.prefab
+Assets/Scenes/ZNS3D/Prefabs/tv_desk.prefab
+Assets/Scenes/ZNS3D/Prefabs/vase_1.prefab
+Assets/Scenes/ZNS3D/Prefabs/vase_2.prefab
+Assets/Scenes/ZNS3D/Prefabs/vase_3.prefab
+Assets/Scenes/ZNS3D/Prefabs/wall_corner 1.prefab
+Assets/Scenes/ZNS3D/Prefabs/wall_corner_2.prefab
+Assets/Scenes/ZNS3D/Prefabs/wall_corner_double.prefab
+Assets/Scenes/ZNS3D/Prefabs/wall_default 1.prefab
+Assets/Scenes/ZNS3D/Prefabs/wall_default_2 1.prefab
+Assets/Scenes/ZNS3D/Prefabs/wall_with_big_door.prefab
+Assets/Scenes/ZNS3D/Prefabs/wall_with_one_window.prefab
+Assets/Scenes/ZNS3D/Prefabs/wall_with_small_door.prefab
+Assets/Scenes/ZNS3D/Prefabs/wall_with_two_window.prefab
+Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF - Drop Shadow.mat
+Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF - Fallback.asset
+Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF - Outline.mat
+Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF.asset
+Assets/TextMesh Pro/Resources/Style Sheets/Default Style Sheet.asset
+Assets/Models/Characters/Enemy/source/Monster_WalkingPr.fbx
+Assets/Models/Characters/Enemy/textures/AboveMonsterBase_Color.png
+Assets/Models/Characters/Enemy/textures/AboveMonsterEmissive.png
+Assets/Models/Characters/Enemy/textures/AboveMonsterMetallic.png
+Assets/Models/Characters/Enemy/textures/AboveMonsterMixed_AO.png
+Assets/Models/Characters/Enemy/textures/AboveMonsterNormal.png
+Assets/Models/Characters/Enemy/textures/AboveMonsterRoughness.png
+Assets/Models/Furniture/AntiqueDesk/source/model.fbx
+Assets/Models/Furniture/AntiqueDesk/textures/Desk_BaseColor.png
+Assets/Models/Furniture/AntiqueDesk/textures/Desk_Metallic.png
+Assets/Models/Furniture/AntiqueDesk/textures/Desk_Normal.png
+Assets/Models/Furniture/AntiqueDesk/textures/Desk_Roughness.png
+Assets/Models/Furniture/AntiqueDesk/textures/internal_ground_ao_texture.jpeg
+Assets/Models/Furniture/Barrel/source/Barrel.zip
+Assets/Models/Furniture/Barrel/textures/barrel-Colour.png
+Assets/Models/Furniture/Barrel/textures/barrel-Colour_specular_copy.png
+Assets/Models/Furniture/Barrel/textures/metal-Colour.png
+Assets/Models/Furniture/Candelabra/source/Candelabra.rar
+Assets/Models/Furniture/Candelabra/textures/Candelabra_BaseColor.png
+Assets/Models/Furniture/Candelabra/textures/Candelabra_Roughness.png
+Assets/Models/Furniture/Candelabra/textures/T_Candelabra_AO.png
+Assets/Models/Furniture/Candelabra/textures/T_Candelabra_Metallic.png
+Assets/Models/Furniture/Candelabra/textures/T_Candelabra_Normal.png
+Assets/Models/Furniture/Candelabra/textures/T_Candle_color.png
+Assets/Models/Furniture/Candelabra/textures/T_Candle_normal_.png
+Assets/Models/Furniture/Candelabra/textures/T_Candle_roughness.png
+Assets/Models/Furniture/DiningTable/source/Dining table.fbx
+Assets/Models/Furniture/DiningTable/textures/bamboo-wood-semigloss-albedo.png
+Assets/Models/Furniture/DiningTable/textures/bamboo-wood-semigloss-normal.png
+Assets/Models/Furniture/DiningTable/textures/coarse-couch-fabric_albedo.png
+Assets/Models/Furniture/DiningTable/textures/coarse-couch-fabric_normal-ogl.png
+Assets/Models/Furniture/GothicMirror/source/mirror.fbx
+Assets/Models/Furniture/GothicMirror/textures/internal_ground_ao_texture.jpeg
+Assets/Models/Furniture/GothicMirror/textures/mirror_1001_ao.png
+Assets/Models/Furniture/GothicMirror/textures/mirror_1001_BaseColor.png
+Assets/Models/Furniture/GothicMirror/textures/mirror_1001_Metallic.png
+Assets/Models/Furniture/GothicMirror/textures/mirror_1001_Normal.png
+Assets/Models/Furniture/GothicMirror/textures/mirror_1001_Roughness.png
+Assets/Models/Furniture/RitualAltar/source/Altar_Low.fbx
+Assets/Models/Furniture/RitualAltar/textures/Altar_Low_Candles_Normal.png
+Assets/Models/Furniture/RitualAltar/textures/Altar_Low_Tissue_AlbedoTransparency.png
+Assets/Models/Furniture/RitualAltar/textures/Altar_Low_Tissue_Normal.png
+Assets/Models/Furniture/RitualAltar/textures/Candles_BaseColor.png
+Assets/Models/Furniture/RitualAltar/textures/Candles_Roughness.png
+Assets/Models/Furniture/RitualAltar/textures/Tissue_Roughness.png
+Assets/Models/Furniture/Safe/source/Safe.fbx
+Assets/Models/Furniture/Safe/textures/Safe_BC.png
+Assets/Models/Furniture/Safe/textures/Safe_M.png
+Assets/Models/Furniture/Safe/textures/Safe_N.png
+Assets/Models/Furniture/Safe/textures/Safe_R.png
+Assets/Models/Furniture/VictorianBed/source/Victorian Bed.zip
+Assets/Models/Furniture/VictorianBed/textures/bed_mattres_material_Base_Color.png
+Assets/Models/Furniture/VictorianBed/textures/bed_mattres_material_Metallic.png
+Assets/Models/Furniture/VictorianBed/textures/bed_mattres_material_Mixed_AO.png
+Assets/Models/Furniture/VictorianBed/textures/bed_mattres_material_Normal_DirectX.png
+Assets/Models/Furniture/VictorianBed/textures/bed_mattres_material_Roughness.png
+Assets/Models/Furniture/VictorianBed/textures/bed_pillow_material_Base_Color.png
+Assets/Models/Furniture/VictorianBed/textures/bed_pillow_material_Metallic.png
+Assets/Models/Furniture/VictorianBed/textures/bed_pillow_material_Mixed_AO.png
+Assets/Models/Furniture/VictorianBed/textures/bed_pillow_material_Normal_DirectX.png
+Assets/Models/Furniture/VictorianBed/textures/bed_pillow_material_Roughness.png
+Assets/Models/Furniture/VictorianBed/textures/bed_wood_material_Base_Color.png
+Assets/Models/Furniture/VictorianBed/textures/bed_wood_material_Metallic.png
+Assets/Models/Furniture/VictorianBed/textures/bed_wood_material_Mixed_AO.png
+Assets/Models/Furniture/VictorianBed/textures/bed_wood_material_Normal_DirectX.png
+Assets/Models/Furniture/VictorianBed/textures/bed_wood_material_Roughness.png
+Assets/Models/Furniture/VictorianBed/textures/internal_ground_ao_texture.jpeg
+Assets/Models/Furniture/VictorianBookshelf/source/victorian_bookshelf.glb
+Assets/Models/Furniture/VictorianBookshelf/textures/books_albedo_4.png
+Assets/Models/Furniture/VictorianBookshelf/textures/books_normal_3.png
+Assets/Models/Furniture/VictorianBookshelf/textures/books_roughness_5@channels=G.png
+Assets/Models/Furniture/VictorianBookshelf/textures/rosewood_albedo_1.png
+Assets/Models/Furniture/VictorianBookshelf/textures/rosewood_normal_0.png
+Assets/Models/Furniture/VictorianBookshelf/textures/rosewood_roughness_2@channels=G.png
+Assets/Models/Furniture/VictorianDoor/source/Door.fbx
+Assets/Models/Furniture/VictorianDoor/textures/Door_Texture_Diffuse.tga.png
+Assets/Models/Furniture/WoodenBarrel/source/Barrel.zip
+Assets/Models/Furniture/WoodenBarrel/textures/barrel-Colour.png
+Assets/Models/Furniture/WoodenBarrel/textures/barrel-Colour_specular_copy.png
+Assets/Models/Furniture/WoodenBarrel/textures/metal-Colour.png
+Assets/Models/Items/Dagger/source/Royal Dagger.fbx
+Assets/Models/Items/Dagger/textures/Dagger_BaseColor.jpg
+Assets/Models/Items/Dagger/textures/Dagger_Metallic.jpg
+Assets/Models/Items/Dagger/textures/Dagger_Normal.jpg
+Assets/Models/Items/Dagger/textures/Dagger_Roughness.jpg
+Assets/Models/Items/Keys/MasterKey/MasterKey.obj
+Assets/Models/Items/RitualDagger/source/Royal Dagger.fbx
+Assets/Models/Items/RitualDagger/textures/Dagger_BaseColor.jpg
+Assets/Models/Items/RitualDagger/textures/Dagger_Metallic.jpg
+Assets/Models/Items/RitualDagger/textures/Dagger_Normal.jpg
+Assets/Models/Items/RitualDagger/textures/Dagger_Roughness.jpg
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Demo/All_Prefabs.unity
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Demo/Demo_Scene.unity
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Hdri/moonlit_golf_4k.exr
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Materials/Glass 1.mat
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Materials/Glass.mat
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Materials/Mat-Antique_Light.mat
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Materials/Mat_Ceiling.mat
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Materials/Mat_Decors_1.mat
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Materials/Mat_Decors_2.mat
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Materials/Mat_Floors.mat
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Materials/Mat_Furnitures_1.mat
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Materials/Mat_Furnitures_2.mat
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Materials/Mat_Gramophone.mat
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Materials/Mat_Walls.mat
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Materials/Mat_Windows_Doors.mat
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Materials/New Material.mat
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Meshes/antique_light.fbx
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Meshes/bookshelf.fbx
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Meshes/book_1.fbx
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Meshes/book_2.fbx
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Meshes/book_3.fbx
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Meshes/book_4.fbx
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Meshes/book_5.fbx
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Meshes/book_6.fbx
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Meshes/book_7.fbx
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Meshes/book_8.fbx
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Meshes/book_9.fbx
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Meshes/carpet_1.fbx
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Meshes/carpet_2.fbx
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Meshes/carpet_3.fbx
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Meshes/ceiling_big.fbx
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Meshes/ceiling_rectangle.fbx
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Meshes/ceiling_small.fbx
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Meshes/ceramic_teapot.fbx
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Meshes/ceramic_tea_glass.fbx
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Meshes/clock_wall.fbx
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Meshes/curtain_1.fbx
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Meshes/curtain_2.fbx
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Meshes/floor_big.fbx
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Meshes/floor_rectangle.fbx
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Meshes/floor_small.fbx
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Meshes/gramophone.fbx
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Meshes/light_desk.fbx
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Meshes/light_tall.fbx
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Meshes/painting_1.fbx
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Meshes/painting_2.fbx
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Meshes/painting_3.fbx
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Meshes/painting_4.fbx
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Meshes/painting_5.fbx
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Meshes/painting_6.fbx
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Meshes/phone.fbx
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Meshes/photo_1.fbx
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Meshes/photo_2.fbx
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Meshes/photo_3.fbx
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Meshes/photo_4.fbx
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Meshes/photo_5.fbx
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Meshes/photo_frame_desk.fbx
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Meshes/sofa_big.fbx
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Meshes/sofa_small.fbx
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Meshes/tea_table.fbx
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Meshes/tv.fbx
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Meshes/tv_desk.fbx
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Meshes/vase_1.fbx
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Meshes/vase_2.fbx
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Meshes/vase_3.fbx
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Meshes/wall_corner.fbx
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Meshes/wall_corner_2.fbx
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Meshes/wall_corner_double.fbx
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Meshes/wall_default.fbx
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Meshes/wall_default_2.fbx
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Meshes/wall_with_big_door.fbx
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Meshes/wall_with_one_window.fbx
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Meshes/wall_with_small_door.fbx
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Meshes/wall_with_two_window.fbx
+Assets/Models/Characters/Enemy/HorrorMonster/source/Monster_WalkingPr.fbx
+Assets/Models/Characters/Enemy/HorrorMonster/textures/AboveMonsterBase_Color.png
+Assets/Models/Characters/Enemy/HorrorMonster/textures/AboveMonsterEmissive.png
+Assets/Models/Characters/Enemy/HorrorMonster/textures/AboveMonsterMetallic.png
+Assets/Models/Characters/Enemy/HorrorMonster/textures/AboveMonsterMixed_AO.png
+Assets/Models/Characters/Enemy/HorrorMonster/textures/AboveMonsterNormal.png
+Assets/Models/Characters/Enemy/HorrorMonster/textures/AboveMonsterRoughness.png
+Assets/Models/Furniture/AntiqueDesk/antique-desk/source/model.fbx
+Assets/Models/Furniture/AntiqueDesk/antique-desk/textures/Desk_BaseColor.png
+Assets/Models/Furniture/AntiqueDesk/antique-desk/textures/Desk_Metallic.png
+Assets/Models/Furniture/AntiqueDesk/antique-desk/textures/Desk_Normal.png
+Assets/Models/Furniture/AntiqueDesk/antique-desk/textures/Desk_Roughness.png
+Assets/Models/Furniture/AntiqueDesk/antique-desk/textures/internal_ground_ao_texture.jpeg
+Assets/Models/Furniture/Barrel/source/unzipped/Barrel.blend
+Assets/Models/Furniture/Barrel/source/unzipped/Barrel.fbx
+Assets/Models/Furniture/Barrel/source/unzipped/Barrel.obj
+Assets/Models/Furniture/DiningTable/dining-table-and-chairs/source/Dining table.fbx
+Assets/Models/Furniture/DiningTable/dining-table-and-chairs/textures/bamboo-wood-semigloss-albedo.png
+Assets/Models/Furniture/DiningTable/dining-table-and-chairs/textures/bamboo-wood-semigloss-normal.png
+Assets/Models/Furniture/DiningTable/dining-table-and-chairs/textures/coarse-couch-fabric_albedo.png
+Assets/Models/Furniture/DiningTable/dining-table-and-chairs/textures/coarse-couch-fabric_normal-ogl.png
+Assets/Models/Furniture/GothicMirror/gothic-mirror/source/mirror.fbx
+Assets/Models/Furniture/GothicMirror/gothic-mirror/textures/internal_ground_ao_texture.jpeg
+Assets/Models/Furniture/GothicMirror/gothic-mirror/textures/mirror_1001_ao.png
+Assets/Models/Furniture/GothicMirror/gothic-mirror/textures/mirror_1001_BaseColor.png
+Assets/Models/Furniture/GothicMirror/gothic-mirror/textures/mirror_1001_Metallic.png
+Assets/Models/Furniture/GothicMirror/gothic-mirror/textures/mirror_1001_Normal.png
+Assets/Models/Furniture/GothicMirror/gothic-mirror/textures/mirror_1001_Roughness.png
+Assets/Models/Furniture/RitualAltar/ritual-altar-game-asset/source/Altar_Low.fbx
+Assets/Models/Furniture/RitualAltar/ritual-altar-game-asset/textures/Altar_Low_Candles_Normal.png
+Assets/Models/Furniture/RitualAltar/ritual-altar-game-asset/textures/Altar_Low_Tissue_AlbedoTransparency.png
+Assets/Models/Furniture/RitualAltar/ritual-altar-game-asset/textures/Altar_Low_Tissue_Normal.png
+Assets/Models/Furniture/RitualAltar/ritual-altar-game-asset/textures/Candles_BaseColor.png
+Assets/Models/Furniture/RitualAltar/ritual-altar-game-asset/textures/Candles_Roughness.png
+Assets/Models/Furniture/RitualAltar/ritual-altar-game-asset/textures/Tissue_Roughness.png
+Assets/Models/Furniture/Safe/safe/source/Safe.fbx
+Assets/Models/Furniture/Safe/safe/textures/Safe_BC.png
+Assets/Models/Furniture/Safe/safe/textures/Safe_M.png
+Assets/Models/Furniture/Safe/safe/textures/Safe_N.png
+Assets/Models/Furniture/Safe/safe/textures/Safe_R.png
+Assets/Models/Furniture/VictorianBed/source/unzipped/sheet 1.fbx
+Assets/Models/Furniture/VictorianBed/source/unzipped/Victorian Bed.fbx
+Assets/Models/Furniture/VictorianBed/victorian-bed/source/Victorian Bed.zip
+Assets/Models/Furniture/VictorianBed/victorian-bed/textures/bed_mattres_material_Base_Color.png
+Assets/Models/Furniture/VictorianBed/victorian-bed/textures/bed_mattres_material_Metallic.png
+Assets/Models/Furniture/VictorianBed/victorian-bed/textures/bed_mattres_material_Mixed_AO.png
+Assets/Models/Furniture/VictorianBed/victorian-bed/textures/bed_mattres_material_Normal_DirectX.png
+Assets/Models/Furniture/VictorianBed/victorian-bed/textures/bed_mattres_material_Roughness.png
+Assets/Models/Furniture/VictorianBed/victorian-bed/textures/bed_pillow_material_Base_Color.png
+Assets/Models/Furniture/VictorianBed/victorian-bed/textures/bed_pillow_material_Metallic.png
+Assets/Models/Furniture/VictorianBed/victorian-bed/textures/bed_pillow_material_Mixed_AO.png
+Assets/Models/Furniture/VictorianBed/victorian-bed/textures/bed_pillow_material_Normal_DirectX.png
+Assets/Models/Furniture/VictorianBed/victorian-bed/textures/bed_pillow_material_Roughness.png
+Assets/Models/Furniture/VictorianBed/victorian-bed/textures/bed_wood_material_Base_Color.png
+Assets/Models/Furniture/VictorianBed/victorian-bed/textures/bed_wood_material_Metallic.png
+Assets/Models/Furniture/VictorianBed/victorian-bed/textures/bed_wood_material_Mixed_AO.png
+Assets/Models/Furniture/VictorianBed/victorian-bed/textures/bed_wood_material_Normal_DirectX.png
+Assets/Models/Furniture/VictorianBed/victorian-bed/textures/bed_wood_material_Roughness.png
+Assets/Models/Furniture/VictorianBed/victorian-bed/textures/internal_ground_ao_texture.jpeg
+Assets/Models/Furniture/VictorianDoor/victorian-door/source/Door.fbx
+Assets/Models/Furniture/VictorianDoor/victorian-door/textures/Door_Texture_Diffuse.tga.png
+Assets/Models/Furniture/WoodenBarrel/source/unzipped/Barrel.blend
+Assets/Models/Furniture/WoodenBarrel/source/unzipped/Barrel.fbx
+Assets/Models/Furniture/WoodenBarrel/source/unzipped/Barrel.obj
+Assets/Models/Items/Keys/AntiqueKey/source/key.glb
+Assets/Models/Items/Keys/AntiqueKey/textures/Diffuse_1.png
+Assets/Models/Items/Keys/AntiqueKey/textures/metallic-roughness_2@channels=B.png
+Assets/Models/Items/Keys/AntiqueKey/textures/metallic-roughness_2@channels=G.png
+Assets/Models/Items/Keys/AntiqueKey/textures/normal_0.png
+Assets/Models/Items/Keys/BrassKey/source/BrassKey.glb
+Assets/Models/Items/Keys/BrassKey/textures/Diffuse_1.png
+Assets/Models/Items/Keys/BrassKey/textures/metallic-roughness_2@channels=B.png
+Assets/Models/Items/Keys/BrassKey/textures/metallic-roughness_2@channels=G.png
+Assets/Models/Items/Keys/BrassKey/textures/normal_0.png
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Demo/Demo_Scene/Box Volume Profile.asset
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Demo/Demo_Scene/Global Volume Profile.asset
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Demo/Demo_Scene/LightingData.asset
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Demo/Demo_Scene/Lightmap-0_comp_dir.png
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Demo/Demo_Scene/Lightmap-0_comp_light.exr
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Demo/Demo_Scene/ReflectionProbe-0.exr
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Demo/Demo_Scene/Sky and Fog Settings.asset
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Textures/Antique_Light/antique_light_Mat_BaseColor.png
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Textures/Antique_Light/antique_light_Mat_Height.png
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Textures/Antique_Light/antique_light_Mat_Metallic.png
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Textures/Antique_Light/antique_light_Mat_Normal.png
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Textures/Antique_Light/antique_light_Mat_Roughness.png
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Textures/Ceiling/ceiling_Mat_ceiling_BaseColor.png
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Textures/Ceiling/ceiling_Mat_ceiling_Height.png
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Textures/Ceiling/ceiling_Mat_ceiling_Metallic.png
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Textures/Ceiling/ceiling_Mat_ceiling_Normal.png
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Textures/Ceiling/ceiling_Mat_ceiling_Roughness.png
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Textures/Decors_1/decors_1_Mat_decors_1_BaseColor.png
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Textures/Decors_1/decors_1_Mat_decors_1_Height.png
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Textures/Decors_1/decors_1_Mat_decors_1_Metallic.png
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Textures/Decors_1/decors_1_Mat_decors_1_Normal.png
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Textures/Decors_1/decors_1_Mat_decors_1_Roughness.png
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Textures/Decors_2/decors_2_Mat_Decors_2_BaseColor.png
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Textures/Decors_2/decors_2_Mat_Decors_2_Height.png
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Textures/Decors_2/decors_2_Mat_Decors_2_Metallic.png
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Textures/Decors_2/decors_2_Mat_Decors_2_Normal.png
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Textures/Decors_2/decors_2_Mat_Decors_2_Roughness.png
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Textures/Floors/floors_Mat_Floors_BaseColor.png
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Textures/Floors/floors_Mat_Floors_Height.png
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Textures/Floors/floors_Mat_Floors_Metallic.png
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Textures/Floors/floors_Mat_Floors_Normal.png
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Textures/Floors/floors_Mat_Floors_Roughness.png
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Textures/Furnitures_1/furnitures_1_Mat_Furnitures_1_BaseColor.png
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Textures/Furnitures_1/furnitures_1_Mat_Furnitures_1_Height.png
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Textures/Furnitures_1/furnitures_1_Mat_Furnitures_1_Metallic.png
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Textures/Furnitures_1/furnitures_1_Mat_Furnitures_1_Normal.png
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Textures/Furnitures_1/furnitures_1_Mat_Furnitures_1_Roughness.png
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Textures/Furnitures_2/furnitures_2_Mat_Furnitures_2_BaseColor.png
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Textures/Furnitures_2/furnitures_2_Mat_Furnitures_2_Height.png
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Textures/Furnitures_2/furnitures_2_Mat_Furnitures_2_Metallic.png
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Textures/Furnitures_2/furnitures_2_Mat_Furnitures_2_Normal.png
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Textures/Furnitures_2/furnitures_2_Mat_Furnitures_2_Roughness.png
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Textures/Gramophone/gramafon_Mat_Gramafon_BaseColor.png
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Textures/Gramophone/gramafon_Mat_Gramafon_Height.png
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Textures/Gramophone/gramafon_Mat_Gramafon_Metallic.png
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Textures/Gramophone/gramafon_Mat_Gramafon_Normal.png
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Textures/Gramophone/gramafon_Mat_Gramafon_Roughness.png
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Textures/Walls/walls_Mat_Walls_BaseColor.png
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Textures/Walls/walls_Mat_Walls_Height.png
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Textures/Walls/walls_Mat_Walls_Metallic.png
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Textures/Walls/walls_Mat_Walls_Normal.png
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Textures/Walls/walls_Mat_Walls_Roughness.png
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Textures/Windows_Doors/Mat_Windows_Doors_BaseColor.png
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Textures/Windows_Doors/Mat_Windows_Doors_Height.png
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Textures/Windows_Doors/Mat_Windows_Doors_Metallic.png
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Textures/Windows_Doors/Mat_Windows_Doors_Normal.png
+Assets/Scenes/ZNS3D/Vintage Living Room Game Pack/Textures/Windows_Doors/windows_doors_Mat_Roughness.png
+Assets/Models/Furniture/VictorianBed/victorian-bed/source/unzipped/sheet 1.fbx
+Assets/Models/Furniture/VictorianBed/victorian-bed/source/unzipped/Victorian Bed.fbx

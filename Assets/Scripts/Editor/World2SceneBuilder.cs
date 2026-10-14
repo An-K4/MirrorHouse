@@ -339,7 +339,7 @@ public class World2SceneBuilder : EditorWindow
 
         // --- ROOM 1: EMILY'S BEDROOM (North-West) ---
         SpawnPrefab(prefabBed, "Prop_Victorian_Bed", new Vector3(-12.5f, 0, 13f), new Vector3(0, 90, 0));
-        SpawnPrefab(prefabDesk, "Prop_Bedroom_Desk", new Vector3(-7f, 0, 14.5f), new Vector3(0, 180, 0));
+        var deskBed = SpawnPrefab(prefabDesk, "Prop_Bedroom_Desk", new Vector3(-7f, 0, 14.5f), new Vector3(0, 180, 0));
 
         var safeBed = SpawnPrefab(prefabSafe, "Safe_Bedroom", new Vector3(-7f, 0.78f, 14.5f), new Vector3(0, 180, 0));
         var lockBed = safeBed.GetComponent<Lockable>();
@@ -353,13 +353,47 @@ public class World2SceneBuilder : EditorWindow
         soBed.FindProperty("interactionPrompt").stringValue = "Két Sắt Cổ (Nhấn E để nhập mật mã)";
         soBed.ApplyModifiedProperties();
 
-        // Clue Note Emily on table
-        var clueNote = CreateBox("Clue_Note_Emily", new Vector3(-7.7f, 0.79f, 14.5f), new Vector3(0.32f, 0.012f, 0.24f), matPaper);
+        // Clue Note Emily giấu kín trong ngăn kéo bàn Draw 1_low
+        Transform targetDrawer = null;
+        if (deskBed != null)
+        {
+            foreach (Transform t in deskBed.GetComponentsInChildren<Transform>(true))
+            {
+                if (t.name == "Draw 1_low" || t.name.Equals("Draw 1_low", System.StringComparison.OrdinalIgnoreCase))
+                {
+                    targetDrawer = t;
+                    break;
+                }
+            }
+        }
+
+        Vector3 noteSize = new Vector3(0.24f, 0.012f, 0.18f);
+        Vector3 notePos = new Vector3(-7.7f, 0.79f, 14.5f);
+        if (targetDrawer != null)
+        {
+            Renderer drawerRend = targetDrawer.GetComponent<Renderer>();
+            notePos = (drawerRend != null ? drawerRend.bounds.center : targetDrawer.position) + new Vector3(0f, 0.02f, 0f);
+        }
+
+        var clueNote = CreateBox("Clue_Note_Emily", notePos, noteSize, matPaper);
+        if (targetDrawer != null)
+        {
+            clueNote.transform.rotation = targetDrawer.rotation;
+            clueNote.transform.SetParent(targetDrawer, true);
+            Vector3 parentLossy = targetDrawer.lossyScale;
+            clueNote.transform.localScale = new Vector3(
+                noteSize.x / Mathf.Max(0.001f, parentLossy.x),
+                noteSize.y / Mathf.Max(0.001f, parentLossy.y),
+                noteSize.z / Mathf.Max(0.001f, parentLossy.z)
+            );
+        }
+
         var clueComp = clueNote.AddComponent<CodeClue>();
         var soClue = new SerializedObject(clueComp);
         soClue.FindProperty("clueId").stringValue = "clue_emily_diary";
-        soClue.FindProperty("clueText").stringValue = "Trang nhật ký của Emily (14/10):\n\n'Cha mang về chiếc gương cổ bằng vàng từ phiên đấu giá. Cha bảo nó được đúc vào đúng NĂM 1894 - năm thành lập dòng họ...\nTừ đêm đó cha luôn nói chuyện một mình trước tấm gương...'\n\n[GỢI Ý: Mật mã két phòng ngủ là 1894]";
-        soClue.FindProperty("interactionPrompt").stringValue = "Đọc nhật ký của Emily [E]";
+        soClue.FindProperty("clueText").stringValue = "Trang nhật ký của Emily giấu kín trong ngăn kéo bàn:\n\n'Cha mang về chiếc gương cổ bằng vàng từ phiên đấu giá. Cha bảo nó được đúc vào đúng NĂM 1894 - năm thành lập dòng họ...\nTừ đêm đó cha luôn nói chuyện một mình trước tấm gương...'\n\n[MANH MỐI THEN CHỐT: Mật mã két phòng ngủ là 1894]";
+        soClue.FindProperty("interactionPrompt").stringValue = "Đọc nhật ký của Emily trong ngăn kéo [E / Chạm]";
+        soClue.FindProperty("interactionRange").floatValue = 2.5f;
         soClue.ApplyModifiedProperties();
 
         CreatePointLight("Light_Candle_Bedroom", new Vector3(-9.5f, 2.2f, 9.5f), 16f, 12f, new Color(1f, 0.8f, 0.45f));

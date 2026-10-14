@@ -11,6 +11,8 @@ public class DrawerInteractive : Interactable
     [Tooltip("How far the drawer slides out when opened (in meters)")]
     public float slideDistance = 0.3f;
     
+    [Tooltip("Thời gian trượt mở / đóng ngăn kéo (giây). Mở mượt mà trong 0.35s")]
+    [SerializeField] private float slideDuration = 0.35f;
     [SerializeField] private float slideSpeed = 1.2f;
     public bool isOpen;
 
@@ -35,12 +37,27 @@ public class DrawerInteractive : Interactable
     protected override void Start()
     {
         base.Start();
+
+        // Đảm bảo collider của ngăn kéo là vật thể cứng, không phải Trigger để Raycast bắt dính 100%
+        BoxCollider col = GetComponent<BoxCollider>();
+        if (col != null && col.isTrigger)
+        {
+            col.isTrigger = false;
+        }
+        else if (col == null && GetComponent<Collider>() == null)
+        {
+            col = gameObject.AddComponent<BoxCollider>();
+        }
+
+        // Đảm bảo khoảng cách trượt mở tối thiểu 0.35m để thấy rõ ngăn kéo kéo ra
+        if (slideDistance < 0.35f) slideDistance = 0.35f;
+
         // Store initial position as closed position
         closedPosition = transform.localPosition;
         
         // Calculate open position using WORLD SPACE direction
         // slideDirection is in world space - works for any desk rotation!
-        Vector3 worldSlideDir = slideDirection.normalized;
+        Vector3 worldSlideDir = slideDirection != Vector3.zero ? slideDirection.normalized : new Vector3(0, 0, 1);
         
         // Calculate world positions
         Vector3 closedWorldPos = transform.position;
@@ -55,6 +72,8 @@ public class DrawerInteractive : Interactable
         {
             openPosition = openWorldPos;
         }
+
+        Debug.Log($"<color=cyan>[DRAWER] Sẵn sàng ngăn kéo '{gameObject.name}' - Hướng trượt: {worldSlideDir}, Cự ly: {slideDistance}m</color>");
         
         // Get or add AudioSource
         audioSource = GetComponent<AudioSource>();
@@ -113,23 +132,38 @@ public class DrawerInteractive : Interactable
         UpdatePrompt();
 
         var clip = isOpen ? openSound : closeSound;
-        if (clip != null) audioSource.PlayOneShot(clip);
+        if (clip != null && audioSource != null) audioSource.PlayOneShot(clip);
 
         if (slideRoutine != null) StopCoroutine(slideRoutine);
         Vector3 target = isOpen ? openPosition : closedPosition;
+        Debug.Log($"<color=cyan>[DRAWER] {gameObject.name} → {(isOpen ? "MỞ NGĂN KÉO (OPENING)" : "ĐÓNG NGĂN KÉO (CLOSING)")} - Khoảng cách: {slideDistance}m</color>");
         slideRoutine = StartCoroutine(Slide(target));
     }
 
     IEnumerator Slide(Vector3 target)
     {
-        while ((transform.localPosition - target).sqrMagnitude > 0.000001f)
+        Vector3 start = transform.localPosition;
+        float elapsed = 0f;
+        float duration = slideDuration > 0.01f ? slideDuration : 0.35f;
+
+        while (elapsed < duration)
         {
-            transform.localPosition = Vector3.MoveTowards(
-                transform.localPosition, target, slideSpeed * Time.deltaTime);
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / duration);
+            float smoothT = Mathf.SmoothStep(0f, 1f, t);
+            transform.localPosition = Vector3.Lerp(start, target, smoothT);
             yield return null;
         }
+
         transform.localPosition = target;
         slideRoutine = null;
+        Debug.Log($"<color=cyan>[DRAWER] {gameObject.name} → {(isOpen ? "ĐÃ MỞ HOÀN TẤT (OPENED)" : "ĐÃ ĐÓNG HOÀN TẤT (CLOSED)")}</color>");
+    }
+
+    public override bool CanInteract()
+    {
+        // Ngăn kéo luôn luôn có thể tương tác (để kéo mở ra hoặc đóng lại)
+        return true;
     }
 
     public void Unlock() => isLocked = false;

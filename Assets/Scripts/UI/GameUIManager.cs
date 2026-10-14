@@ -354,7 +354,7 @@ public class GameUIManager : MonoBehaviour
             brt.anchorMin = new Vector2(0f, 1f);
             brt.anchorMax = new Vector2(0f, 1f);
             brt.pivot = new Vector2(0f, 1f);
-            brt.anchoredPosition = new Vector2(30f, -30f);
+            brt.anchoredPosition = new Vector2(60f, -50f);
             brt.sizeDelta = new Vector2(500f, 54f);
 
             Image badgeImg = badgeObj.GetComponent<Image>();
@@ -380,7 +380,7 @@ public class GameUIManager : MonoBehaviour
             HorrorUITheme.AddHorrorTextShadow(inventoryText, Color.black, new Vector2(1.5f, -1.5f));
         }
 
-        // 2. Pause Button (Top Right)
+        // 2. Pause Button (Top Right - an toàn khỏi viền cong và camera notch)
         if (pauseButton == null)
         {
             Transform existingPb = canvas.transform.Find("HUD_PauseButton");
@@ -392,7 +392,7 @@ public class GameUIManager : MonoBehaviour
             rt.anchorMin = new Vector2(1f, 1f);
             rt.anchorMax = new Vector2(1f, 1f);
             rt.pivot = new Vector2(1f, 1f);
-            rt.anchoredPosition = new Vector2(-30f, -30f);
+            rt.anchoredPosition = new Vector2(-60f, -50f);
             rt.sizeDelta = new Vector2(70f, 70f);
 
             pauseButton = pbObj.GetComponent<Button>();
@@ -418,29 +418,42 @@ public class GameUIManager : MonoBehaviour
             Stretch(txtObj.GetComponent<RectTransform>());
         }
 
-        // 3. Sprint Button (Bottom Right, above Interact button)
+        // 3. Sprint Button (Bottom Right, cân đối ngay phía trên nút E)
         if (sprintButton == null)
         {
             Transform existingSb = canvas.transform.Find("HUD_SprintButton");
-            if (existingSb != null) DestroyImmediate(existingSb.gameObject);
+            GameObject sbObj = null;
+            if (existingSb != null)
+            {
+                sbObj = existingSb.gameObject;
+            }
+            else
+            {
+                sbObj = new GameObject("HUD_SprintButton", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image), typeof(Button));
+                sbObj.transform.SetParent(canvas.transform, false);
+            }
 
-            GameObject sbObj = new GameObject("HUD_SprintButton", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image), typeof(Button));
-            sbObj.transform.SetParent(canvas.transform, false);
             RectTransform rt = sbObj.GetComponent<RectTransform>();
             rt.anchorMin = new Vector2(1f, 0f);
             rt.anchorMax = new Vector2(1f, 0f);
-            rt.pivot = new Vector2(1f, 0f);
-            rt.anchoredPosition = new Vector2(-100f, 240f);
-            rt.sizeDelta = new Vector2(110f, 70f);
+            rt.pivot = new Vector2(0.5f, 0.5f);
+            rt.anchoredPosition = new Vector2(-190f, 320f);
+            rt.sizeDelta = new Vector2(100f, 80f);
 
             sprintButton = sbObj.GetComponent<Button>();
+            sprintButton.onClick.RemoveAllListeners();
             sprintButton.onClick.AddListener(OnSprintToggleClicked);
             HorrorUITheme.ApplyHorrorButtonStyle(sprintButton, new Color(0.12f, 0.08f, 0.10f, 0.8f), HorrorUITheme.ColorBoxBorder);
 
-            GameObject txtObj = new GameObject("Text", typeof(RectTransform), typeof(CanvasRenderer), typeof(Text));
-            txtObj.transform.SetParent(sbObj.transform, false);
-            Text t = txtObj.GetComponent<Text>();
-            t.font = font;
+            Text t = sbObj.GetComponentInChildren<Text>();
+            if (t == null)
+            {
+                GameObject txtObj = new GameObject("Text", typeof(RectTransform), typeof(CanvasRenderer), typeof(Text));
+                txtObj.transform.SetParent(sbObj.transform, false);
+                t = txtObj.GetComponent<Text>();
+                Stretch(txtObj.GetComponent<RectTransform>());
+            }
+            if (font != null) t.font = font;
             t.text = "CHẠY";
             t.fontSize = 20;
             t.fontStyle = FontStyle.Bold;
@@ -448,7 +461,6 @@ public class GameUIManager : MonoBehaviour
             t.color = HorrorUITheme.TextBoneWhite;
             t.raycastTarget = false;
             HorrorUITheme.AddHorrorTextShadow(t, Color.black, new Vector2(1.5f, -1.5f));
-            Stretch(txtObj.GetComponent<RectTransform>());
         }
 
         // 4. Pause Menu Panel
@@ -547,6 +559,57 @@ public class GameUIManager : MonoBehaviour
             clueLe.minHeight = 100f;
 
             CreateButton(contentRoot, "Đóng manh mối", font, CloseClue, HorrorUITheme.ColorBtnQuit, HorrorUITheme.ColorBtnQuitBorder);
+        }
+
+        // 9. Enforce mobile controls layout (Joystick at 190, 190; E at -190, 190; Sprint at -190, 320)
+        EnforceMobileControlsLayout();
+    }
+
+    private void EnforceMobileControlsLayout()
+    {
+        // 1. Virtual Joystick bên trái: anchoredPosition = (190, 190), size = 200x200, pivot = (0.5, 0.5)
+        GameObject joyObj = GameObject.Find("Fixed Joystick");
+        if (joyObj != null)
+        {
+            RectTransform jrt = joyObj.GetComponent<RectTransform>();
+            if (jrt != null)
+            {
+                jrt.anchorMin = Vector2.zero;
+                jrt.anchorMax = Vector2.zero;
+                jrt.pivot = new Vector2(0.5f, 0.5f);
+                jrt.anchoredPosition = new Vector2(190f, 190f);
+                jrt.sizeDelta = new Vector2(200f, 200f);
+            }
+
+            Transform handle = joyObj.transform.Find("Handle");
+            if (handle != null)
+            {
+                var handleImg = handle.GetComponent<Image>();
+                if (handleImg != null) handleImg.raycastTarget = false;
+                RectTransform hrt = handle.GetComponent<RectTransform>();
+                if (hrt != null)
+                {
+                    hrt.anchorMin = new Vector2(0.5f, 0.5f);
+                    hrt.anchorMax = new Vector2(0.5f, 0.5f);
+                    hrt.pivot = new Vector2(0.5f, 0.5f);
+                    hrt.sizeDelta = new Vector2(85f, 85f);
+                }
+            }
+        }
+
+        // 2. Nút Tương Tác E bên phải: anchoredPosition = (-190, 190), size = 120x120, pivot = (0.5, 0.5)
+        GameObject mibObj = GameObject.Find("MobileInteractButton");
+        if (mibObj != null)
+        {
+            RectTransform mrt = mibObj.GetComponent<RectTransform>();
+            if (mrt != null)
+            {
+                mrt.anchorMin = new Vector2(1f, 0f);
+                mrt.anchorMax = new Vector2(1f, 0f);
+                mrt.pivot = new Vector2(0.5f, 0.5f);
+                mrt.anchoredPosition = new Vector2(-190f, 190f);
+                mrt.sizeDelta = new Vector2(120f, 120f);
+            }
         }
     }
 
